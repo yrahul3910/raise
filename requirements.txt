@@ -1,3 +1,4 @@
+pandas
 numpy
 keras
 scikit-learn===0.23.1
