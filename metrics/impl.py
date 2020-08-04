@@ -11,6 +11,7 @@ import math
 def get_confusion_matrix(y_true, y_pred) -> tuple:
     """
     Returns tp, tn, fp, fn
+
     :param y_true: True labels
     :param y_pred: Predictions
     :return: (tp, tn, fp, fn)
@@ -22,6 +23,7 @@ def get_confusion_matrix(y_true, y_pred) -> tuple:
 def get_accuracy(y_true, y_pred) -> float:
     """
     Returns the accuracy score
+
     :param y_true: True labels
     :param y_pred: Predictions
     :return: Accuracy score
@@ -32,6 +34,7 @@ def get_accuracy(y_true, y_pred) -> float:
 def get_f1_score(y_true, y_pred) -> float:
     """
     Returns the F-1 score
+
     :param y_true: True labels
     :param y_pred: Predictions
     :return: F-1 score
@@ -42,6 +45,7 @@ def get_f1_score(y_true, y_pred) -> float:
 def get_recall(y_true, y_pred) -> float:
     """
     Returns the recall score
+
     :param y_true: True labels
     :param y_pred: Predictions
     :return: Recall score
@@ -52,6 +56,7 @@ def get_recall(y_true, y_pred) -> float:
 def get_precision(y_true, y_pred) -> float:
     """
     Returns the precision.
+
     :param y_true: True labels
     :param y_pred: Predictions
     :return: Precision
@@ -62,6 +67,7 @@ def get_precision(y_true, y_pred) -> float:
 def get_pf(y_true, y_pred) -> float:
     """
     Returns the false alarm rate
+
     :param y_true: True labels
     :param y_pred: Predictions
     :return: False alarm rate
@@ -73,6 +79,7 @@ def get_pf(y_true, y_pred) -> float:
 def get_roc_auc(y_true, y_pred) -> float:
     """
     Returns the area under the pd/pf curve
+
     :param y_true: True labels
     :param y_pred: Predictions
     :return: AUC score
@@ -83,6 +90,7 @@ def get_roc_auc(y_true, y_pred) -> float:
 def get_d2h(y_true, y_pred) -> float:
     """
     Returns the distance to heaven metric
+
     :param y_true: True labels
     :param y_pred: Predictions
     :return: d2h score
@@ -93,6 +101,7 @@ def get_d2h(y_true, y_pred) -> float:
 def get_popt20(data) -> float:
     """
     Get popt20 score.
+
     :param data: Pandas DataFrame with data. Must contain columns "bug", "loc", and "prediction".
     :return: popt20 score
     """

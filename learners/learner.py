@@ -3,9 +3,7 @@ import numpy as np
 
 
 class Learner:
-    """
-    The base Learner class.
-    """
+    """The base Learner class."""
 
     def __init__(self, name: str = "rf", random: bool = False):
         """

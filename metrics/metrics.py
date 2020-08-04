@@ -1,4 +1,11 @@
-from metrics.impl import *
+from metrics.impl import get_accuracy
+from metrics.impl import get_popt20
+from metrics.impl import get_pf
+from metrics.impl import get_recall
+from metrics.impl import get_roc_auc
+from metrics.impl import get_d2h
+from metrics.impl import get_f1_score
+from metrics.impl import get_precision
 
 
 name_map = {
@@ -15,12 +22,11 @@ name_map = {
 
 
 class Metric:
-    """
-    Base class for all metrics
-    """
+    """Base class for all metrics"""
     def __init__(self, y_true, y_pred):
         """
         Initializes the Metric object
+
         :param y_true: True targets
         :param y_pred: Predictions
         """
@@ -31,12 +37,11 @@ class Metric:
 
 
 class ClassificationMetrics(Metric):
-    """
-    Handles classification metrics
-    """
+    """Handles classification metrics"""
     def add_data(self, data) -> None:
         """
         Adds data for the popt20 metric
+
         :param data: Pandas DataFrame. Must include the columns "bug", "loc", and "prediction"
         :return: None
         """
@@ -45,6 +50,7 @@ class ClassificationMetrics(Metric):
     def add_metric(self, metric: str) -> None:
         """
         Adds a metric to the object
+
         :param metric:
         :return: None
         """
@@ -59,6 +65,7 @@ class ClassificationMetrics(Metric):
     def add_metrics(self, metrics: list) -> None:
         """
         Adds a list of metrics.
+
         :param metrics: List
         :return: None
         """
@@ -68,6 +75,7 @@ class ClassificationMetrics(Metric):
     def get_metrics(self) -> list:
         """
         Returns all metric values
+
         :return: List of all added metrics
         """
         metrics = [name_map[metric](self.y_true, self.y_pred) for metric in self.metrics if metric != 'popt20']

@@ -4,10 +4,13 @@ import random
 
 
 class SVM(Learner):
-    """
-    The Support Vector Machine learner
-    """
+    """The Support Vector Machine learner"""
     def __init__(self, *args, **kwargs):
+        """
+        Initializes the classifier.
+        :param args: Args passed to Learner
+        :param kwargs: Keyword args passed to Learner
+        """
         super(SVM, self).__init__(*args, **kwargs)
         print("******\nWARNING: This module is buggy and should NOT be used.\n*****")
         if self.random:

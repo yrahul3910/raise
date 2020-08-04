@@ -1,6 +1,29 @@
+
+
+<p align="center">
+<img src="http://ai4se.net/img/logo.png" height="80px" /><br />
+<a href="http://ai4se.net">homepage</a>  | 
+<a href="https://github.com/yrahul3910/raise/tree/master/docs">docs</a>  |
+<a href="https://github.com/yrahul3910/raise/blob/master/LICENSE">license</a>  |
+<a href="https://github.com/yrahul3910/raise/blob/master/CODE_OF_CONDUCT.md">contribute</a>  |
+<a href="https://github.com/yrahul3910/raise/issues/">issues</a>  ::
+<a href="mailto:timm@ieee.org">contact</a>
+</p>
+<p align="center">
+<img src="https://img.shields.io/badge/language-python-orange.svg">&nbsp;
+<img src="https://img.shields.io/badge/license-MIT-green.svg">&nbsp;
+<img src="https://img.shields.io/badge/platform-mac,*nux-informational">&nbsp;
+<img src="https://img.shields.io/badge/purpose-ai,se-blueviolet">&nbsp;
+<img src="https://app.codacy.com/project/badge/Grade/8352fafd16454ea995f43891d9571d22" />&nbsp;
+</p> <hr />
+
 # The RAISE package
 
 The RAISE package is an attempt to unify code, and incorporate PEP8 standards. The package takes a modular, object-oriented design, with each part of the ML pipeline encapsulated in a class. The purpose is to allow a streamlined, easy to read interface that allows for explainability of code, to enforce programming standards, and improve maintainability.
+
+# Install
+
+Run `setup.py` to install the package.
 
 # Structure
 

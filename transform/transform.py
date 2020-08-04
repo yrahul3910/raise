@@ -4,6 +4,8 @@ from sklearn.preprocessing import Normalizer
 from sklearn.preprocessing import MaxAbsScaler
 from sklearn.preprocessing import RobustScaler
 from sklearn.preprocessing import KernelCenterer
+from imblearn.over_sampling import SMOTE
+from transform.cfs import CFS
 import numpy as np
 
 from data.data import Data
@@ -14,7 +16,9 @@ transformers = {
     "maxabs": MaxAbsScaler,
     "robust": RobustScaler,
     "kernel": KernelCenterer,
-    "standardize": StandardScaler
+    "standardize": StandardScaler,
+    "smote": SMOTE,
+    "cfs": CFS
 }
 
 
@@ -28,6 +32,8 @@ class Transform:
         :param name: str. If invalid, raises a ValueError.
         :param random: bool.
         """
+        self.name = name
+
         if name not in transformers.keys():
             raise ValueError("Invalid transform name.")
 
@@ -50,5 +56,9 @@ class Transform:
         :param data: Data object
         :return: None
         """
-        self.transformer.fit_transform(data.x_train, data.y_train)
-        self.transformer.transform(data.x_test)
+        if self.name != "smote":
+            self.transformer.fit_transform(data.x_train, data.y_train)
+            self.transformer.transform(data.x_test)
+        else:
+            data.x_train, data.y_train = self.transformer.fit_sample(data.x_train, data.y_train)
+            data.x_test = self.transformer.sample(data.x_test)

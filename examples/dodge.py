@@ -1,14 +1,8 @@
-import sys
-import os
-
-sys.path.append(os.path.abspath(os.path.join(os.getcwd(), "..")))
-
 from data.data import DataLoader
 from hyperparams.dodge import DODGE
 from learners.logreg import LogisticRegressionClassifier
 from learners.nb import NaiveBayes
 from learners.rf import RandomForest
-from learners.svm import SVM
 from learners.tree import DecisionTree
 
 
