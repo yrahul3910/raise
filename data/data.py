@@ -8,6 +8,14 @@ class Data:
     """
     Base class for data
     """
+    def __add__(self, other):
+        x_train = np.concatenate((self.x_train, other.x_train), axis=0)
+        x_test = np.concatenate((self.x_test, other.x_test), axis=0)
+        y_train = np.concatenate((self.y_train, other.y_train), axis=0)
+        y_test = np.concatenate((self.y_test, other.y_test), axis=0)
+
+        return Data(x_train, x_test, y_train, y_test)
+
     def __init__(self, x_train, x_test, y_train, y_test):
         self.x_train = x_train
         self.y_train = y_train

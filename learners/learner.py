@@ -6,6 +6,7 @@ class Learner:
     """
     The base Learner class.
     """
+
     def __init__(self, name: str = "rf", random: bool = False, id: str = None):
         """
         Initializes a Learner object
@@ -17,6 +18,7 @@ class Learner:
         self.random = random
         self.id = id
         self.learner = None
+        self.__name__ = name
         self.x_train, self.x_test, self.y_train, self.y_test = None, None, None, None
 
     def set_data(self, x_train, y_train, x_test, y_test) -> None:
