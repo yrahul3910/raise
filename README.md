@@ -28,7 +28,7 @@ Implements various data transforms, with an option for random arguments. This cl
 
 Provides the `Experiment` class, which allows for a combination of the above, with logging to a file. Experiments can have their own name, which forms the filenames. If not provided, a random one is used. The constructor must be provided a dict in the following format:
 
-```json
+```
 {
 		"n_runs": int,
 		"transforms": list[str],
