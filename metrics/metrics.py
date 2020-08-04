@@ -70,7 +70,7 @@ class ClassificationMetrics(Metric):
         Returns all metric values
         :return: List of all added metrics
         """
-        metrics = [metric(self.y_true, self.y_pred) for metric in self.metrics if metric != 'popt20']
+        metrics = [name_map[metric](self.y_true, self.y_pred) for metric in self.metrics if metric != 'popt20']
         if "popt20" in self.metrics:
             metrics.insert(self.metrics.index("popt20"), get_popt20(self.data))
         return metrics

@@ -7,16 +7,14 @@ class Learner:
     The base Learner class.
     """
 
-    def __init__(self, name: str = "rf", random: bool = False, id: str = None):
+    def __init__(self, name: str = "rf", random: bool = False):
         """
         Initializes a Learner object
         :param name: The name of the learner. Must be a recognized name.
         :param random: Whether to initialize the hyperparameters randomly.
-        :param id: A user-identifiable id. Not necessary, just for debugging.
         """
         self.name = name
         self.random = random
-        self.id = id
         self.learner = None
         self.__name__ = name
         self.x_train, self.x_test, self.y_train, self.y_test = None, None, None, None
@@ -45,11 +43,6 @@ class Learner:
             self.y_train is not None and
             self.x_test is not None and
             self.y_test is not None
-        ) and (
-            type(self.x_train) in [np.ndarray, pd.DataFrame] and
-            type(self.x_test) in [np.ndarray, pd.DataFrame] and
-            type(self.y_train) in [np.ndarray, pd.DataFrame] and
-            type(self.y_test) in [np.ndarray, pd.DataFrame]
         ) and (
             self.x_train.shape[0] == self.y_train.shape[0] and
             self.x_test.shape[0] == self.y_test.shape[0] and

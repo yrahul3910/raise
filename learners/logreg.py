@@ -12,6 +12,6 @@ class LogisticRegressionClassifier(Learner):
         if self.random:
             self.penalty = random.choice(['l1', 'l2'])
             self.c = random.choice([0.1, 1., 10., 100., 1000.])
-            self.learner = LogisticRegression(penalty=self.penalty, C=self.c)
+            self.learner = LogisticRegression(penalty=self.penalty, C=self.c, solver='liblinear')
         else:
-            self.learner = LogisticRegression()
+            self.learner = LogisticRegression(solver='liblinear')

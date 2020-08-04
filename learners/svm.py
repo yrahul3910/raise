@@ -9,9 +9,10 @@ class SVM(Learner):
     """
     def __init__(self, *args, **kwargs):
         super(SVM, self).__init__(*args, **kwargs)
+        print("******\nWARNING: This module is buggy and should NOT be used.\n*****")
         if self.random:
             self.c = random.choice([.01, .1, 1., 10., 100., 1000.])
-            self.kernel = random.choice(['linear', 'poly', 'rbf', 'sigmoid'])
+            self.kernel = random.choice(['poly', 'rbf', 'sigmoid'])
             self.degree = random.randint(2, 4)
             self.gamma = random.random()
             self.learner = SVC(C=self.c, kernel=self.kernel, degree=self.degree, gamma=self.gamma)

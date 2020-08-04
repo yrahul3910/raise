@@ -65,6 +65,7 @@ class Experiment:
 
                 # Evaluate
                 metric = ClassificationMetrics(self.data.y_test, predictions)
+                metric.add_metrics(self.metrics)
                 if "popt20" in self.metrics:
                     metric.add_data(np.concatenate((self.data.x_train, self.data.y_train), axis=1))
                 values = metric.get_metrics()
