@@ -49,7 +49,7 @@ Implements various data transforms, with an option for random arguments. This cl
 
 Provides the `Experiment` class, which allows for a combination of the above, with logging to a file. Experiments can have their own name, which forms the filenames. If not provided, a random one is used. The constructor must be provided a dict in the following format:
 
-```
+```python
 {
 	"n_runs": int,
 	"transforms": list[str],
@@ -65,6 +65,3 @@ Provides the `Experiment` class, which allows for a combination of the above, wi
 ### `raise.hyperparams`
 
 Implements hyper-parameter optimizers from the RAISE lab; currently only has DODGE. Hyper-parameter optimizers expect a config file with the same format as `raise.experiments.Experiment`, and then can be run using `optimize()`.
-
-
-

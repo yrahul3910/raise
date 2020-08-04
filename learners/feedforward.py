@@ -70,8 +70,8 @@ class FeedforwardDL(Learner):
         if self.random:
             self.weighted = random.choice([1., 10., 100., False])
             self.wfo = random.choice([True, False])
-            self.n_layers = random.randint([1, 5])
-            self.n_units = random.randint([1, 20])
+            self.n_layers = random.randint(1, 5)
+            self.n_units = random.randint(1, 20)
 
     def fit(self):
         self._check_data()
@@ -79,7 +79,7 @@ class FeedforwardDL(Learner):
         if self.weighted:
             frac = sum(self.y_train) * 1. / len(self.y_train)
 
-            if type(self.weighted) == int:
+            if isinstance(self.weighted, int):
                 self.weighted = 1.
             self.loss = weighted_categorical_crossentropy(weights=(1., self.weighted / frac))
 
@@ -90,7 +90,7 @@ class FeedforwardDL(Learner):
             Dense(self.x_train.shape[1], activation=self.activation)
         ])
 
-        for i in range(self.n_layers - 1):
+        for _ in range(self.n_layers - 1):
             self.learner.add(Dense(self.x_train.shape[1], activation=self.activation))
 
         self.learner.add(Dense(len(np.unique(self.y_train)), activation='softmax'))
