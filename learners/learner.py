@@ -3,11 +3,12 @@ import numpy as np
 
 
 class Learner:
-    """The base Learner class."""
 
+    """The base Learner class."""
     def __init__(self, name: str = "rf", random: bool = False):
         """
         Initializes a Learner object
+
         :param name: The name of the learner. Must be a recognized name.
         :param random: Whether to initialize the hyperparameters randomly.
         """
@@ -20,6 +21,7 @@ class Learner:
     def set_data(self, x_train, y_train, x_test, y_test) -> None:
         """
         Sets the data of the learner
+
         :param x_train: Training data
         :param y_train: Training labels
         :param x_test: Test data
@@ -34,6 +36,7 @@ class Learner:
     def _check_data(self) -> None:
         """
         Ensures data is set
+
         :return: None
         """
         assert (
@@ -50,6 +53,7 @@ class Learner:
     def fit(self) -> None:
         """
         Fits the learner
+
         :return: None
         """
         self._check_data()
@@ -58,6 +62,7 @@ class Learner:
     def predict(self, x_test):
         """
         Makes predictions
+
         :param x_test: Test data
         :return: np.ndarray
         """

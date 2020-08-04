@@ -8,6 +8,7 @@ import string
 
 
 class Experiment:
+
     """Base class for experiments"""
     def __init__(self, json: dict):
         """"
@@ -26,7 +27,8 @@ class Experiment:
     def run(self):
         """
         Runs the experiment
-        :return:
+
+        :return: None
         """
         print("Running experiment", self.name)
         print('=' * len("Running experiment" + str(self.name)))

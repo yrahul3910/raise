@@ -5,6 +5,7 @@ from sklearn.model_selection import train_test_split
 
 
 class Data:
+
     """Base class for data"""
     def __add__(self, other):
         x_train = np.concatenate((self.x_train, other.x_train), axis=0)
@@ -25,6 +26,7 @@ class Data:
 
 
 class DataLoader:
+
     """Data loading utilities"""
     @staticmethod
     def from_files(base_path: str, files: list, target:str = "bug", col_start:int = 3, col_stop:int = -2) -> Data:
