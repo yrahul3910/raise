@@ -1,0 +1,4 @@
+---
+engines:
+  pylint:
+    disable=import-error
