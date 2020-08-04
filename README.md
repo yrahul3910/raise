@@ -41,7 +41,9 @@ Provides the `Experiment` class, which allows for a combination of the above, wi
 }
 ```
 
+## `raise.hyperparams`
 
+Implements hyper-parameter optimizers from the RAISE lab; currently only has DODGE. Hyper-parameter optimizers expect a config file with the same format as `raise.experiments.Experiment`, and then can be run using `optimize()`.
 
 
 
