@@ -23,9 +23,7 @@ transformers = {
 
 
 class Transform:
-    """
-    An encapsulation for data transforms.
-    """
+    """An encapsulation for data transforms."""
     def __init__(self, name: str, random=False):
         """
         Initializes the Transform object.

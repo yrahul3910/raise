@@ -8,8 +8,10 @@ import string
 
 
 class Experiment:
+    """
 
-    """Base class for experiments"""
+    Base class for experiments
+    """
     def __init__(self, json: dict):
         """"
         Initializes the experiment.

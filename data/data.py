@@ -8,6 +8,12 @@ class Data:
 
     """Base class for data"""
     def __add__(self, other):
+        """
+        Appends a Data object
+
+        :param other: Other Data object
+        :return: Data
+        """
         x_train = np.concatenate((self.x_train, other.x_train), axis=0)
         x_test = np.concatenate((self.x_test, other.x_test), axis=0)
         y_train = np.concatenate((self.y_train, other.y_train), axis=0)
@@ -16,6 +22,14 @@ class Data:
         return Data(x_train, x_test, y_train, y_test)
 
     def __init__(self, x_train, x_test, y_train, y_test):
+        """
+        Initializes the Data wrapper object
+
+        :param x_train: Train data
+        :param x_test: Test data
+        :param y_train: Train labels
+        :param y_test: Test labels
+        """
         self.x_train = x_train
         self.y_train = y_train
         self.x_test = x_test
