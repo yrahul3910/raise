@@ -30,14 +30,14 @@ Provides the `Experiment` class, which allows for a combination of the above, wi
 
 ```
 {
-		"n_runs": int,
-		"transforms": list[str],
-		"metrics": list[str],
-  	"random": bool,
-  	"learners": list[raise.learners.Learner],
-  	"log_path": str,
-  	"data": list[raise.data.Data],
-  	"name": str
+	"n_runs": int,
+	"transforms": list[str],
+	"metrics": list[str],
+  "random": bool,
+  "learners": list[raise.learners.Learner],
+  "log_path": str,
+  "data": list[raise.data.Data],
+  "name": str
 }
 ```
 
