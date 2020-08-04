@@ -43,7 +43,7 @@ class DataLoader:
 
     """Data loading utilities"""
     @staticmethod
-    def from_files(base_path: str, files: list, target:str = "bug", col_start:int = 3, col_stop:int = -2) -> Data:
+    def from_files(base_path: str, files: list, target: str = "bug", col_start:int = 3, col_stop: int = -2) -> Data:
         """
         Builds data from a list of files, the last of which is the test set.
 

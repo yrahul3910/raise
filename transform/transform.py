@@ -41,8 +41,8 @@ class Transform:
                 end = np.random.randint(start + 1, 100)
                 self.transformer = RobustScaler(quantile_range=(start, end))
             elif name == "normalize":
-                abs = np.random.choice(['l1', 'l2', 'max'])
-                self.transformer = Normalizer(norm=abs)
+                norm = np.random.choice(['l1', 'l2', 'max'])
+                self.transformer = Normalizer(norm=norm)
             else:
                 self.transformer = transformers[name]()
         else:

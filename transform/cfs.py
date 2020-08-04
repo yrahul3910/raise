@@ -19,7 +19,9 @@ def entropy(x, k=3, base=2):
     e.g. x = [[1.3],[3.7],[5.1],[2.4]] if x is a one-dimensional scalar and we have four samples
     """
 
-    assert k <= len(x) - 1, "Set k smaller than num. samples - 1"
+    if not k <= len(x) - 1:
+        raise AssertionError("Set k smaller than num. samples - 1")
+
     d = len(x[0])
     N = len(x)
     intens = 1e-10  # small noise to break degeneracy, see doc.
@@ -36,8 +38,12 @@ def mi(x, y, k=3, base=2):
     if x is a one-dimensional scalar and we have four samples
     """
 
-    assert len(x) == len(y), "Lists should have same length"
-    assert k <= len(x) - 1, "Set k smaller than num. samples - 1"
+    if len(x) != len(y):
+        raise AssertionError("Lists should have same length")
+
+    if  k > len(x) - 1:
+        raise AssertionError("Set k smaller than num. samples - 1")
+
     intens = 1e-10  # small noise to break degeneracy, see doc.
     x = [list(p + intens * nr.rand(len(x[0]))) for p in x]
     y = [list(p + intens * nr.rand(len(y[0]))) for p in y]
@@ -55,8 +61,12 @@ def cmi(x, y, z, k=3, base=2):
     if x is a one-dimensional scalar and we have four samples
     """
 
-    assert len(x) == len(y), "Lists should have same length"
-    assert k <= len(x) - 1, "Set k smaller than num. samples - 1"
+    if len(x) != len(y):
+        raise AssertionError("Lists should have same length")
+
+    if k > len(x) - 1:
+        raise AssertionError("Set k smaller than num. samples - 1")
+
     intens = 1e-10  # small noise to break degeneracy, see doc.
     x = [list(p + intens * nr.rand(len(x[0]))) for p in x]
     y = [list(p + intens * nr.rand(len(y[0]))) for p in y]
@@ -75,9 +85,15 @@ def kldiv(x, xp, k=3, base=2):
     if x is a one-dimensional scalar and we have four samples
     """
 
-    assert k <= len(x) - 1, "Set k smaller than num. samples - 1"
-    assert k <= len(xp) - 1, "Set k smaller than num. samples - 1"
-    assert len(x[0]) == len(xp[0]), "Two distributions must have same dim."
+    if k > len(x) - 1:
+        raise AssertionError("Set k smaller than num. samples - 1")
+
+    if k > len(xp) - 1:
+        raise AssertionError("Set k smaller than num. samples - 1")
+
+    if len(x[0]) != len(xp[0]):
+        raise AssertionError("Two distributions must have same dim.")
+
     d = len(x[0])
     n = len(x)
     m = len(xp)
@@ -180,7 +196,7 @@ def shuffle_test(measure, x, y, z=False, ns=200, ci=0.95, **kwargs):
 
     xp = x[:]  # A copy that we can shuffle
     outputs = []
-    for i in range(ns):
+    for _ in range(ns):
         random.shuffle(xp)
         if z:
             outputs.append(measure(xp, y, z, **kwargs))
@@ -297,7 +313,7 @@ def merit_calculation(X, y):
         merit of a feature subset X
     """
 
-    n_samples, n_features = X.shape
+    _, n_features = X.shape
     rff = 0
     rcf = 0
     for i in range(n_features):

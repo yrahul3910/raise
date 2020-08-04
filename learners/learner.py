@@ -39,7 +39,7 @@ class Learner:
 
         :return: None
         """
-        assert (
+        if not (
             self.x_train is not None and
             self.y_train is not None and
             self.x_test is not None and
@@ -48,7 +48,8 @@ class Learner:
             self.x_train.shape[0] == self.y_train.shape[0] and
             self.x_test.shape[0] == self.y_test.shape[0] and
             self.x_train.shape[1] == self.x_test.shape[1]
-        )
+        ):
+            raise AssertionError("Train/test data have issues.")
 
     def fit(self) -> None:
         """
