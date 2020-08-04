@@ -107,7 +107,7 @@ def get_popt20(data) -> float:
     """
     def subtotal(x):
         xx = [0]
-        for i, t in enumerate(x):
+        for _, t in enumerate(x):
             xx += [xx[-1] + t]
         return xx[1:]
 
