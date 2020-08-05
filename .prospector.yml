@@ -6,7 +6,13 @@ pep257:
   disable: [
     D203
   ]
+
 pylint:
   disable: [
     import-error
+  ]
+
+bandit:
+  ignore: [
+    tests/
   ]

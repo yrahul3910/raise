@@ -1,3 +1,4 @@
 #!/bin/sh
 export PYTHONPATH=$PYTHONPATH:$PWD../
-pytest --cov=../ ./
+coverage run -m pytest ../
+coverage xml -o cobertura.xml

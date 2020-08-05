@@ -4,7 +4,7 @@
 <a href="https://github.com/yrahul3910/raise/tree/master/docs">docs</a>  |
 <a href="https://github.com/yrahul3910/raise/blob/master/LICENSE">license</a>  |
 <a href="https://github.com/yrahul3910/raise/blob/master/CODE_OF_CONDUCT.md">contribute</a>  |
-<a href="https://github.com/yrahul3910/raise/issues/">issues</a>  ::
+<a href="https://github.com/yrahul3910/raise/issues/">issues</a>  |
 <a href="mailto:timm@ieee.org">contact</a>
 </p>
 <p align="center">
@@ -13,7 +13,9 @@
 <img src="https://img.shields.io/badge/platform-mac,*nux-informational">&nbsp;
 <img src="https://img.shields.io/badge/purpose-ai,se-blueviolet">&nbsp;
 <a href="https://www.codacy.com/manual/yrahul3910/raise?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=yrahul3910/raise&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/8352fafd16454ea995f43891d9571d22"/></a>&nbsp;
+  <a href="https://www.codacy.com/manual/yrahul3910/raise?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=yrahul3910/raise&amp;utm_campaign=Badge_Coverage"><img src="https://app.codacy.com/project/badge/Coverage/8352fafd16454ea995f43891d9571d22"/></a>
 </p> <hr />
+
 
 # The RAISE package
 
