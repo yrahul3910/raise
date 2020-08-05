@@ -3,6 +3,7 @@ from hyperparams.dodge import DODGE
 from learners.logreg import LogisticRegressionClassifier
 from learners.nb import NaiveBayes
 from learners.rf import RandomForest
+from learners.svm import SVM
 from learners.tree import DecisionTree
 
 
@@ -16,6 +17,7 @@ if __name__ == "__main__":
                         LogisticRegressionClassifier(random=True, name="lr"),
                         NaiveBayes(random=True, name="nb"),
                         RandomForest(random=True),
+                        SVM(random=True),
                         DecisionTree(random=True, name="dt")
                     ] * 50,
         "log_path": "../log",
