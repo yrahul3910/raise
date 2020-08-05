@@ -1,0 +1,5 @@
+[xml]
+output = cobertura.xml
+
+[report]
+ignore_errors = true
