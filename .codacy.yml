@@ -3,3 +3,4 @@ engines:
   bandit:
     exclude_paths:
       - 'tests/*'
+      - 'CODE_OF_CONDUCT.md'
