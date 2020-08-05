@@ -1,4 +1,3 @@
-from sklearn.svm import SVC
 from learners.learner import Learner
 import random
 import numpy as np
@@ -72,8 +71,9 @@ class BiasedSVM(Learner):
         super(BiasedSVM, self).__init__(*args, **kwargs)
         if self.random:
             self.c = random.choice([.01, .1, 1., 10., 100., 1000.])
-            self.kernel = random.choice(['poly', 'rbf', 'sigmoid'])
+            self.kernel = random.choice(['poly', 'rbf', 'linear'])
             self.degree = random.randint(2, 4)
+            self.sigma = random.random() * 5
             self.k = random.random()
         else:
             self.c = 1.
@@ -90,8 +90,15 @@ class BiasedSVM(Learner):
 
         :return: None
         """
+        kernel_map = {
+            "poly": polynomial_kernel(self.degree),
+            "rbf": gaussian_kernel(self.sigma),
+            "linear": linear_kernel
+        }
         self.y_train = self.y_train.apply(lambda x: -1 if x == 0 else 1)
-        self.w, self.b = solve_dual_problem(np.array(self.x_train), np.array(self.y_train), self.k)
+        self.w, self.b = solve_dual_problem(np.array(self.x_train), np.array(self.y_train),
+                                            k=self.k,
+                                            kernel=kernel_map[self.kernel])
 
     def fit(self) -> None:
         """Wrapper around _fit with a timeout."""
