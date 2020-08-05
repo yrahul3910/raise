@@ -66,7 +66,7 @@ class BiasedSVM(Learner):
     A biased SVM learner. Implements a modified version of the SVM algorithm, using the dual
     problem solution set up above.
     """
-    def __init__(self, *args, **kwargs):
+    def __init__(self, c=1., kernel="rbf", degree=2, k=.1, sigma=3., *args, **kwargs):
         """Initializes the classifier"""
         super(BiasedSVM, self).__init__(*args, **kwargs)
         if self.random:
@@ -76,10 +76,11 @@ class BiasedSVM(Learner):
             self.sigma = random.random() * 5
             self.k = random.random()
         else:
-            self.c = 1.
-            self.kernel = 'rbf'
-            self.degree = 2
-            self.k = .1
+            self.c = c
+            self.kernel = kernel
+            self.degree = degree
+            self.k = k
+            self.sigma = sigma
 
         self.w, self.b = None, None
         self.failed = False

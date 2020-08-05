@@ -12,7 +12,6 @@ class Learner:
         :param name: The name of the learner. Must be a recognized name.
         :param random: Whether to initialize the hyperparameters randomly.
         """
-        self.name = name
         self.random = random
         self.learner = None
         self.__name__ = name
@@ -30,8 +29,8 @@ class Learner:
         """
         self.x_train = x_train
         self.x_test = x_test
-        self.y_train = y_train
-        self.y_test = y_test
+        self.y_train = y_train.apply(lambda x: 0 if x == 0 else 1)
+        self.y_test = y_test.apply(lambda x: 0 if x == 0 else 1)
 
     def _check_data(self) -> None:
         """
@@ -39,15 +38,15 @@ class Learner:
 
         :return: None
         """
-        if not (
-            self.x_train is not None and
-            self.y_train is not None and
-            self.x_test is not None and
-            self.y_test is not None
-        ) and (
-            self.x_train.shape[0] == self.y_train.shape[0] and
-            self.x_test.shape[0] == self.y_test.shape[0] and
-            self.x_train.shape[1] == self.x_test.shape[1]
+        if (
+            self.x_train is None or
+            self.y_train is None or
+            self.x_test is None or
+            self.y_test is None
+        ) or (
+            self.x_train.shape[0] != self.y_train.shape[0] or
+            self.x_test.shape[0] != self.y_test.shape[0] or
+            self.x_train.shape[1] != self.x_test.shape[1]
         ):
             raise AssertionError("Train/test data have issues.")
 

@@ -1,6 +1,7 @@
 from keras.models import Sequential
 from keras.layers import Dense
 from keras import backend as K
+from keras.utils import to_categorical
 import numpy as np
 import random
 from learners.learner import Learner
@@ -65,7 +66,7 @@ class FeedforwardDL(Learner):
         self.n_layers = n_layers
         self.n_units = n_units
         self.n_epochs = n_epochs
-        self.loss = 'categorical_crossentropy'
+        self.loss = 'binary_crossentropy'
 
         if self.random:
             self.weighted = random.choice([1., 10., 100., False])
@@ -75,6 +76,10 @@ class FeedforwardDL(Learner):
 
     def fit(self):
         self._check_data()
+        self.x_train = np.array(self.x_train)
+        self.x_test = np.array(self.x_test)
+        self.y_train = np.array(self.y_train).squeeze()
+        self.y_test = np.array(self.y_test).squeeze()
 
         if self.weighted:
             frac = sum(self.y_train) * 1. / len(self.y_train)
@@ -93,7 +98,7 @@ class FeedforwardDL(Learner):
         for _ in range(self.n_layers - 1):
             self.learner.add(Dense(self.x_train.shape[1], activation=self.activation))
 
-        self.learner.add(Dense(len(np.unique(self.y_train)), activation='softmax'))
+        self.learner.add(Dense(1, activation='sigmoid'))
         self.learner.compile(optimizer=self.optimizer, loss=self.loss)
 
         self.learner.fit(np.array(self.x_train), np.array(self.y_train), batch_size=128, epochs=self.n_epochs,

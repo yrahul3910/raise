@@ -21,6 +21,14 @@ class Data:
 
         return Data(x_train, x_test, y_train, y_test)
 
+    def __iter__(self):
+        """
+        For the splat operator.
+
+        :return x_train, y_train, x_test, y_test
+        """
+        return iter([self.x_train, self.y_train, self.x_test, self.y_test])
+
     def __init__(self, x_train, x_test, y_train, y_test):
         """
         Initializes the Data wrapper object
@@ -74,16 +82,19 @@ class DataLoader:
         return Data(X_train, X_test, y_train, y_test)
 
     @staticmethod
-    def from_file(path:str, target) -> Data:
+    def from_file(path:str, target="bug", col_start=3, col_stop=-2) -> Data:
         """
         Path to file
 
         :param path: Path to file
         :param target: Target column
+        :param col_start: Column to start reading at
+        :param col_stop: Column to stop reading at
         :return: Data object
         """
         df = pd.read_csv(path)
         y = df[target]
         x = df.drop(columns=target)
+        x = x.iloc[:, col_start:col_stop]
 
         return Data(*train_test_split(x, y))

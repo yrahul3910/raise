@@ -1,3 +1,4 @@
+pytest
 cvxopt
 pandas
 numpy
