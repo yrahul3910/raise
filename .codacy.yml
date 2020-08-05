@@ -3,6 +3,6 @@ engines:
   bandit:
     exclude_paths:
       - 'tests/*'
-  remark-int:
+  remark-lint:
     exclude_paths:
       - 'CODE_OF_CONDUCT.md'
