@@ -3,7 +3,7 @@ cvxopt
 pandas
 numpy
 keras===2.3.1
-tensorflow===2.0.0
+tensorflow===2.0.1
 coverage
 scikit-learn===0.23.1
 imblearn
