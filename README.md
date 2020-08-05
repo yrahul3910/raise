@@ -10,11 +10,12 @@
 <p align="center">
 <img src="https://img.shields.io/badge/language-python-orange.svg">&nbsp;
 <img src="https://img.shields.io/badge/license-MIT-green.svg">&nbsp;
-<img src="https://img.shields.io/badge/platform-mac,*nux-informational">&nbsp;
-<img src="https://img.shields.io/badge/purpose-ai,se-blueviolet">&nbsp;
+<img src="https://img.shields.io/badge/platform-mac,*nix-informational">&nbsp;
+<a href="https://travis-ci.org/yrahul3910/raise"><img src="https://travis-ci.org/yrahul3910/raise.svg?branch=master" /></a>
 <a href="https://www.codacy.com/manual/yrahul3910/raise?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=yrahul3910/raise&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/8352fafd16454ea995f43891d9571d22"/></a>&nbsp;
   <a href="https://www.codacy.com/manual/yrahul3910/raise?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=yrahul3910/raise&amp;utm_campaign=Badge_Coverage"><img src="https://app.codacy.com/project/badge/Coverage/8352fafd16454ea995f43891d9571d22"/></a>
 </p> <hr />
+
 
 
 # The RAISE package
