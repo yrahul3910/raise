@@ -72,7 +72,7 @@ class DataLoader:
         train_df, test_df = train_df.iloc[:, col_start:], test_df.iloc[:, col_start:]
         train_size = train_df[target].count()
         df = pd.concat([train_df, test_df], ignore_index=True)
-        df[target] = df[target].apply(lambda x: 0 if x == 0 else 1)
+        df[target] = df[target].apply(lambda x: 0. if x == 0 else 1.)
 
         train_data = df.iloc[:train_size, :]
         test_data = df.iloc[train_size:, :]
