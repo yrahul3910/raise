@@ -11,8 +11,3 @@ pylint:
   disable: [
     import-error
   ]
-
-bandit:
-  ignore: [
-    tests/
-  ]
