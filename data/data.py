@@ -43,8 +43,11 @@ class Data:
         self.x_test = x_test
         self.y_test = y_test
 
+    def __len__(self):
+        return len(self.x_train)
+
     def get_popt_data(self):
-        return np.concatenate((self.x_train, self.y_train), axis=1)
+        return np.concatenate((self.x_train, np.array(self.y_train).reshape(-1, 1)), axis=1)
 
 
 class DataLoader:
