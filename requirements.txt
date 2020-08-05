@@ -1,3 +1,4 @@
+cvxopt
 pandas
 numpy
 keras

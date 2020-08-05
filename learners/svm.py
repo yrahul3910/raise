@@ -5,7 +5,6 @@ import numpy as np
 import cvxopt
 from cvxopt import matrix as cvxopt_matrix
 from cvxopt import solvers as cvxopt_solvers
-import multiprocessing
 
 
 # from https://pythonprogramming.net/soft-margin-kernel-cvxopt-svm-machine-learning-tutorial/
@@ -21,8 +20,8 @@ def polynomial_kernel(p=3):
 
 
 def gaussian_kernel(sigma=5.0):
-    def kernel(x, y, sigma=sigma):
-        return np.exp(-np.linalg.norm(x - y) ** 2 / (2 * (sigma ** 2)))
+    def kernel(x, y, s=sigma):
+        return np.exp(-np.linalg.norm(x - y) ** 2 / (2 * (s ** 2)))
 
     return kernel
 
@@ -48,7 +47,6 @@ def solve_dual_problem(X, y, k=.1, kernel=linear_kernel, C=1.):
     b = cvxopt_matrix(np.zeros(1))
     G = cvxopt_matrix(np.vstack((np.eye(m) * -1, np.eye(m))))
 
-    #cvxopt_solvers.options['show_progress'] = True
     sol = cvxopt_solvers.qp(P, q, G, h, A, b)
     lambd = np.array(sol['x'])
     y = y.T
