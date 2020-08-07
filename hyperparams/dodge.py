@@ -1,5 +1,6 @@
 import random
 import string
+import os
 
 from data.data import Data
 import itertools
@@ -12,21 +13,23 @@ class DODGE:
     """
     Implements the DODGE hyper-parameter optimizer
     """
-    def __init__(self, config, verbose=True):
+    def __init__(self, config):
         """
         Initializes DODGE.
         :param config: The config object.
         :param verbose: Whether to print debug info.
         """
         self.config = config
-        self.verbose = verbose
+        self.file = open(os.path.join(self.config['log_path'], self.config['name'] + '.txt'), 'r')
+
+    def __del__(self):
+        self.file.close()
 
     def optimize(self):
         dic = {}
         for _ in range(self.config["n_runs"]):
-            if self.verbose:
-                print("Run #", _)
-                print("=" * len("Run #" + str(_)))
+            print("Run #", _, file=self.file)
+            print("=" * len("Run #" + str(_)), file=self.file)
 
             transforms = self.config["transforms"]
             learners = self.config["learners"]
@@ -43,8 +46,7 @@ class DODGE:
 
             for counter in range(30):
                 try:
-                    if self.verbose:
-                        print(counter, flush=True)
+                    print(counter, flush=True)
 
                     keys = [k for k, v in func_str_counter_dic.items() if v == 0]
                     key = random.choice(keys)
@@ -55,6 +57,7 @@ class DODGE:
                     preds = model.predict(data.x_test)
                     metrics = ClassificationMetrics(data.y_test, preds)
                     metrics.add_metrics(self.config["metrics"])
+                    print('iter', counter, '\b:', metrics.get_metrics(), file=self.file)
                     metric = metrics.get_metrics()[0]
 
                     if all(abs(t - metric) > 0.2 for t in lis_value):
@@ -69,4 +72,4 @@ class DODGE:
                 except ValueError:
                     pass
 
-        print(dic)
+        print(dic, file=self.file)

@@ -11,7 +11,7 @@ if __name__ == "__main__":
     config = {
         "n_runs": 20,
         "transforms": ["normalize", "standardize", "robust", "maxabs", "minmax"] * 30,
-        "metrics": ["auc"],
+        "metrics": ["f1", "pd", "pf"],
         "random": True,
         "learners": [
                         LogisticRegressionClassifier(random=True, name="lr"),
@@ -24,8 +24,8 @@ if __name__ == "__main__":
         "data": [
             DataLoader.from_files("./promise/", ["camel-1.2.csv", "camel-1.4.csv", "camel-1.6.csv"])
         ],
-        "name": "camel-popt20"
+        "name": "camel-pd-pf"
     }
 
-    dodge = DODGE(config, verbose=True)
+    dodge = DODGE(config)
     dodge.optimize()
