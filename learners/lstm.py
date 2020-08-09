@@ -1,10 +1,10 @@
+import random
 import warnings
 
 from keras import Sequential
-from keras.layers import Dropout, Dense, LSTM, Embedding, SpatialDropout1D
+from keras.layers import Dense, LSTM, Embedding, SpatialDropout1D
 from keras.preprocessing.sequence import pad_sequences
 from keras.preprocessing.text import Tokenizer
-from keras.utils import to_categorical
 
 import numpy as np
 from learners.learner import Learner
@@ -12,7 +12,8 @@ from learners.learner import Learner
 
 # From https://towardsdatascience.com/multi-class-text-classification-with-lstm-1590bee1bd17
 class TextDeepLearner(Learner):
-    def __init__(self, epochs=10, max_words=1000, max_len=40, embedding=5, token_filters=' ', *args, **kwargs):
+    def __init__(self, epochs=10, max_words=1000, max_len=40, embedding=5, token_filters=' ',
+                 n_layers = 1, *args, **kwargs):
         """
         Initializes the text learner.
 
@@ -21,6 +22,7 @@ class TextDeepLearner(Learner):
         :param max_len: Maximum length of sequences
         :param embedding: Embedding dimensionality
         :param token_filters: Tokens to tokenize by
+        :param n_layers: Number of LSTM layers
         :param args: Args passed to Learner
         :param kwargs: Keyword args passed to Learner
         """
@@ -30,6 +32,15 @@ class TextDeepLearner(Learner):
         self.token_filters = token_filters
         self.max_len = max_len
         self.embed_dim = embedding
+        self.n_layers = n_layers
+
+        if isinstance(self.random, bool) and self.random:
+            self.max_words = random.randint(500, 4000)
+            self.max_len = random.randint(20, 100)
+            self.n_layers = random.randint(1, 4)
+        elif isinstance(self.random, dict):
+            for key in self.random.keys():
+                setattr(self, key, self.random[key])
 
     def set_data(self, x_train, y_train, x_test, y_test) -> None:
         self.x_train = x_train
@@ -50,7 +61,8 @@ class TextDeepLearner(Learner):
         model = Sequential()
         model.add(Embedding(self.max_words, self.embed_dim, input_length=self.x_train.shape[1]))
         model.add(SpatialDropout1D(0.2))
-        model.add(LSTM(100, dropout=0.2, recurrent_dropout=0.2))
+        for i in range(self.n_layers):
+            model.add(LSTM(100, dropout=0.2, recurrent_dropout=0.2))
         model.add(Dense(1, activation='sigmoid'))
         model.compile(loss='binary_crossentropy', optimizer='adam')
         model.fit(self.x_train, self.y_train, batch_size=64, epochs=self.epochs)
