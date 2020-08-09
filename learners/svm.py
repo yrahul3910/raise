@@ -69,18 +69,21 @@ class BiasedSVM(Learner):
     def __init__(self, c=1., kernel="rbf", degree=2, k=.1, sigma=3., *args, **kwargs):
         """Initializes the classifier"""
         super(BiasedSVM, self).__init__(*args, **kwargs)
-        if self.random:
+
+        self.c = c
+        self.kernel = kernel
+        self.degree = degree
+        self.k = k
+        self.sigma = sigma
+        if isinstance(self.random, bool) and self.random:
             self.c = random.choice([.01, .1, 1., 10., 100., 1000.])
             self.kernel = random.choice(['poly', 'rbf', 'linear'])
             self.degree = random.randint(2, 4)
             self.sigma = random.random() * 5
             self.k = random.random()
-        else:
-            self.c = c
-            self.kernel = kernel
-            self.degree = degree
-            self.k = k
-            self.sigma = sigma
+        elif isinstance(self.random, dict):
+            for key in self.random.keys():
+                setattr(self, key, self.random[key])
 
         self.w, self.b = None, None
         self.failed = False

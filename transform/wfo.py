@@ -1,7 +1,5 @@
 import numpy as np
 
-from transform.transform import Transform
-
 
 def fuzz_data(X, y, radii=(0., .3, .03)):
     idx = np.where(y == 1)[0]
@@ -21,6 +19,9 @@ def fuzz_data(X, y, radii=(0., .3, .03)):
     return np.concatenate((X, np.array(fuzzed_x)), axis=0), np.concatenate((y, np.array(fuzzed_y)))
 
 
-class WeightedFuzzyOversampler(Transform):
-    def apply(self, data):
+class WeightedFuzzyOversampler:
+    def fit_transform(self, data):
         data.x_train, data.y_train = fuzz_data(data.x_train, data.y_train)
+
+    def transform(self, x_test):
+        raise NotImplementedError("transform should not be called on wfo.")

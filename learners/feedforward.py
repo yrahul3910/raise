@@ -51,10 +51,13 @@ class FeedforwardDL(Learner):
         self.n_epochs = n_epochs
         self.loss = 'binary_crossentropy'
 
-        if self.random:
+        if isinstance(self.random, bool) and self.random:
             self.weighted = random.choice([1., 10., 100., False])
             self.n_layers = random.randint(1, 5)
             self.n_units = random.randint(1, 20)
+        elif isinstance(self.random, dict):
+            for key in self.random.keys():
+                setattr(self, key, self.random[key])
 
     def fit(self):
         self._check_data()

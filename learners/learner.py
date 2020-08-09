@@ -1,3 +1,5 @@
+from _ctypes import Union
+
 import pandas as pd
 import numpy as np
 
@@ -5,7 +7,7 @@ import numpy as np
 class Learner:
 
     """The base Learner class."""
-    def __init__(self, name: str = "rf", random: bool = False):
+    def __init__(self, name: str = "rf", random: Union(bool, dict) = False):
         """
         Initializes a Learner object
 
@@ -17,7 +19,7 @@ class Learner:
         self.__name__ = name
         self.x_train, self.x_test, self.y_train, self.y_test = None, None, None, None
 
-    def set_data(self, x_train, y_train, x_test, y_test) -> None:
+    def set_data(self, x_train: pd.DataFrame, y_train: pd.Series, x_test: pd.DataFrame, y_test: pd.Series) -> None:
         """
         Sets the data of the learner
 
