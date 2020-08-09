@@ -1,12 +1,14 @@
 import os
+from collections import Counter
+
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 
 
 class Data:
-
     """Base class for data"""
+
     def __add__(self, other):
         """
         Appends a Data object
@@ -51,10 +53,10 @@ class Data:
 
 
 class DataLoader:
-
     """Data loading utilities"""
+
     @staticmethod
-    def from_files(base_path: str, files: list, target: str = "bug", col_start:int = 3, col_stop: int = -2) -> Data:
+    def from_files(base_path: str, files: list, target: str = "bug", col_start: int = 3, col_stop: int = -2) -> Data:
         """
         Builds data from a list of files, the last of which is the test set.
 
@@ -85,7 +87,7 @@ class DataLoader:
         return Data(X_train, X_test, y_train, y_test)
 
     @staticmethod
-    def from_file(path:str, target="bug", col_start=3, col_stop=-2) -> Data:
+    def from_file(path: str, target="bug", col_start=3, col_stop=-2) -> Data:
         """
         Path to file
 
@@ -99,5 +101,33 @@ class DataLoader:
         y = df[target]
         x = df.drop(columns=target)
         x = x.iloc[:, col_start:col_stop]
+
+        return Data(*train_test_split(x, y))
+
+
+class TextDataLoader:
+    """Class for loading text data."""
+
+    @staticmethod
+    def from_file(filename, splitter=">>>"):
+        """
+        Reads data from a file, where data and labels are separated by splitter.
+
+        :param filename: Path to file to read.
+        :param splitter: Splitting text
+        :return: Data object
+        """
+        dic = []
+        labels = []
+        with open(filename, 'r') as f:
+            for doc in f.readlines():
+                row = doc.lower().split(splitter)
+                dic.append(row[0].strip())
+                labels.append(row[1].strip())
+        count = Counter(labels)
+        import operator
+        key = max(count.items(), key=operator.itemgetter(1))[0]
+        labels = list(map(lambda x: 1 if x == key else 0, labels))
+        x, y = np.array(dic), np.array(labels)
 
         return Data(*train_test_split(x, y))

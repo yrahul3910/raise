@@ -1,10 +1,10 @@
 from keras.models import Sequential
 from keras.layers import Dense
 from keras import backend as K
-from keras.utils import to_categorical
 import numpy as np
 import random
 from learners.learner import Learner
+from transform.wfo import fuzz_data
 
 
 def weighted_categorical_crossentropy(weights):
@@ -20,24 +20,6 @@ def weighted_categorical_crossentropy(weights):
             K.binary_crossentropy(y_true, y_pred) * weights)
 
     return loss
-
-
-def fuzz_data(X, y, radii=(0., .3, .03)):
-    idx = np.where(y == 1)[0]
-    frac = len(idx) * 1. / len(y)
-
-    fuzzed_x = []
-    fuzzed_y = []
-
-    for row in X[idx]:
-        for i, r in enumerate(np.arange(*radii)):
-            for j in range(int((1. / frac) / pow(2., i))):
-                fuzzed_x.append([val - r for val in row])
-                fuzzed_x.append([val + r for val in row])
-                fuzzed_y.append(1)
-                fuzzed_y.append(1)
-
-    return np.concatenate((X, np.array(fuzzed_x)), axis=0), np.concatenate((y, np.array(fuzzed_y)))
 
 
 class FeedforwardDL(Learner):
@@ -59,6 +41,7 @@ class FeedforwardDL(Learner):
         :param kwargs: Keyword args passed to Learner
         """
         super(FeedforwardDL, self).__init__(*args, **kwargs)
+
         self.activation = activation
         self.weighted = weighted
         self.wfo = wfo
@@ -70,7 +53,6 @@ class FeedforwardDL(Learner):
 
         if self.random:
             self.weighted = random.choice([1., 10., 100., False])
-            self.wfo = random.choice([True, False])
             self.n_layers = random.randint(1, 5)
             self.n_units = random.randint(1, 20)
 
