@@ -20,7 +20,9 @@ class DODGE:
         :param verbose: Whether to print debug info.
         """
         self.config = config
-        self.file = open(os.path.join(self.config['log_path'], self.config['name'] + '.txt'), 'r')
+        self.file = open(os.path.join(self.config['log_path'], self.config['name'] + '.txt'), 'w')
+        for learner in self.config["learners"]:
+            print(learner)
 
     def __del__(self):
         self.file.close()

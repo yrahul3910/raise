@@ -51,13 +51,14 @@ class FeedforwardDL(Learner):
         self.n_epochs = n_epochs
         self.loss = 'binary_crossentropy'
 
-        if isinstance(self.random, bool) and self.random:
-            self.weighted = random.choice([1., 10., 100., False])
-            self.n_layers = random.randint(1, 5)
-            self.n_units = random.randint(1, 20)
-        elif isinstance(self.random, dict):
-            for key in self.random.keys():
-                setattr(self, key, self.random[key])
+        self.random_map = {
+            "n_layers": (1, 5),
+            "weighted": [1., 10., 100., False],
+            "n_units": (5, 20)
+        }
+
+        self.learner = Sequential()
+        self._instantiate_random_vals()
 
     def fit(self):
         self._check_data()
@@ -76,12 +77,8 @@ class FeedforwardDL(Learner):
         if self.wfo:
             self.x_train, self.y_train = fuzz_data(self.x_train, self.y_train)
 
-        self.learner = Sequential([
-            Dense(self.x_train.shape[1], activation=self.activation)
-        ])
-
-        for _ in range(self.n_layers - 1):
-            self.learner.add(Dense(self.x_train.shape[1], activation=self.activation))
+        for _ in range(self.n_layers):
+            self.learner.add(Dense(self.n_units, activation=self.activation))
 
         self.learner.add(Dense(1, activation='sigmoid'))
         self.learner.compile(optimizer=self.optimizer, loss=self.loss)

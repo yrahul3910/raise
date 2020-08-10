@@ -75,15 +75,16 @@ class BiasedSVM(Learner):
         self.degree = degree
         self.k = k
         self.sigma = sigma
-        if isinstance(self.random, bool) and self.random:
-            self.c = random.choice([.01, .1, 1., 10., 100., 1000.])
-            self.kernel = random.choice(['poly', 'rbf', 'linear'])
-            self.degree = random.randint(2, 4)
-            self.sigma = random.random() * 5
-            self.k = random.random()
-        elif isinstance(self.random, dict):
-            for key in self.random.keys():
-                setattr(self, key, self.random[key])
+
+        self.learner = self
+        self.random_map = {
+            "c": [.01, .1, 1., 10., 100., 1000.],
+            "kernel": ["poly", "rbf", "linear"],
+            "degree": (2, 5),
+            "sigma": (0., 5.),
+            "k": (0., 1.)
+        }
+        self._instantiate_random_vals()
 
         self.w, self.b = None, None
         self.failed = False

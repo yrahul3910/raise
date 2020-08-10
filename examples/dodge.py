@@ -19,13 +19,21 @@ if __name__ == "__main__":
                         RandomForest(random=True),
                         SVM(random=True),
                         DecisionTree(random=True, name="dt")
-                    ] * 50,
+                    ],
         "log_path": "../log",
         "data": [
             DataLoader.from_files("./promise/", ["camel-1.2.csv", "camel-1.4.csv", "camel-1.6.csv"])
         ],
         "name": "camel-pd-pf"
     }
+    for _ in range(50):
+        config["learners"].extend([
+            LogisticRegressionClassifier(random=True, name="lr"),
+            NaiveBayes(random=True, name="nb"),
+            RandomForest(random=True),
+            SVM(random=True),
+            DecisionTree(random=True, name="dt")
+        ])
 
     dodge = DODGE(config)
     dodge.optimize()

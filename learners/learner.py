@@ -1,13 +1,11 @@
-from _ctypes import Union
-
+import random
 import pandas as pd
-import numpy as np
 
 
 class Learner:
 
     """The base Learner class."""
-    def __init__(self, name: str = "rf", random: Union(bool, dict) = False):
+    def __init__(self, name: str = "rf", random=False):
         """
         Initializes a Learner object
 
@@ -16,8 +14,40 @@ class Learner:
         """
         self.random = random
         self.learner = None
+        self.name = name
         self.__name__ = name
+        self.random_map = {}
         self.x_train, self.x_test, self.y_train, self.y_test = None, None, None, None
+
+    def __str__(self):
+        attrs = filter(lambda x: not x.startswith("_") and not callable(getattr(self, x)), dir(self))
+        attr_dic = {k: getattr(self, k) for k in attrs}
+        return str(attr_dic)
+
+    def _get_random_val(self, key):
+        """
+        Used to fetch random hyperparameter values
+
+        :param key: Key to search in random_map
+        :return: A random value.
+        """
+        if not hasattr(self.learner, key):
+            raise ValueError("Learner does not have key " + key)
+
+        if isinstance(self.random_map[key], tuple):
+            if isinstance(self.random_map[key][0], int):
+                return random.randint(*self.random_map[key])
+            return random.random() * (self.random_map[key][1] - self.random_map[key][0]) + self.random_map[key][0]
+        elif isinstance(self.random_map[key], list):
+            return random.choice(self.random_map[key])
+
+    def _instantiate_random_vals(self):
+        if isinstance(self.random, bool) and self.random:
+            for key in self.random_map.keys():
+                setattr(self.learner, key, self._get_random_val(key))
+        elif isinstance(self.random, dict):
+            for key in self.random.keys():
+                setattr(self.learner, key, self._get_random_val(key))
 
     def set_data(self, x_train: pd.DataFrame, y_train: pd.Series, x_test: pd.DataFrame, y_test: pd.Series) -> None:
         """

@@ -1,6 +1,5 @@
 from sklearn.tree import DecisionTreeClassifier
 from learners.learner import Learner
-import random
 
 
 class DecisionTree(Learner):
@@ -10,10 +9,8 @@ class DecisionTree(Learner):
         super(DecisionTree, self).__init__(*args, **kwargs)
 
         self.learner = DecisionTreeClassifier()
-        if isinstance(self.random, bool) and self.random:
-            self.criterion = random.choice(['gini', 'entropy'])
-            self.splitter = random.choice(['best', 'random'])
-            self.learner = DecisionTreeClassifier(criterion=self.criterion, splitter=self.splitter)
-        elif isinstance(self.random, dict):
-            for key in self.random.keys():
-                setattr(self, key, self.random[key])
+        self.random_map = {
+            "criterion": ["gini", "entropy"],
+            "splitter": ["best", "random"]
+        }
+        self._instantiate_random_vals()

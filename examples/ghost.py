@@ -13,11 +13,13 @@ if __name__ == "__main__":
         "transforms": ["normalize", "standardize", "robust", "maxabs", "minmax"] * 30,
         "metrics": ["f1", "pd", "pf"],
         "random": True,
-        "learners": [FeedforwardDL(weighted=1.)] * 30,
+        "learners": [FeedforwardDL(random=True)],
         "log_path": "./log/",
         "data": [data],
         "name": "camel-pd-pf"
     }
+    for _ in range(50):
+        config["learners"].append(FeedforwardDL(random=True))
 
     dodge = DODGE(config)
     dodge.optimize()
