@@ -1,4 +1,3 @@
-import random
 import warnings
 
 from keras import Sequential
@@ -34,13 +33,12 @@ class TextDeepLearner(Learner):
         self.embed_dim = embedding
         self.n_layers = n_layers
 
-        if isinstance(self.random, bool) and self.random:
-            self.max_words = random.randint(500, 4000)
-            self.max_len = random.randint(20, 100)
-            self.n_layers = random.randint(1, 4)
-        elif isinstance(self.random, dict):
-            for key in self.random.keys():
-                setattr(self, key, self.random[key])
+        self.random_map = {
+            "max_words": (500, 5000),
+            "max_len": (10, 50),
+            "n_layers": (1, 4)
+        }
+        self._instantiate_random_vals()
 
     def set_data(self, x_train, y_train, x_test, y_test) -> None:
         self.x_train = x_train
