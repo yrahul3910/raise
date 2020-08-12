@@ -48,8 +48,9 @@ class Data:
     def __len__(self):
         return len(self.x_train)
 
-    def get_popt_data(self):
-        return np.concatenate((self.x_train, np.array(self.y_train).reshape(-1, 1)), axis=1)
+    def get_popt_data(self, preds):
+        preds = pd.Series(np.array(preds).squeeze(), name="prediction")
+        return pd.concat((self.x_train, self.y_train, preds), axis=1)
 
 
 class DataLoader:

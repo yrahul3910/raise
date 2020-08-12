@@ -38,11 +38,12 @@ class Experiment:
         start_time = time.time()
 
         # Accumulate the data
+        data = self.data[0]
         if len(self.data) > 1:
-            data = self.data[0]
             for i in range(1, len(self.data)):
                 data += self.data[i]
-            self.data = data
+
+        self.data = data
 
         # Apply transforms
         for t in self.transforms:
@@ -53,7 +54,7 @@ class Experiment:
 
         for i in range(self.n_runs):
             print(" Run #", str(i) + ':', flush=True)
-            print('=' * len("Run #" + str(i) + ':'))
+            print(' ' + '=' * len("Run #" + str(i) + ':'))
 
             # Initialize the learners
             for learner in self.learners:
@@ -61,15 +62,14 @@ class Experiment:
                 learner.fit()
 
             # Make predictions
-            predictions = []
             for learner in self.learners:
-                predictions.append(learner.predict(self.data.x_test))
+                predictions = learner.predict(self.data.x_test)
 
                 # Evaluate
                 metric = ClassificationMetrics(self.data.y_test, predictions)
-                metric.add_metrics(self.metrics)
                 if "popt20" in self.metrics:
-                    metric.add_data(np.concatenate((self.data.x_train, self.data.y_train), axis=1))
+                    metric.add_data(self.data.get_popt_data(predictions))
+                metric.add_metrics(self.metrics)
                 values = metric.get_metrics()
                 for j, m in enumerate(self.metrics):
                     results[learner.__name__][m].append(values[j])

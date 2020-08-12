@@ -20,8 +20,10 @@ def fuzz_data(X, y, radii=(0., .3, .03)):
 
 
 class WeightedFuzzyOversampler:
-    def fit_transform(self, data):
-        data.x_train, data.y_train = fuzz_data(data.x_train, data.y_train)
+    def fit_transform(self, x_train, y_train):
+        shape = x_train.shape[0]
+        x_train, y_train = fuzz_data(np.array(x_train), np.array(y_train))
+        assert x_train.shape[0] >= shape
 
     def transform(self, x_test):
         raise NotImplementedError("transform should not be called on wfo.")

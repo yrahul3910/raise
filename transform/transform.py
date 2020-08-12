@@ -58,7 +58,9 @@ class Transform:
         """
         if self.name != "smote":
             self.transformer.fit_transform(data.x_train, data.y_train)
-            self.transformer.transform(data.x_test)
+
+            if self.name != "wfo":
+                self.transformer.transform(data.x_test)
         else:
             data.x_train, data.y_train = self.transformer.fit_sample(data.x_train, data.y_train)
             data.x_test = self.transformer.sample(data.x_test)

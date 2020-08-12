@@ -6,6 +6,7 @@ from metrics.impl import get_roc_auc
 from metrics.impl import get_d2h
 from metrics.impl import get_f1_score
 from metrics.impl import get_precision
+import numpy as np
 
 
 name_map = {
@@ -78,6 +79,8 @@ class ClassificationMetrics(Metric):
 
         :return: List of all added metrics
         """
+        self.y_pred = np.array(self.y_pred).squeeze()
+
         metrics = [name_map[metric](self.y_true, self.y_pred) for metric in self.metrics if metric != 'popt20']
         if "popt20" in self.metrics:
             metrics.insert(self.metrics.index("popt20"), get_popt20(self.data))
