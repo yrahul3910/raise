@@ -1,6 +1,6 @@
 from distutils.core import setup
 
-setup(name='raise',
+setup(name='raise_utils',
       version='1.0',
       description='RAISE lab package',
       author='RAISE, NC State University',

@@ -2,7 +2,6 @@ import time
 
 from metrics.metrics import ClassificationMetrics
 from transform.transform import Transform
-import numpy as np
 import random
 import string
 
@@ -77,7 +76,7 @@ class Experiment:
         end_time = time.time()
         print("Experiment completed in", str(end_time - start_time), "seconds. Writing results to file.")
 
-        with open(self.name, 'w') as f:
+        with open(self.log + self.name, 'w') as f:
             f.write(str(results))
 
         print("Results written.\nDone.")
