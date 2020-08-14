@@ -50,7 +50,14 @@ class Data:
 
     def get_popt_data(self, preds):
         preds = pd.Series(np.array(preds).squeeze(), name="prediction")
-        return pd.concat((self.x_train, self.y_train, preds), axis=1)
+        if isinstance(self.x_train, pd.DataFrame):
+            return pd.concat((self.x_train, self.y_train, preds), axis=1)
+        else:
+            return pd.DataFrame({
+                "data": self.x_test,
+                "bug": self.y_test,
+                "prediction": preds
+            })
 
 
 class DataLoader:

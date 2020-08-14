@@ -4,3 +4,4 @@ from learners.logreg import LogisticRegressionClassifier
 from learners.nb import NaiveBayes
 from learners.rf import RandomForest
 from learners.feedforward import FeedforwardDL
+from learners.lstm import TextDeepLearner

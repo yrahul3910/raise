@@ -12,7 +12,7 @@ from learners.learner import Learner
 # From https://towardsdatascience.com/multi-class-text-classification-with-lstm-1590bee1bd17
 class TextDeepLearner(Learner):
     def __init__(self, epochs=10, max_words=1000, max_len=40, embedding=5, token_filters=' ',
-                 n_layers = 1, *args, **kwargs):
+                 n_layers=1, *args, **kwargs):
         """
         Initializes the text learner.
 
@@ -45,6 +45,9 @@ class TextDeepLearner(Learner):
         self.x_test = x_test
         self.y_train = y_train
         self.y_test = y_test
+
+        self.y_train[self.y_train != 0] = 1
+        self.y_test[self.y_test != 0] = 1
 
         tokenizer = Tokenizer(num_words=self.max_words, filters=self.token_filters, lower=True)
         tokenizer.fit_on_texts(self.x_train)
