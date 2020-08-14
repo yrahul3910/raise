@@ -6,6 +6,7 @@ from sklearn.preprocessing import RobustScaler
 from sklearn.preprocessing import KernelCenterer
 from imblearn.over_sampling import SMOTE
 from transform.cfs import CFS
+from transform.inliers import OutlierRemoval
 from transform.wfo import WeightedFuzzyOversampler
 import numpy as np
 
@@ -20,7 +21,8 @@ transformers = {
     "standardize": StandardScaler,
     "smote": SMOTE,
     "cfs": CFS,
-    "wfo": WeightedFuzzyOversampler
+    "wfo": WeightedFuzzyOversampler,
+    "outlier": OutlierRemoval
 }
 
 
