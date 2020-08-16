@@ -29,6 +29,7 @@ class DODGE:
 
     def optimize(self):
         dic = {}
+        dic_func = {}
         for _ in range(self.config["n_runs"]):
             print("Run #", _, file=self.file)
             print("=" * len("Run #" + str(_)), file=self.file)
@@ -50,6 +51,9 @@ class DODGE:
                 try:
                     print(counter, flush=True)
 
+                    if counter not in dic_func.keys():
+                        dic_func[counter] = []
+
                     keys = [k for k, v in func_str_counter_dic.items() if v == 0]
                     key = random.choice(keys)
                     transform, model = func_str_dic[key]
@@ -70,8 +74,11 @@ class DODGE:
 
                     if counter not in dic.keys():
                         dic[counter] = []
+
+                    dic_func[counter].append(key)
                     dic[counter].append(max(lis_value))
                 except ValueError:
                     pass
 
+        dic["settings"] = dic_func
         print(dic, file=self.file)
