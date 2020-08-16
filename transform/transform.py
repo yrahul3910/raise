@@ -7,6 +7,7 @@ from sklearn.preprocessing import KernelCenterer
 from imblearn.over_sampling import SMOTE
 from transform.cfs import CFS
 from transform.inliers import OutlierRemoval
+from transform.null import NullTransform
 from transform.text.transform import TextTransform
 from transform.wfo import WeightedFuzzyOversampler
 import numpy as np
@@ -23,7 +24,8 @@ transformers = {
     "smote": SMOTE,
     "cfs": CFS,
     "wfo": WeightedFuzzyOversampler,
-    "outlier": OutlierRemoval
+    "outlier": OutlierRemoval,
+    "none": NullTransform
 }
 
 text_transforms = [
@@ -80,4 +82,3 @@ class Transform:
                     self.transformer.transform(data.x_test)
             else:
                 data.x_train, data.y_train = self.transformer.fit_sample(data.x_train, data.y_train)
-                data.x_test = self.transformer.sample(data.x_test)

@@ -38,6 +38,7 @@ class TextDeepLearner(Learner):
             "max_len": (10, 50),
             "n_layers": (1, 4)
         }
+        self.learner = self
         self._instantiate_random_vals()
 
     def set_data(self, x_train, y_train, x_test, y_test) -> None:

@@ -26,6 +26,7 @@ class FeedforwardDL(Learner):
     """
     A standard feed-forward neural network.
     """
+
     def __init__(self, weighted=False, wfo=False, optimizer='adam', n_layers=3, n_units=19,
                  activation='relu', n_epochs=10, *args, **kwargs):
         """
@@ -54,10 +55,11 @@ class FeedforwardDL(Learner):
         self.random_map = {
             "n_layers": (1, 5),
             "weighted": [1., 10., 100., False],
-            "n_units": (5, 20)
+            "n_units": (3, 20)
         }
 
-        self.learner = Sequential()
+        self.learner = self
+        self.model = Sequential()
         self._instantiate_random_vals()
 
     def fit(self):
@@ -78,13 +80,13 @@ class FeedforwardDL(Learner):
             self.x_train, self.y_train = fuzz_data(self.x_train, self.y_train)
 
         for _ in range(self.n_layers):
-            self.learner.add(Dense(self.n_units, activation=self.activation))
+            self.model.add(Dense(self.n_units, activation=self.activation))
 
-        self.learner.add(Dense(1, activation='sigmoid'))
-        self.learner.compile(optimizer=self.optimizer, loss=self.loss)
+        self.model.add(Dense(1, activation='sigmoid'))
+        self.model.compile(optimizer=self.optimizer, loss=self.loss)
 
-        self.learner.fit(np.array(self.x_train), np.array(self.y_train), batch_size=128, epochs=self.n_epochs,
-                         validation_split=0.2)
+        self.model.fit(np.array(self.x_train), np.array(self.y_train), batch_size=128, epochs=self.n_epochs,
+                       validation_split=0.2)
 
     def predict(self, x_test) -> np.ndarray:
         """
@@ -92,4 +94,4 @@ class FeedforwardDL(Learner):
         :param x_test: Test data
         :return: np.ndarray
         """
-        return self.learner.predict_classes(x_test)
+        return self.model.predict_classes(x_test)
