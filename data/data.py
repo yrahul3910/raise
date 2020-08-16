@@ -136,6 +136,6 @@ class TextDataLoader:
         import operator
         key = max(count.items(), key=operator.itemgetter(1))[0]
         labels = list(map(lambda x: 1 if x == key else 0, labels))
-        x, y = np.array(dic), np.array(labels)
+        x, y = np.array(dic), pd.Series(labels)
 
         return Data(*train_test_split(x, y))

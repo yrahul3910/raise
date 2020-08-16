@@ -7,6 +7,7 @@ from sklearn.preprocessing import KernelCenterer
 from imblearn.over_sampling import SMOTE
 from transform.cfs import CFS
 from transform.inliers import OutlierRemoval
+from transform.text.transform import TextTransform
 from transform.wfo import WeightedFuzzyOversampler
 import numpy as np
 
@@ -25,6 +26,13 @@ transformers = {
     "outlier": OutlierRemoval
 }
 
+text_transforms = [
+    "tf",
+    "tfidf",
+    "hashing",
+    "lda"
+]
+
 
 class Transform:
     """An encapsulation for data transforms."""
@@ -36,21 +44,24 @@ class Transform:
         """
         self.name = name
 
-        if name not in transformers.keys():
+        if name not in transformers.keys() and name not in text_transforms:
             raise ValueError("Invalid transform name.")
 
-        if random:
-            if name == "robust":
-                start = np.random.randint(0, 50)
-                end = np.random.randint(start + 1, 100)
-                self.transformer = RobustScaler(quantile_range=(start, end))
-            elif name == "normalize":
-                norm = np.random.choice(['l1', 'l2', 'max'])
-                self.transformer = Normalizer(norm=norm)
+        if name in transformers.keys():
+            if random:
+                if name == "robust":
+                    start = np.random.randint(0, 50)
+                    end = np.random.randint(start + 1, 100)
+                    self.transformer = RobustScaler(quantile_range=(start, end))
+                elif name == "normalize":
+                    norm = np.random.choice(['l1', 'l2', 'max'])
+                    self.transformer = Normalizer(norm=norm)
+                else:
+                    self.transformer = transformers[name]()
             else:
                 self.transformer = transformers[name]()
         else:
-            self.transformer = transformers[name]()
+            self.transformer = TextTransform(name=name, random=random)
 
     def apply(self, data: Data) -> None:
         """
@@ -58,11 +69,15 @@ class Transform:
         :param data: Data object
         :return: None
         """
-        if self.name != "smote":
-            self.transformer.fit_transform(data.x_train, data.y_train)
-
-            if self.name != "wfo":
-                self.transformer.transform(data.x_test)
+        if self.name in text_transforms:
+            self.transformer.fit_transform(data)
+            data.x_test = self.transformer.transform(data.x_test)
         else:
-            data.x_train, data.y_train = self.transformer.fit_sample(data.x_train, data.y_train)
-            data.x_test = self.transformer.sample(data.x_test)
+            if self.name != "smote":
+                self.transformer.fit_transform(data.x_train, data.y_train)
+
+                if self.name != "wfo":
+                    self.transformer.transform(data.x_test)
+            else:
+                data.x_train, data.y_train = self.transformer.fit_sample(data.x_train, data.y_train)
+                data.x_test = self.transformer.sample(data.x_test)

@@ -1,4 +1,4 @@
-from data.data import DataLoader
+from data.data import DataLoader, TextDataLoader
 from hyperparams.dodge import DODGE
 from learners.logreg import LogisticRegressionClassifier
 from learners.nb import NaiveBayes
@@ -10,8 +10,8 @@ from learners.tree import DecisionTree
 if __name__ == "__main__":
     config = {
         "n_runs": 20,
-        "transforms": ["normalize", "standardize", "robust", "maxabs", "minmax"] * 30,
-        "metrics": ["f1", "pd", "pf"],
+        "transforms": ["tf", "tfidf", "hashing", "lda"] * 30,
+        "metrics": ["f1", "pd", "pf", "auc", "prec"],
         "random": True,
         "learners": [
                         LogisticRegressionClassifier(random=True, name="lr"),
@@ -22,7 +22,7 @@ if __name__ == "__main__":
                     ],
         "log_path": "../log",
         "data": [
-            DataLoader.from_files("./promise/", ["camel-1.2.csv", "camel-1.4.csv", "camel-1.6.csv"])
+            TextDataLoader.from_file("./pits/pitsA.txt")
         ],
         "name": "camel-pd-pf"
     }

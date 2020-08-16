@@ -11,5 +11,9 @@ This module provides a set of pre-processing transforms for data. An instance of
 * `smote`
 * `cfs`: implements Correlation-based Feature Selection
 * `wfo`: implements weighted fuzzy oversampling
+* `tf`: term frequency
+* `tfidf`: tf-idf
+* `hashing`: hashing vectorizer
+* `lda`: latent Dirichlet allocation
 
 Additional transforms can be user-created by subclassing `Transform` and overriding the `apply` method.
