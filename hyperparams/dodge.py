@@ -58,6 +58,7 @@ class DODGE:
 
                     keys = [k for k, v in func_str_counter_dic.items() if v == 0]
                     key = random.choice(keys)
+                    print(key)
                     transform, model = func_str_dic[key]
                     transform.apply(data)
                     model.set_data(data.x_train, data.y_train, data.x_test, data.y_test)

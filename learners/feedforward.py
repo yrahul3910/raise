@@ -83,7 +83,7 @@ class FeedforwardDL(Learner):
         self.model.compile(optimizer=self.optimizer, loss=self.loss)
 
         self.model.fit(np.array(self.x_train), np.array(self.y_train), batch_size=512, epochs=self.n_epochs,
-                       validation_split=0.2, callbacks=[EarlyStopping(patience=15, min_delta=1e-4)], verbose=self.verbose)
+                       validation_split=0.2, verbose=self.verbose)
 
     def predict(self, x_test) -> np.ndarray:
         """

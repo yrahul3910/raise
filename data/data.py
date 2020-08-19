@@ -88,9 +88,9 @@ class DataLoader:
         test_data = df.iloc[train_size:, :]
 
         X_train = train_data[train_data.columns[:col_stop]]
-        y_train = train_data[target]
+        y_train = train_data[target].astype("int")
         X_test = test_data[test_data.columns[:col_stop]]
-        y_test = test_data[target]
+        y_test = test_data[target].astype("int")
 
         return Data(X_train, X_test, y_train, y_test)
 
@@ -106,7 +106,7 @@ class DataLoader:
         :return: Data object
         """
         df = pd.read_csv(path)
-        y = df[target]
+        y = df[target].astype("int")
         x = df.drop(columns=target)
         x = x.iloc[:, col_start:col_stop]
 
