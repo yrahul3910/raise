@@ -76,7 +76,7 @@ class Transform:
             data.x_test = self.transformer.transform(data.x_test)
         else:
             if self.name != "smote":
-                if self.name == "wfo":
+                if self.name in ["wfo", "cfs"]:
                     data.x_train, data.y_train = self.transformer.fit_transform(data.x_train, data.y_train)
                 else:
                     data.x_train = self.transformer.fit_transform(data.x_train)
