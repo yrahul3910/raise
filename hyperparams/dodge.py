@@ -1,6 +1,7 @@
 import random
 import string
 import os
+import sys
 
 from data.data import Data
 import itertools
@@ -20,7 +21,8 @@ class DODGE:
         :param verbose: Whether to print debug info.
         """
         self.config = config
-        self.file = open(os.path.join(self.config['log_path'], self.config['name'] + '.txt'), 'w')
+        if self.config["log_path"] is None: self.file = sys.stdout
+        else: self.file = open(os.path.join(self.config['log_path'], self.config['name'] + '.txt'), 'w')
         for learner in self.config["learners"]:
             print(learner)
 

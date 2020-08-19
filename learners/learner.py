@@ -46,6 +46,7 @@ class Learner:
             for key in self.random_map.keys():
                 setattr(self.learner, key, self._get_random_val(key))
         elif isinstance(self.random, dict):
+            self.random_map = self.random
             for key in self.random.keys():
                 setattr(self.learner, key, self._get_random_val(key))
 

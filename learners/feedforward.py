@@ -1,5 +1,6 @@
 from keras.models import Sequential
 from keras.layers import Dense
+from keras.callbacks import EarlyStopping
 from keras import backend as K
 import numpy as np
 import random
@@ -28,7 +29,7 @@ class FeedforwardDL(Learner):
     """
 
     def __init__(self, weighted=False, wfo=False, optimizer='adam', n_layers=3, n_units=19,
-                 activation='relu', n_epochs=10, *args, **kwargs):
+                 activation='relu', n_epochs=10, verbose=1, *args, **kwargs):
         """
         Initializes the deep learner.
         :param weighted: Whether to use a weighted loss function
@@ -38,6 +39,7 @@ class FeedforwardDL(Learner):
         :param n_units: Number of units per layer
         :param activation: Activation to use
         :param n_epochs: Number of epochs
+        :param verbose: Whether training should be verbose
         :param args: Args passed to Learner
         :param kwargs: Keyword args passed to Learner
         """
@@ -47,16 +49,11 @@ class FeedforwardDL(Learner):
         self.weighted = weighted
         self.wfo = wfo
         self.optimizer = optimizer
+        self.verbose = verbose
         self.n_layers = n_layers
         self.n_units = n_units
         self.n_epochs = n_epochs
         self.loss = 'binary_crossentropy'
-
-        self.random_map = {
-            "n_layers": (1, 5),
-            "weighted": [1., 10., 100., False],
-            "n_units": (3, 20)
-        }
 
         self.learner = self
         self.model = Sequential()
@@ -85,8 +82,8 @@ class FeedforwardDL(Learner):
         self.model.add(Dense(1, activation='sigmoid'))
         self.model.compile(optimizer=self.optimizer, loss=self.loss)
 
-        self.model.fit(np.array(self.x_train), np.array(self.y_train), batch_size=128, epochs=self.n_epochs,
-                       validation_split=0.2)
+        self.model.fit(np.array(self.x_train), np.array(self.y_train), batch_size=512, epochs=self.n_epochs,
+                       validation_split=0.2, callbacks=[EarlyStopping(patience=15, min_delta=1e-4)], verbose=self.verbose)
 
     def predict(self, x_test) -> np.ndarray:
         """
