@@ -382,10 +382,10 @@ class CFS:
 
     def fit_transform(self, x_train: pd.DataFrame, y_train):
         self.cols = x_train.columns[[cfs(x_train.values, y_train.values)]].tolist()
-        x_train.columns = self.cols
+        return x_train[self.cols], y_train
 
     def transform(self, x_test):
         if len(self.cols) == 0:
             raise AssertionError("Empty cols.")
 
-        x_test.cols = self.cols
+        return x_test[self.cols]

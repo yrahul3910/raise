@@ -6,6 +6,7 @@ from metrics.impl import get_roc_auc
 from metrics.impl import get_d2h
 from metrics.impl import get_f1_score
 from metrics.impl import get_precision
+from metrics.impl import get_confusion_matrix
 import numpy as np
 
 
@@ -18,7 +19,8 @@ name_map = {
     "auc": get_roc_auc,
     "d2h": get_d2h,
     "f1": get_f1_score,
-    "prec": get_precision
+    "prec": get_precision,
+    "conf": get_confusion_matrix
 }
 
 

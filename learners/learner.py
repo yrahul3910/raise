@@ -46,6 +46,7 @@ class Learner:
             for key in self.random_map.keys():
                 setattr(self.learner, key, self._get_random_val(key))
         elif isinstance(self.random, dict):
+            self.random_map = self.random
             for key in self.random.keys():
                 setattr(self.learner, key, self._get_random_val(key))
 
@@ -61,8 +62,8 @@ class Learner:
         """
         self.x_train = x_train
         self.x_test = x_test
-        self.y_train = y_train.apply(lambda x: 0 if x == 0 else 1)
-        self.y_test = y_test.apply(lambda x: 0 if x == 0 else 1)
+        self.y_train = pd.Series(y_train).apply(lambda x: 0 if x == 0 else 1)
+        self.y_test = pd.Series(y_test).apply(lambda x: 0 if x == 0 else 1)
 
     def _check_data(self) -> None:
         """
