@@ -1,1 +1,1 @@
-from interpret.interpret import ResultsInterpreter
+from interpret.interpret import ResultsInterpreter, DODGEInterpreter
