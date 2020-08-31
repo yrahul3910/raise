@@ -10,6 +10,7 @@ from transform.inliers import OutlierRemoval
 from transform.null import NullTransform
 from transform.text.transform import TextTransform
 from transform.wfo import WeightedFuzzyOversampler
+from transform.wfo import RadiallyWeightedFuzzyOversampler
 import numpy as np
 
 from data.data import Data
@@ -23,6 +24,7 @@ transformers = {
     "standardize": StandardScaler,
     "smote": SMOTE,
     "cfs": CFS,
+    "rwfo": RadiallyWeightedFuzzyOversampler,
     "wfo": WeightedFuzzyOversampler,
     "outlier": OutlierRemoval,
     "none": NullTransform
@@ -38,6 +40,7 @@ text_transforms = [
 
 class Transform:
     """An encapsulation for data transforms."""
+
     def __init__(self, name: str, random=False):
         """
         Initializes the Transform object.
@@ -54,7 +57,8 @@ class Transform:
                 if name == "robust":
                     start = np.random.randint(0, 50)
                     end = np.random.randint(start + 1, 100)
-                    self.transformer = RobustScaler(quantile_range=(start, end))
+                    self.transformer = RobustScaler(
+                        quantile_range=(start, end))
                 elif name == "normalize":
                     norm = np.random.choice(['l1', 'l2', 'max'])
                     self.transformer = Normalizer(norm=norm)
@@ -76,12 +80,14 @@ class Transform:
             data.x_test = self.transformer.transform(data.x_test)
         else:
             if self.name != "smote":
-                if self.name in ["wfo", "cfs"]:
-                    data.x_train, data.y_train = self.transformer.fit_transform(data.x_train, data.y_train)
+                if self.name in ["wfo", "cfs", "rwfo"]:
+                    data.x_train, data.y_train = self.transformer.fit_transform(
+                        data.x_train, data.y_train)
                 else:
                     data.x_train = self.transformer.fit_transform(data.x_train)
 
-                if self.name != "wfo":
+                if self.name != "wfo" and self.name != "rwfo":
                     data.x_test = self.transformer.transform(data.x_test)
             else:
-                data.x_train, data.y_train = self.transformer.fit_sample(data.x_train, data.y_train)
+                data.x_train, data.y_train = self.transformer.fit_sample(
+                    data.x_train, data.y_train)
