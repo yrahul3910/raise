@@ -13,10 +13,6 @@ and larger data)
 
 Ouputs treatments, clustered such that things that have similar
 results get the same ranks.
-
-For a demo of this code, just run
-
-    python3 sk.py
 """
 
 
@@ -120,15 +116,18 @@ def bootstrap(y0, z0, conf=THE.bs.conf, b=THE.bs.b):
     """
 
     class Sum():
-        def __init__(self, some=[]):
-            self.sum = self.n = i.mu = 0;
+        def __init__(self, some=None):
+            if some is None:
+                some = []
+            self.sum = self.n = i.mu = 0
             self.all = []
-            for one in some: self.put(one)
+            for one_ in some:
+                self.put(one_)
 
         def put(self, x):
-            self.all.append(x);
-            self.sum += x;
-            self.n += 1;
+            self.all.append(x)
+            self.sum += x
+            self.n += 1
             self.mu = float(self.sum) / self.n
 
         def __add__(self, i2): return Sum(self.all + i2.all)
@@ -145,20 +144,16 @@ def bootstrap(y0, z0, conf=THE.bs.conf, b=THE.bs.b):
         return delta
 
     def one(lst):
-        return lst[int(any(len(lst)))]
-
-    def any(n):
-        return random.uniform(0, n)
+        return lst[int(random.uniform(0, (len(lst))))]
 
     y, z = Sum(y0), Sum(z0)
     x = y + z
-    baseline = test_statistic(y, z)
     yhat = [y1 - y.mu + x.mu for y1 in y.all]
     zhat = [z1 - z.mu + x.mu for z1 in z.all]
     bigger = 0
     for i in range(b):
         if test_statistic(Sum([one(yhat) for _ in yhat]),
-                         Sum([one(zhat) for _ in zhat])) > baseline:
+                         Sum([one(zhat) for _ in zhat])) > test_statistic(y, z):
             bigger += 1
     return bigger / b >= conf
 
@@ -178,8 +173,6 @@ class Mine:
         return i.oid
 
     def __repr__(i):
-        pairs = sorted([(k, v) for k, v in i.__dict__.items()
-                        if k[0] != THE.mine.private])
         pre = i.__class__.__name__ + '{'
 
         def q(z):
@@ -194,15 +187,17 @@ class Mine:
 class Rx(Mine):
     "place to manage pairs of (TreatmentName,ListofResults)"
 
-    def __init__(i, rx="", vals=[], key=same):
-        i.rx = rx
-        i.vals = sorted([x for x in vals if x != THE.char.skip])
-        i.n = len(i.vals)
-        i.med = i.vals[int(i.n / 2)]
-        i.mu = sum(i.vals) / i.n
-        i.rank = 1
+    def __init__(self, rx="", vals=None):
+        if vals is None:
+            vals = []
+        self.rx = rx
+        self.vals = sorted([x for x in vals if x != THE.char.skip])
+        self.n = len(self.vals)
+        self.med = self.vals[int(self.n / 2)]
+        self.mu = sum(self.vals) / self.n
+        self.rank = 1
 
-    def tiles(i, lo=0, hi=1):
+    def tiles(self, lo=0, hi=1):
         return xtile(i.vals, lo, hi)
 
     def __lt__(i, j):
@@ -254,8 +249,6 @@ class Rx(Mine):
     @staticmethod
     def show(rxs):
         "pretty print set of treatments"
-        tmp = Rx.sum(rxs)
-        lo, hi = tmp.vals[0], tmp.vals[-1]
         for rx in sorted(rxs):
             print(THE.rx.show % (rx.rank, rx.rx, rx.tiles()))
 

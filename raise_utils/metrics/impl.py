@@ -72,7 +72,7 @@ def get_pf(y_true, y_pred) -> float:
     :param y_pred: Predictions
     :return: False alarm rate
     """
-    tp, tn, fp, fn = get_confusion_matrix(y_true, y_pred)
+    _, tn, fp, fn = get_confusion_matrix(y_true, y_pred)
     return 1. * fp / (fp + tn) if fp + tn != 0 else 0
 
 
@@ -115,8 +115,8 @@ def get_popt20(data) -> float:
         total_true = float(len([i for i in true if i == 1]))
         hit = 0.0
         recall = []
-        for i in range(len(true)):
-            if true[i] == 1:
+        for i, el in enumerate(true):
+            if el == 1:
                 hit += 1
             recall += [hit / total_true if total_true else 0.0]
         return recall

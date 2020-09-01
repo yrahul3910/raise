@@ -40,15 +40,12 @@ class DODGE:
             print("Run #", _, file=self.file)
             print("=" * len("Run #" + str(_)), file=self.file)
 
-            transforms = self.config["transforms"]
-            learners = self.config["learners"]
-            combine = list(itertools.product(transforms, learners))
             data: Data = self.config["data"][0]
 
             func_str_dic = {}
             func_str_counter_dic = {}
             lis_value = []
-            for pair in combine:
+            for pair in itertools.product(self.config["transforms"], self.config["learners"]):
                 pair_name = pair[0] + \
                     random.choice(string.ascii_letters) + "|" + pair[1].name
                 func_str_dic[pair_name] = [

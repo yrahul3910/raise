@@ -7,8 +7,8 @@ import numpy as np
 class DODGEInterpreter:
     """Interprets the results of DODGE-generated files"""
 
-    def __init__(self, files: list = [], max_by: Union[None, int, Callable[..., str]] = None,
-                 exclude_cols: list = [], metrics: list=[]) -> None:
+    def __init__(self, files=None, max_by: Union[None, int, Callable[..., str]] = None,
+                 exclude_cols=None, metrics=None) -> None:
         """
         Initializes the interpreter.
 
@@ -27,6 +27,12 @@ class DODGEInterpreter:
         ========
         :return DODGEInterpreter object
         """
+        if files is None:
+            files = []
+        if exclude_cols is None:
+            exclude_cols = []
+        if metrics is None:
+            metrics = []
         self.files = files
         if max_by is None:
             self.max_by = 0
@@ -75,7 +81,8 @@ class DODGEInterpreter:
             max_idx = np.argmax(mapped_vals, axis=-2)
             file_results = max_idx.choose(np.rollaxis(run_splits, -2, 0))
 
-            medians[file.split('/')[-1]] = {metric: file_results.T[i] for i, metric in enumerate(self.metrics)}
+            medians[file.split('/')[-1]] = {metric: file_results.T[i]
+                                            for i, metric in enumerate(self.metrics)}
 
         return medians
 
@@ -140,7 +147,8 @@ class ResultsInterpreter:
         self.merge_method = merge_method
 
         if self.merge_method is None:
-            self.merge_method = lambda r, d: r.split("/")[-1] == d.split("/")[-1]
+            self.merge_method = lambda r, d: r.split(
+                "/")[-1] == d.split("/")[-1]
         return self
 
     def interpret(self):
@@ -172,10 +180,9 @@ class ResultsInterpreter:
             if merge:
                 for r_file in self.files:
                     for d_file in self.dodge_results.keys():
-                        if self.merge_method(r_file, d_file):
-                            if metric in self.dodge_results[d_file]:
-                                key = '_dodge-' + r_file.split("/")[-1]
-                                result[key] = self.dodge_results[d_file][metric]
+                        if self.merge_method(r_file, d_file) and metric in self.dodge_results[d_file]:
+                            key = '_dodge-' + r_file.split("/")[-1]
+                            result[key] = self.dodge_results[d_file][metric]
 
             Rx.show(Rx.sk(Rx.data(**result)))
             print()

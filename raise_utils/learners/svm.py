@@ -1,5 +1,4 @@
 from raise_utils.learners.learner import Learner
-import random
 import numpy as np
 import cvxopt
 from cvxopt import matrix as cvxopt_matrix
@@ -26,7 +25,7 @@ def gaussian_kernel(sigma=5.0):
 
 
 def solve_dual_problem(X, y, k=.1, kernel=linear_kernel, C=1.):
-    m, n = X.shape
+    m, _ = X.shape
 
     idx = np.where(y == -1)[0]
     q = -np.ones((m, 1))
@@ -66,6 +65,7 @@ class BiasedSVM(Learner):
     A biased SVM learner. Implements a modified version of the SVM algorithm, using the dual
     problem solution set up above.
     """
+
     def __init__(self, c=1., kernel="rbf", degree=2, k=.1, sigma=3., *args, **kwargs):
         """Initializes the classifier"""
         super(BiasedSVM, self).__init__(*args, **kwargs)
@@ -126,6 +126,7 @@ class BiasedSVM(Learner):
 
 class SVM(BiasedSVM):
     """The standard Support Vector Machine learner"""
+
     def __init__(self, *args, **kwargs):
         """Initializes the classifier."""
         super(SVM, self).__init__(*args, **kwargs)

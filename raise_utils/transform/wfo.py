@@ -10,7 +10,7 @@ def fuzz_data(X, y, radii=(0., .3, .03)):
 
     for row in X[idx]:
         for i, r in enumerate(np.arange(*radii)):
-            for j in range(int((1. / frac) / pow(2., i))):
+            for _ in range(int((1. / frac) / pow(2., i))):
                 fuzzed_x.append([val - r for val in row])
                 fuzzed_x.append([val + r for val in row])
                 fuzzed_y.append(1)

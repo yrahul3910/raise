@@ -11,6 +11,7 @@ class Experiment:
 
     Base class for experiments
     """
+
     def __init__(self, json: dict):
         """"
         Initializes the experiment.
@@ -23,7 +24,8 @@ class Experiment:
         self.learners: list = json['learners']
         self.log: str = json.get('log_path', './log/')
         self.data: list = json['data']  # list
-        self.name: str = json.get('name', ''.join(random.choices(string.ascii_letters, k=10)))
+        self.name: str = json.get('name', ''.join(
+            random.choices(string.ascii_letters, k=10)))
 
     def run(self):
         """
@@ -49,7 +51,8 @@ class Experiment:
             transform = Transform(t, random=self.random)
             transform.apply(self.data)
 
-        results = {l.__name__: {m: [] for m in self.metrics} for l in self.learners}
+        results = {learn.__name__: {m: [] for m in self.metrics}
+                   for learn in self.learners}
 
         for i in range(self.n_runs):
             print(" Run #", str(i) + ':', flush=True)
@@ -57,7 +60,8 @@ class Experiment:
 
             # Initialize the learners
             for learner in self.learners:
-                learner.set_data(self.data.x_train, self.data.y_train, self.data.x_test, self.data.y_test)
+                learner.set_data(self.data.x_train, self.data.y_train,
+                                 self.data.x_test, self.data.y_test)
                 learner.fit()
 
             # Make predictions
@@ -74,7 +78,8 @@ class Experiment:
                     results[learner.__name__][m].append(values[j])
 
         end_time = time.time()
-        print("Experiment completed in", str(end_time - start_time), "seconds. Writing results to file.")
+        print("Experiment completed in", str(end_time - start_time),
+              "seconds. Writing results to file.")
 
         with open(self.log + self.name, 'w') as f:
             f.write(str(results))

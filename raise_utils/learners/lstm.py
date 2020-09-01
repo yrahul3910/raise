@@ -50,7 +50,8 @@ class TextDeepLearner(Learner):
         self.y_train[self.y_train != 0] = 1
         self.y_test[self.y_test != 0] = 1
 
-        tokenizer = Tokenizer(num_words=self.max_words, filters=self.token_filters, lower=True)
+        tokenizer = Tokenizer(num_words=self.max_words,
+                              filters=self.token_filters, lower=True)
         tokenizer.fit_on_texts(self.x_train)
         self.x_train = tokenizer.texts_to_sequences(self.x_train)
         self.x_test = tokenizer.texts_to_sequences(self.x_test)
@@ -61,13 +62,15 @@ class TextDeepLearner(Learner):
     def fit(self):
         self._check_data()
         model = Sequential()
-        model.add(Embedding(self.max_words, self.embed_dim, input_length=self.x_train.shape[1]))
+        model.add(Embedding(self.max_words, self.embed_dim,
+                            input_length=self.x_train.shape[1]))
         model.add(SpatialDropout1D(0.2))
-        for i in range(self.n_layers):
+        for _ in range(self.n_layers):
             model.add(LSTM(100, dropout=0.2, recurrent_dropout=0.2))
         model.add(Dense(1, activation='sigmoid'))
         model.compile(loss='binary_crossentropy', optimizer='adam')
-        model.fit(self.x_train, self.y_train, batch_size=64, epochs=self.epochs)
+        model.fit(self.x_train, self.y_train,
+                  batch_size=64, epochs=self.epochs)
         self.learner = model
 
     def predict_on_test(self) -> np.ndarray:
