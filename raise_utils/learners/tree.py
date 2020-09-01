@@ -1,5 +1,5 @@
 from sklearn.tree import DecisionTreeClassifier
-from learners.learner import Learner
+from raise_utils.learners.learner import Learner
 
 
 class DecisionTree(Learner):
