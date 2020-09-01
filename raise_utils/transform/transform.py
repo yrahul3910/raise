@@ -8,7 +8,7 @@ from imblearn.over_sampling import SMOTE
 from raise_utils.transform.cfs import CFS
 from raise_utils.transform.inliers import OutlierRemoval
 from raise_utils.transform.null import NullTransform
-from raise_utils.transform.text.raise_utils.transform import TextTransform
+from raise_utils.transform.text.transform import TextTransform
 from raise_utils.transform.wfo import WeightedFuzzyOversampler
 from raise_utils.transform.wfo import RadiallyWeightedFuzzyOversampler
 import numpy as np
