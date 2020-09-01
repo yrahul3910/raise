@@ -7,11 +7,11 @@ Learners in RAISE are used slightly different from in `sklearn`. You start by cr
 The `Learner` class implements some basic checks for the data and other cases, and raises exceptions accordingly, with error messages describing the issue. Learners also implement `__str__`, allowing you to call the `print` function to inspect the parameters.
 
 A key feature of the learners is that they allow for random initialization, which is implemented to give the user as much control as possible. The simplest way to use this is to pass `random=True` to the learner while creating an instance (the default is `False`). The more advanced method is to pass in a `dict`, which is interpreted in the following way:
-   
-* If a value is a tuple of (two) integers, a random integer between the two (both inclusive) is chosen.  
-* If a value is a tuple of (two) floats, a random float between the two is chosen.  
-* If a value is a list, then one of the list items is chosen randomly.  
-  
+
+* If a value is a tuple of (two) integers, a random integer between the two (both inclusive) is chosen.
+* If a value is a tuple of (two) floats, a random float between the two is chosen.
+* If a value is a list, then one of the list items is chosen randomly.
+
 The keys of this `dict` must be members of the learner being used. The table below shows these members.
 
 | **Learner**                    | **Parameters**                        |
