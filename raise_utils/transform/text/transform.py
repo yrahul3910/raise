@@ -1,8 +1,8 @@
-from data import Data
-from transform.text.hashing import Hashing
-from transform.text.lda import LDA
-from transform.text.tf import Tf
-from transform.text.tfidf import TfIdf
+from raise_utils.data import Data
+from raise_utils.transform.text.hashing import Hashing
+from raise_utils.transform.text.lda import LDA
+from raise_utils.transform.text.tf import Tf
+from raise_utils.transform.text.tfidf import TfIdf
 
 transforms = {
     "tf": Tf,
