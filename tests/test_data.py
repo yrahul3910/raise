@@ -35,4 +35,4 @@ def test_add():
 
 def test_popt_data():
     data = DataLoader.from_file("../promise/camel-1.2.csv")
-    assert data.get_popt_data().shape[1] == data.x_train.shape[1] + 1
+    assert data.get_popt_data(data.y_train).shape[1] == data.x_train.shape[1] + 2
