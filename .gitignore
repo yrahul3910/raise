@@ -1,5 +1,5 @@
-.DS_Store
 __pycache__/
+build/
 .codacy-coverage/
-.coverage
-cobertura.xml
+.pytest_cache/
+
