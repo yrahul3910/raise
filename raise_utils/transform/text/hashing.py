@@ -1,6 +1,6 @@
 from sklearn.feature_extraction.text import HashingVectorizer
 
-from data import Data
+from raise_utils.data import Data
 import random
 
 

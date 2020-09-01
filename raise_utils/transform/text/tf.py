@@ -1,5 +1,5 @@
 from sklearn.feature_extraction.text import CountVectorizer
-from data import Data
+from raise_utils.data import Data
 import random
 
 

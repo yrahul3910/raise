@@ -1,6 +1,6 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-from data import Data
+from raise_utils.data import Data
 import random
 
 

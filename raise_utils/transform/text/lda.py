@@ -2,7 +2,7 @@ import random
 
 from sklearn.decomposition import LatentDirichletAllocation
 
-from data import Data
+from raise_utils.data import Data
 
 
 class LDA:
