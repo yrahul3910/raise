@@ -151,7 +151,7 @@ def get_popt20(data) -> float:
     yyy = yy[:len(xxx)]
     try:
         s_m = round(auc(xxx, yyy), 3)
-    except:
+    except ValueError:
         return 0
 
     popt = (s_m - s_wst) / (s_opt - s_wst)

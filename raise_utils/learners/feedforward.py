@@ -3,7 +3,6 @@ from keras.layers import Dense
 from keras.callbacks import EarlyStopping
 from keras import backend as K
 import numpy as np
-import random
 from raise_utils.learners.learner import Learner
 from raise_utils.transform.wfo import fuzz_data
 
@@ -83,7 +82,9 @@ class FeedforwardDL(Learner):
         self.model.compile(optimizer=self.optimizer, loss=self.loss)
 
         self.model.fit(np.array(self.x_train), np.array(self.y_train), batch_size=512, epochs=self.n_epochs,
-                       validation_split=0.2, verbose=self.verbose)
+                       validation_split=0.2, verbose=self.verbose, callbacks=[
+                EarlyStopping(monitor='val_loss', patience=15, min_delta=1e-3)
+            ])
 
     def predict(self, x_test) -> np.ndarray:
         """

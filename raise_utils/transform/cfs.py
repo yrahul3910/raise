@@ -349,7 +349,7 @@ def cfs(X, y):
     Zhao, Zheng et al. "Advancing Feature Selection Research - ASU Feature Selection Repository" 2010.
     """
 
-    n_samples, n_features = X.shape
+    _, n_features = X.shape
     F = []
     # M stores the merit values
     M = []

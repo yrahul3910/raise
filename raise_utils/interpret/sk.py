@@ -17,7 +17,6 @@ results get the same ranks.
 For a demo of this code, just run
 
     python3 sk.py
-
 """
 
 
@@ -121,20 +120,20 @@ def bootstrap(y0, z0, conf=THE.bs.conf, b=THE.bs.b):
     """
 
     class Sum():
-        def __init__(i, some=[]):
-            i.sum = i.n = i.mu = 0;
-            i.all = []
-            for one in some: i.put(one)
+        def __init__(self, some=[]):
+            self.sum = self.n = i.mu = 0;
+            self.all = []
+            for one in some: self.put(one)
 
-        def put(i, x):
-            i.all.append(x);
-            i.sum += x;
-            i.n += 1;
-            i.mu = float(i.sum) / i.n
+        def put(self, x):
+            self.all.append(x);
+            self.sum += x;
+            self.n += 1;
+            self.mu = float(self.sum) / self.n
 
-        def __add__(i1, i2): return Sum(i1.all + i2.all)
+        def __add__(self, i2): return Sum(self.all + i2.all)
 
-    def testStatistic(y, z):
+    def test_statistic(y, z):
         tmp1 = tmp2 = 0
         for y1 in y.all: tmp1 += (y1 - y.mu) ** 2
         for z1 in z.all: tmp2 += (z1 - z.mu) ** 2
@@ -153,12 +152,12 @@ def bootstrap(y0, z0, conf=THE.bs.conf, b=THE.bs.b):
 
     y, z = Sum(y0), Sum(z0)
     x = y + z
-    baseline = testStatistic(y, z)
+    baseline = test_statistic(y, z)
     yhat = [y1 - y.mu + x.mu for y1 in y.all]
     zhat = [z1 - z.mu + x.mu for z1 in z.all]
     bigger = 0
     for i in range(b):
-        if testStatistic(Sum([one(yhat) for _ in yhat]),
+        if test_statistic(Sum([one(yhat) for _ in yhat]),
                          Sum([one(zhat) for _ in zhat])) > baseline:
             bigger += 1
     return bigger / b >= conf
@@ -246,11 +245,11 @@ class Rx(Mine):
     @staticmethod
     def sum(rxs):
         "make a new rx from all the rxs' vals"
-        all = []
+        all_ = []
         for rx in rxs:
             for val in rx.vals:
-                all += [val]
-        return Rx(vals=all)
+                all_ += [val]
+        return Rx(vals=all_)
 
     @staticmethod
     def show(rxs):

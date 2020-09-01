@@ -1,10 +1,10 @@
-from data.data import DataLoader, TextDataLoader
-from hyperparams.dodge import DODGE
-from learners.logreg import LogisticRegressionClassifier
-from learners.nb import NaiveBayes
-from learners.rf import RandomForest
-from learners.svm import SVM
-from learners.tree import DecisionTree
+from raise_utils.data import TextDataLoader
+from raise_utils.hyperparams import DODGE
+from raise_utils.learners import LogisticRegressionClassifier
+from raise_utils.learners import NaiveBayes
+from raise_utils.learners import RandomForest
+from raise_utils.learners import SVM
+from raise_utils.learners import DecisionTree
 
 
 if __name__ == "__main__":

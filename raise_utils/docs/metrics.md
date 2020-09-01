@@ -4,12 +4,12 @@ Metrics compute different metrics from classification metrics. `ClassificationMe
 
 The following metrics are supported:
 
-* `accuracy`
-* `popt20`
-* `pf`
-* `pd` or `recall`
-* `auc`
-* `d2h`
-* `f1`
-* `prec`
+  * `accuracy`
+  * `popt20`
+  * `pf`
+  * `pd` or `recall`
+  * `auc`
+  * `d2h`
+  * `f1`
+  * `prec`
 

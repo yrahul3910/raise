@@ -68,7 +68,7 @@ class DODGEInterpreter:
                     lambda x: x[self.max_by], axis=1, arr=run_splits)
             elif callable(self.max_by):
                 mapped_vals = np.apply_along_axis(
-                    lambda x: self.max_by(x), axis=1, arr=run_splits)
+                    self.max_by, axis=1, arr=run_splits)
 
             assert mapped_vals.shape == (n_runs, n_metrics)
 

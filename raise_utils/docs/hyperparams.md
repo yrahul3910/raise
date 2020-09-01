@@ -14,4 +14,3 @@ Implements hyperparameter optimizers. For now, only DODGE is supported. A `DODGE
   "name": str
 }
 ```
-

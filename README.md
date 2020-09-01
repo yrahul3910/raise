@@ -15,8 +15,6 @@
 <a href="https://www.codacy.com/manual/yrahul3910/raise?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=yrahul3910/raise&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/8352fafd16454ea995f43891d9571d22"/></a>&nbsp;
 </p> <hr />
 
-
-
 # The RAISE package
 
 The RAISE package is an attempt to unify code, and incorporate PEP8 standards. The package takes a modular, object-oriented design, with each part of the ML pipeline encapsulated in a class. The purpose is to allow a streamlined, easy to read interface that allows for explainability of code, to enforce programming standards, and improve maintainability.
