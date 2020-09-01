@@ -1,5 +1,5 @@
-from data import DataLoader
-from learners import FeedforwardDL
+from raise_utils.data import DataLoader
+from raise_utils.learners import FeedforwardDL
 import pytest
 import numpy as np
 

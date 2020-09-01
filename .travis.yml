@@ -4,4 +4,4 @@ python:
 install:
   - pip install -r requirements.txt
 script:
-  - cd tests && ./test.sh
+  - cd raise_utils/tests && ./test.sh

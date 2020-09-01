@@ -1,5 +1,5 @@
-from data import DataLoader
-from learners import SVM, BiasedSVM
+from raise_utils.data import DataLoader
+from raise_utils.learners import SVM, BiasedSVM
 
 
 def test_svm_works():

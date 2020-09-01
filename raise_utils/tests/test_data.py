@@ -1,4 +1,4 @@
-from data import DataLoader
+from raise_utils.data import DataLoader
 import pandas as pd
 
 
