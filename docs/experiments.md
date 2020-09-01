@@ -17,6 +17,5 @@ This module allows for a slightly automated pipeline. An instance of `Experiment
 
 A few things to note here:
   
-* The choice of `random` here does not affect the `random` parameter in the learners.
-* The `data` value is a list of `Data`; these are concatenated together.
-
+* The choice of `random` here does not affect the `random` parameter in the learners.  
+* The `data` value is a list of `Data`; these are concatenated together.  

@@ -4,7 +4,7 @@ Metrics compute different metrics from classification metrics. `ClassificationMe
 
 The following metrics are supported:
   
-*  `accuracy`  
+* `accuracy`  
 * `popt20`  
 * `pf`  
 * `pd` or `recall`  
