@@ -4,6 +4,8 @@ pandas
 numpy
 keras===2.3.1
 tensorflow===1.15.2
+torch
+ray[tune]
 coverage
 scikit-learn===0.23.1
 imblearn

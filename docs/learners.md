@@ -23,3 +23,6 @@ The keys of this `dict` must be members of the learner being used. The table bel
 | `SVM` and `BiasedSVM`          | `c`, `kernel`, `degree`, `k`, `sigma` |
 | `DecisionTree`                 | `splitter`, `criterion`               |
 | `TextDeepLearner`              | `max_words`, `max_len`, `n_layers`    |
+
+There is also a `feedforward_torch` module in `learners` that is currently experimental. The goal of this is to implement the same functionality as `FeedforwardDL`, but using PyTorch instead of Keras over TensorFlow. This module also exports a `FeedforwardDL` object with the same parameters, but some of them are currently not functional, as this is experimental. For an example of usage, see the [RayTune example](./raise_utils/examples/raytune.py).
+
