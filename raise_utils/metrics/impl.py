@@ -95,7 +95,7 @@ def get_d2h(y_true, y_pred) -> float:
     :param y_pred: Predictions
     :return: d2h score
     """
-    return math.sqrt(get_pf(y_true, y_pred) ** 2 + (1. - get_recall(y_true, y_pred)) ** 2) / math.sqrt(2)
+    return 1. / math.sqrt(2) - math.sqrt(get_pf(y_true, y_pred) ** 2 + (1. - get_recall(y_true, y_pred)) ** 2) / math.sqrt(2)
 
 
 def get_popt20(data) -> float:

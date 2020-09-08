@@ -1,20 +1,20 @@
 from raise_utils.data import DataLoader
-from raise_utils.learners import RandomForest
+from raise_utils.learners import DecisionTree
 
 
-def test_rf_works():
-    clf = RandomForest()
+def test_dt_works():
+    clf = DecisionTree()
     data = DataLoader.from_file("../promise/camel-1.2.csv")
     clf.set_data(*data)
     clf.fit()
 
-    assert True
+    assert True  # Check if we reached here
 
 
-def test_weighted_rf():
-    clf = RandomForest(weighted=True)
+def test_biased_tree():
+    clf = DecisionTree(weighted=True)
     data = DataLoader.from_file("../promise/camel-1.2.csv")
     clf.set_data(*data)
     clf.fit()
 
-    assert True
+    assert True  # Check if we reached here
