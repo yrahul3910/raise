@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
 from copy import deepcopy as kopy
-import sys, random
+import sys
+import random
 
 """
 Scott-Knot test + non parametric effect size + significance tests.
@@ -77,8 +78,10 @@ def cliffsDeltaSlow(lst1, lst2, dull=THE.cliffs.dull):
     for x in lst1:
         for y in lst2:
             n += 1
-            if x > y:  gt += 1
-            if x < y:  lt += 1
+            if x > y:
+                gt += 1
+            if x < y:
+                lt += 1
     return abs(lt - gt) / n <= dull
 
 
@@ -87,7 +90,8 @@ def cliffsDelta(lst1, lst2, dull=THE.cliffs.dull):
 
     def runs(lst):
         for j, two in enumerate(lst):
-            if j == 0: one, i = two, 0
+            if j == 0:
+                one, i = two, 0
             if one != two:
                 yield j - i, one
                 i = j
@@ -99,9 +103,11 @@ def cliffsDelta(lst1, lst2, dull=THE.cliffs.dull):
     lst2 = sorted(lst2)
     j = more = less = 0
     for repeats, x in runs(sorted(lst1)):
-        while j <= (n - 1) and lst2[j] < x: j += 1
+        while j <= (n - 1) and lst2[j] < x:
+            j += 1
         more += j * repeats
-        while j <= (n - 1) and lst2[j] == x: j += 1
+        while j <= (n - 1) and lst2[j] == x:
+            j += 1
         less += (n - j) * repeats
     d = (more - less) / (m * n)
     return abs(d) <= dull
@@ -134,8 +140,10 @@ def bootstrap(y0, z0, conf=THE.bs.conf, b=THE.bs.b):
 
     def test_statistic(y, z):
         tmp1 = tmp2 = 0
-        for y1 in y.all: tmp1 += (y1 - y.mu) ** 2
-        for z1 in z.all: tmp2 += (z1 - z.mu) ** 2
+        for y1 in y.all:
+            tmp1 += (y1 - y.mu) ** 2
+        for z1 in z.all:
+            tmp2 += (z1 - z.mu) ** 2
         s1 = float(tmp1) / (y.n - 1)
         s2 = float(tmp2) / (z.n - 1)
         delta = z.mu - y.mu
@@ -153,7 +161,7 @@ def bootstrap(y0, z0, conf=THE.bs.conf, b=THE.bs.b):
     bigger = 0
     for i in range(b):
         if test_statistic(Sum([one(yhat) for _ in yhat]),
-                         Sum([one(zhat) for _ in zhat])) > test_statistic(y, z):
+                          Sum([one(zhat) for _ in zhat])) > test_statistic(y, z):
             bigger += 1
     return bigger / b >= conf
 
@@ -176,8 +184,10 @@ class Mine:
         pre = i.__class__.__name__ + '{'
 
         def q(z):
-            if isinstance(z, str): return "'%s'" % z
-            if callable(z): return "fun(%s)" % z.__name__
+            if isinstance(z, str):
+                return "'%s'" % z
+            if callable(z):
+                return "fun(%s)" % z.__name__
             return str(z)
 
         return pre + ", ".join(['%s=%s' % (k, q(v))])
@@ -198,7 +208,7 @@ class Rx(Mine):
         self.rank = 1
 
     def tiles(self, lo=0, hi=1):
-        return xtile(i.vals, lo, hi)
+        return xtile(self.vals, lo, hi)
 
     def __lt__(i, j):
         return i.med < j.med
@@ -265,7 +275,8 @@ class Rx(Mine):
                 now = left0.xpect(right0, b4)
                 if now > best:
                     if left0 != right0:
-                        best, cut, left, right = now, j, kopy(left0), kopy(right0)
+                        best, cut, left, right = now, j, kopy(
+                            left0), kopy(right0)
             if cut:
                 rank = divide(lo, cut, left, rank) + 1
                 rank = divide(cut, hi, right, rank)
@@ -363,7 +374,7 @@ def bsTest(n=1000, mu1=10, sigma1=1, mu2=10.2, sigma2=1):
     x = [g(mu1, sigma1) for i in range(n)]
     y = [g(mu2, sigma2) for i in range(n)]
     return n, mu1, sigma1, mu2, sigma2, \
-           'same' if bootstrap(x, y) else 'different'
+        'same' if bootstrap(x, y) else 'different'
 
 
 # -------------------------------------------------------

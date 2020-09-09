@@ -71,17 +71,16 @@ class DODGEInterpreter:
 
             if isinstance(self.max_by, int):
                 mapped_vals = np.apply_along_axis(
-                    lambda x: x[self.max_by], axis=1, arr=run_splits)
+                    lambda x: x[self.max_by], axis=-1, arr=run_splits)
             elif callable(self.max_by):
                 mapped_vals = np.apply_along_axis(
-                    self.max_by, axis=1, arr=run_splits)
+                    self.max_by, axis=-1, arr=run_splits)
 
-            assert mapped_vals.shape == (n_runs, n_metrics)
+            assert mapped_vals.shape == (n_runs, DODGE_ITER)
 
-            max_idx = np.argmax(mapped_vals, axis=-2)
-            file_results = max_idx.choose(np.rollaxis(run_splits, -2, 0))
+            max_idx = np.argmax(mapped_vals, axis=-1)
 
-            medians[file.split('/')[-1]] = {metric: file_results.T[i]
+            medians[file.split('/')[-1]] = {metric: max_idx.choose(np.rollaxis(np.apply_along_axis(lambda p: p[i], -1, run_splits), -1, 0))
                                             for i, metric in enumerate(self.metrics)}
 
         return medians

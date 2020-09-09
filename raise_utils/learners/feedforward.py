@@ -5,6 +5,7 @@ from keras import backend as K
 import numpy as np
 from raise_utils.learners.learner import Learner
 from raise_utils.transform.wfo import fuzz_data
+from imblearn.over_sampling import SMOTE
 
 
 def weighted_categorical_crossentropy(weights):
@@ -70,10 +71,14 @@ class FeedforwardDL(Learner):
 
             if isinstance(self.weighted, int):
                 self.weighted = 1.
-            self.loss = weighted_categorical_crossentropy(weights=(1., self.weighted / frac))
+            self.loss = weighted_categorical_crossentropy(
+                weights=(1., self.weighted / frac))
 
         if self.wfo:
             self.x_train, self.y_train = fuzz_data(self.x_train, self.y_train)
+            sm = SMOTE()
+            self.x_train, self.y_train = sm.fit_sample(
+                self.x_train, self.y_train)
 
         for _ in range(self.n_layers):
             self.model.add(Dense(self.n_units, activation=self.activation))
@@ -83,8 +88,8 @@ class FeedforwardDL(Learner):
 
         self.model.fit(np.array(self.x_train), np.array(self.y_train), batch_size=512, epochs=self.n_epochs,
                        validation_split=0.2, verbose=self.verbose, callbacks=[
-                EarlyStopping(monitor='val_loss', patience=15, min_delta=1e-3)
-            ])
+            EarlyStopping(monitor='val_loss', patience=15, min_delta=1e-3)
+        ])
 
     def predict(self, x_test) -> np.ndarray:
         """
