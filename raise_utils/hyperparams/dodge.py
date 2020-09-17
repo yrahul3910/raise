@@ -80,8 +80,12 @@ class DODGE:
                             hook.call(model, data.x_test, data.y_test)
 
                     preds = model.predict(data.x_test)
-                    metrics = ClassificationMetrics(
-                        np.argmax(data.y_test, axis=-1), preds)
+
+                    if len(np.unique(data.y_test)) > 2:
+                        metrics = ClassificationMetrics(
+                            np.argmax(data.y_test, axis=-1), preds)
+                    else:
+                        metrics = ClassificationMetrics(data.y_test, preds)
                     metrics.add_metrics(self.config["metrics"])
                     print('iter', counter, '\b:',
                           metrics.get_metrics(), file=self.file, flush=True)

@@ -1,7 +1,7 @@
 import distutils.core
 
 distutils.core.setup(name='raise_utils',
-                     version='1.1b',
+                     version='1.1',
                      description='RAISE lab package (LGPL-3.0-or-later)',
                      author='RAISE, NC State University',
                      author_email='ryedida@ncsu.edu',
