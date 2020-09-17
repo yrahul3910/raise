@@ -26,6 +26,7 @@ name_map = {
 
 class Metric:
     """Base class for all metrics"""
+
     def __init__(self, y_true, y_pred):
         """
         Initializes the Metric object
@@ -41,6 +42,7 @@ class Metric:
 
 class ClassificationMetrics(Metric):
     """Handles classification metrics"""
+
     def add_data(self, data) -> None:
         """
         Adds data for the popt20 metric
@@ -61,7 +63,8 @@ class ClassificationMetrics(Metric):
             raise ValueError("Invalid metric name.")
 
         if metric == "popt20" and self.data is None:
-            raise AssertionError("Please call add_data if including popt20 as a metric.")
+            raise AssertionError(
+                "Please call add_data if including popt20 as a metric.")
 
         self.metrics.append(metric)
 
@@ -83,7 +86,8 @@ class ClassificationMetrics(Metric):
         """
         self.y_pred = np.array(self.y_pred).squeeze()
 
-        metrics = [name_map[metric](self.y_true, self.y_pred) for metric in self.metrics if metric != 'popt20']
+        metrics = [name_map[metric](self.y_true, self.y_pred) for metric in self.metrics
+                   if metric != 'popt20']
         if "popt20" in self.metrics:
             metrics.insert(self.metrics.index("popt20"), get_popt20(self.data))
         return metrics

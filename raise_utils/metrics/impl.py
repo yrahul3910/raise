@@ -6,6 +6,7 @@ from sklearn.metrics import precision_score
 from sklearn.metrics import roc_auc_score
 from sklearn.metrics import auc
 import math
+import numpy as np
 
 
 def get_confusion_matrix(y_true, y_pred) -> tuple:
@@ -39,7 +40,11 @@ def get_f1_score(y_true, y_pred) -> float:
     :param y_pred: Predictions
     :return: F-1 score
     """
-    return f1_score(y_true, y_pred)
+    if len(np.unique(y_true)) > 2:
+        average = None
+    else:
+        average = 'binary'
+    return f1_score(y_true, y_pred, average=average)
 
 
 def get_recall(y_true, y_pred) -> float:
@@ -50,7 +55,11 @@ def get_recall(y_true, y_pred) -> float:
     :param y_pred: Predictions
     :return: Recall score
     """
-    return recall_score(y_true, y_pred)
+    if len(np.unique(y_true)) > 2:
+        average = None
+    else:
+        average = 'binary'
+    return recall_score(y_true, y_pred, average=average)
 
 
 def get_precision(y_true, y_pred) -> float:
@@ -61,7 +70,11 @@ def get_precision(y_true, y_pred) -> float:
     :param y_pred: Predictions
     :return: Precision
     """
-    return precision_score(y_true, y_pred)
+    if len(np.unique(y_true)) > 2:
+        average = None
+    else:
+        average = 'binary'
+    return precision_score(y_true, y_pred, average=average)
 
 
 def get_pf(y_true, y_pred) -> float:

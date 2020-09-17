@@ -5,3 +5,4 @@ from raise_utils.learners.nb import NaiveBayes
 from raise_utils.learners.rf import RandomForest
 from raise_utils.learners.feedforward import FeedforwardDL
 from raise_utils.learners.lstm import TextDeepLearner
+from raise_utils.learners.multiclassdl import MulticlassDL

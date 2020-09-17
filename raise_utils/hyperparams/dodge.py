@@ -2,6 +2,7 @@ import random
 import string
 import os
 import sys
+import numpy as np
 
 from raise_utils.data.data import Data
 import itertools
@@ -27,6 +28,7 @@ class DODGE:
         else:
             self.file = open(os.path.join(
                 self.config['log_path'], self.config['name'] + '.txt'), 'w')
+        self.post_train_hooks = self.config.get("post_train_hooks", None)
         for learner in self.config["learners"]:
             print(learner)
 
@@ -59,6 +61,9 @@ class DODGE:
                     if counter not in dic_func.keys():
                         dic_func[counter] = []
 
+                    if counter not in dic.keys():
+                        dic[counter] = []
+
                     keys = [k for k, v in func_str_counter_dic.items()
                             if v == 0]
                     key = random.choice(keys)
@@ -68,11 +73,18 @@ class DODGE:
                     model.set_data(data.x_train, data.y_train,
                                    data.x_test, data.y_test)
                     model.fit()
+
+                    # Run post-training hooks
+                    if self.post_train_hooks is not None:
+                        for hook in self.post_train_hooks:
+                            hook.call(model, data.x_test, data.y_test)
+
                     preds = model.predict(data.x_test)
-                    metrics = ClassificationMetrics(data.y_test, preds)
+                    metrics = ClassificationMetrics(
+                        np.argmax(data.y_test, axis=-1), preds)
                     metrics.add_metrics(self.config["metrics"])
                     print('iter', counter, '\b:',
-                          metrics.get_metrics(), file=self.file)
+                          metrics.get_metrics(), file=self.file, flush=True)
                     metric = metrics.get_metrics()[0]
 
                     if all(abs(t - metric) > 0.2 for t in lis_value):
@@ -87,7 +99,9 @@ class DODGE:
                     dic_func[counter].append(key)
                     dic[counter].append(max(lis_value))
                 except ValueError:
-                    pass
+                    raise
 
         dic["settings"] = dic_func
         print(dic, file=self.file)
+        self.file.flush()
+        self.file.close()
