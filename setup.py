@@ -14,6 +14,7 @@ distutils.core.setup(name='raise_utils',
                          'raise_utils.transform',
                          'raise_utils.transform.text',
                          'raise_utils.interpret',
-                         'raise_utils.hooks'
+                         'raise_utils.hooks',
+                         'raise_utils'
                      ]
                      )
