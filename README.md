@@ -1,7 +1,8 @@
 <p align="center">
 <img src="http://ai4se.net/img/logo.png" height="80px" /><br />
 <a href="http://ai4se.net">homepage</a>  | 
-<a href="https://github.com/yrahul3910/raise/tree/master/docs">docs</a>  |
+<a href="https://github.com/yrahul3910/raise/tree/master/docs">quick guide</a>  |
+<a href="https://raise.readthedocs.io/en/latest/">docs</a>  |
 <a href="https://github.com/yrahul3910/raise/blob/master/LICENSE">license</a>  |
 <a href="https://github.com/yrahul3910/raise/blob/master/CODE_OF_CONDUCT.md">contribute</a>  |
 <a href="https://github.com/yrahul3910/raise/issues/">issues</a>  |
