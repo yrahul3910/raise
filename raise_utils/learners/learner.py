@@ -28,9 +28,6 @@ class Learner:
         attr_dic = {k: getattr(self, k) for k in attrs}
         return str(attr_dic)
 
-    def __repr__(self):
-        return self.__str__()
-
     def _get_random_val(self, key):
         """
         Used to fetch random hyperparameter values
