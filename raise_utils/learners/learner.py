@@ -5,24 +5,31 @@ import pandas as pd
 class Learner:
 
     """The base Learner class."""
-    def __init__(self, name: str = "rf", random=False):
+
+    def __init__(self, name: str = "rf", random=False, hooks: dict = None):
         """
         Initializes a Learner object
 
         :param name: The name of the learner. Must be a recognized name.
         :param random: Whether to initialize the hyperparameters randomly.
+        :param hooks: An object with keys "pre_train", "post_train" that correspond to pre-train and post-train hooks.
         """
         self.random = random
         self.learner = None
         self.name = name
-        self.__name__ = name
+        self.name = name
         self.random_map = {}
+        self.hooks = hooks
         self.x_train, self.x_test, self.y_train, self.y_test = None, None, None, None
 
     def __str__(self):
-        attrs = filter(lambda x: not x.startswith("_") and not callable(getattr(self, x)), dir(self))
+        attrs = filter(lambda x: not x.startswith(
+            "_") and not callable(getattr(self, x)), dir(self))
         attr_dic = {k: getattr(self, k) for k in attrs}
         return str(attr_dic)
+
+    def __repr__(self):
+        return self.__str__()
 
     def _get_random_val(self, key):
         """
@@ -101,7 +108,18 @@ class Learner:
         :return: None
         """
         self._check_data()
+
+        if self.hooks is not None:
+            if self.hooks.get('pre_train', None):
+                for hook in self.hooks['pre_train']:
+                    hook.call(self)
+
         self.learner.fit(self.x_train, self.y_train)
+
+        if self.hooks is not None:
+            if self.hooks.get('post_train', None):
+                for hook in self.hooks['post_train']:
+                    hook.call(self.learner)
 
     def predict(self, x_test):
         """

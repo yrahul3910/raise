@@ -83,10 +83,20 @@ class MulticlassDL(Learner):
         self.model.add(Dense(self.n_classes, activation='softmax'))
         self.model.compile(optimizer=self.optimizer, loss=self.loss)
 
+        if self.hooks is not None:
+            if self.hooks.get('pre_train', None):
+                for hook in self.hooks['pre_train']:
+                    hook.call(self)
+
         self.model.fit(np.array(self.x_train), np.array(self.y_train), batch_size=512, epochs=self.n_epochs,
                        validation_split=0.2, verbose=self.verbose, callbacks=[
             EarlyStopping(monitor='val_loss', patience=15, min_delta=1e-3)
         ])
+
+        if self.hooks is not None:
+            if self.hooks.get('post_train', None):
+                for hook in self.hooks['post_train']:
+                    hook.call(self.learner)
 
     def predict(self, x_test):
         """

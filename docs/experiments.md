@@ -1,4 +1,4 @@
-# `raise.experiments`
+# `raise_utils.experiments`
 
 This module allows for a slightly automated pipeline. An instance of `Experiment` is created, passing in a configuration dictionary, and the `run` method is called. The structure of the dictionary is below (comments show the default values:
 

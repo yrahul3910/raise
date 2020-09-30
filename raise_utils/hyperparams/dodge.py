@@ -38,7 +38,7 @@ class DODGE:
     def optimize(self):
         dic = {}
         dic_func = {}
-        for _ in range(self.config["n_runs"]):
+        for _ in range(self.config.get("n_runs", 1)):
             print("Run #", _, file=self.file)
             print("=" * len("Run #" + str(_)), file=self.file)
 
@@ -54,7 +54,7 @@ class DODGE:
                     Transform(pair[0], random=True), pair[1]]
                 func_str_counter_dic[pair_name] = 0
 
-            for counter in range(30):
+            for counter in range(self.config.get('n_iters', 30)):
                 try:
                     print(counter, flush=True)
 

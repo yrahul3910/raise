@@ -1,6 +1,15 @@
-# `raise.learners`
+# `raise_utils.learners`
 
 Learners form the core of the RAISE package, and are therefore designed flexibly. The base class for all learners is the `Learner` class; this is not meant to be used, since it does not by itself implement any learner; rather, it provides some basic functions used by all learners subclassing it.
+
+Learners can also be passed a `hooks` object in the initializer, with the following structure:
+
+```
+{
+  "pre_train": list[Hook],
+  "post_train": list[Hook]
+}
+```
 
 Learners in RAISE are used slightly different from in `sklearn`. You start by creating an instance of the learner, passing it any desired parameters. Then, you call `set_data`, passing it the train and test splits; for conciseness, the `Data` class implements `__iter__`, allowing you to call `*data` to get the correct order of arguments to pass to `set_data`. Then, you call `fit` with no parameters, and later, `predict` can be called with the test set.
 
@@ -28,3 +37,12 @@ The keys of this `dict` must be members of the learner being used. The table bel
 There is also a `feedforward_torch` module in `learners` that is currently experimental. The goal of this is to implement the same functionality as `FeedforwardDL`, but using PyTorch instead of Keras over TensorFlow. This module also exports a `FeedforwardDL` object with the same parameters, but some of them are currently not functional, as this is experimental. For an example of usage, see the [RayTune example](./raise_utils/examples/raytune.py).
 
 The `MulticlassDL` learner additionally takes a `n_classes` argument in the initializer, which specifies the number of classes in the input. This learner expects that the labels of the data be one-hot encoded; therefore, `DataLoader` cannot be used in this case (yet).
+
+The `BiasedSVM` and `SVM` classes may sometimes throw an error that looks like this:  
+
+```
+ValueError: Rank(A) < p or Rank([P; A; G]) < n
+```
+
+This indicates that the dual problem of the support vector machine is unsolvable, and therefore the SVM parameters cannot be computed. If you get this error, it is very likely you attempted to use a linear kernel--you should not see this error with the `rbf` kernel.
+

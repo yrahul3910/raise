@@ -1,4 +1,4 @@
-# `raise.transforms`
+# `raise_utils.transforms`
 
 This module provides a set of pre-processing transforms for data. An instance of `Transform` is created, passing in the name of the transform (with an option for random parameter settings), and then the `apply` method is called, passing in a `Data` instance. The following transforms are supported:
 

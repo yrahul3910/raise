@@ -61,6 +61,7 @@ class FeedforwardDL(Learner):
 
     def fit(self):
         self._check_data()
+
         self.x_train = np.array(self.x_train)
         self.x_test = np.array(self.x_test)
         self.y_train = np.array(self.y_train).squeeze()
@@ -86,10 +87,20 @@ class FeedforwardDL(Learner):
         self.model.add(Dense(1, activation='sigmoid'))
         self.model.compile(optimizer=self.optimizer, loss=self.loss)
 
+        if self.hooks is not None:
+            if self.hooks.get('pre_train', None):
+                for hook in self.hooks['pre_train']:
+                    hook.call(self)
+
         self.model.fit(np.array(self.x_train), np.array(self.y_train), batch_size=512, epochs=self.n_epochs,
                        validation_split=0.2, verbose=self.verbose, callbacks=[
             EarlyStopping(monitor='val_loss', patience=15, min_delta=1e-3)
         ])
+
+        if self.hooks is not None:
+            if self.hooks.get('post_train', None):
+                for hook in self.hooks['post_train']:
+                    hook.call(self.model)
 
     def predict(self, x_test) -> np.ndarray:
         """
@@ -97,4 +108,4 @@ class FeedforwardDL(Learner):
         :param x_test: Test data
         :return: np.ndarray
         """
-        return self.model.predict_classes(x_test)
+        return np.argmax(self.model.predict(x_test), axis=-1)

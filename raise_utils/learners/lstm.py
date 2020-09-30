@@ -69,9 +69,21 @@ class TextDeepLearner(Learner):
             model.add(LSTM(100, dropout=0.2, recurrent_dropout=0.2))
         model.add(Dense(1, activation='sigmoid'))
         model.compile(loss='binary_crossentropy', optimizer='adam')
+
+        self.learner = model
+
+        if self.hooks is not None:
+            if self.hooks.get('pre_train', None):
+                for hook in self.hooks['pre_train']:
+                    hook.call(self)
+
         model.fit(self.x_train, self.y_train,
                   batch_size=64, epochs=self.epochs)
-        self.learner = model
+
+        if self.hooks is not None:
+            if self.hooks.get('post_train', None):
+                for hook in self.hooks['post_train']:
+                    hook.call(model)
 
     def predict_on_test(self) -> np.ndarray:
         """

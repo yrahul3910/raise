@@ -1,8 +1,8 @@
-# `raise.data`
+# `raise_utils.data`
 
 This package provides the `Data` and `DataLoader` classes. Users should use the latter to obtain an object of type `Data`. `DataLoader` allows users to select either one or multiple files as the data; in the latter case, it is assumed that the last file is the test set. Both functions allow you to choose the start and stop columns to be considered.
 
-## `raise.data.DataLoader`
+## `raise_utils.data.DataLoader`
 
 `from_files(base_path: str, files: list, target:str = "bug", col_start:int = 3, col_stop:int = -2) -> Data`
 
