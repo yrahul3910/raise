@@ -2,6 +2,7 @@ from keras.models import Sequential
 from keras.layers import Dense
 from keras.callbacks import EarlyStopping
 from keras import backend as K
+from keras.utils import to_categorical
 import numpy as np
 import pandas as pd
 from raise_utils.learners.learner import Learner
@@ -46,8 +47,15 @@ class MulticlassDL(Learner):
         self._instantiate_random_vals()
 
     def set_data(self, x_train: pd.DataFrame, y_train: pd.Series, x_test: pd.DataFrame, y_test: pd.Series) -> None:
+        """
+        Sets the learner data, in the order (x_train, y_train, x_test, y_test). Please pass in
+        one-hot encoded values for the target. This can be done as follows:
+
+        from tf.keras.utils import to_categorical
+        y = to_categorical(y, num_classes=3)
+        """
         self.x_train = x_train
-        self.y_train = y_train
+        self.y_train = np.argmax(y_train, axis=-1)
         self.x_test = x_test
         self.y_test = y_test
 
@@ -64,10 +72,15 @@ class MulticlassDL(Learner):
             self.x_train, self.y_train = sm.fit_sample(
                 self.x_train, self.y_train)
 
+            self.y_train = to_categorical(
+                self.y_train, num_classes=self.n_classes)
+            self.y_test = to_categorical(
+                self.y_test, num_classes=self.n_classes)
+
         for _ in range(self.n_layers):
             self.model.add(Dense(self.n_units, activation=self.activation))
 
-        self.model.add(Dense(1, activation='softmax'))
+        self.model.add(Dense(self.n_classes, activation='softmax'))
         self.model.compile(optimizer=self.optimizer, loss=self.loss)
 
         self.model.fit(np.array(self.x_train), np.array(self.y_train), batch_size=512, epochs=self.n_epochs,

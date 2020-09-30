@@ -81,7 +81,7 @@ class DODGE:
 
                     preds = model.predict(data.x_test)
 
-                    if len(np.unique(data.y_test)) > 2:
+                    if len(data.y_test.shape) > 1:
                         metrics = ClassificationMetrics(
                             np.argmax(data.y_test, axis=-1), preds)
                     else:
