@@ -138,8 +138,8 @@ class ResultsInterpreter:
         =======
         i: A DODGEInterpreter object
         merge_method: A function describing which files' results will be merged. It is
-                        passed two arguments: the ResultsInterpreter filename and the
-                        DODGEInterpreter filename.
+        passed two arguments: the ResultsInterpreter filename and the
+        DODGEInterpreter filename.
         """
         dodge_results = i.interpret()
         self.dodge_results = dodge_results
