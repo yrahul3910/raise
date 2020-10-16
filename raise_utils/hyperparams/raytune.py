@@ -19,7 +19,7 @@ class RayTune:
     learner.
     """
 
-    def __init__(self, fn: Union[Callable, Learner], data: Data, metrics: ClassificationMetrics, config: dict, num_samples: int = 30, post_results_hook: Hook):
+    def __init__(self, fn: Union[Callable, Learner], data: Data, metrics: ClassificationMetrics, config: dict, post_results_hook: Hook, num_samples: int = 30):
         """
         Initializes all the settings for the RayTune hyperparameter
         tuner.
