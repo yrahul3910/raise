@@ -1,7 +1,8 @@
 <p align="center">
 <img src="http://ai4se.net/img/logo.png" height="80px" /><br />
 <a href="http://ai4se.net">homepage</a>  | 
-<a href="https://github.com/yrahul3910/raise/tree/master/docs">docs</a>  |
+<a href="https://github.com/yrahul3910/raise/tree/master/docs">quick guide</a>  |
+<a href="https://raise.readthedocs.io/en/latest/">docs</a>  |
 <a href="https://github.com/yrahul3910/raise/blob/master/LICENSE">license</a>  |
 <a href="https://github.com/yrahul3910/raise/blob/master/CODE_OF_CONDUCT.md">contribute</a>  |
 <a href="https://github.com/yrahul3910/raise/issues/">issues</a>  |
@@ -11,6 +12,9 @@
 <img src="https://img.shields.io/badge/language-python-orange.svg">&nbsp;
 <img src="https://img.shields.io/badge/license-LGPL-green.svg">&nbsp;
 <a href="https://badge.fury.io/py/raise-utils"><img src="https://badge.fury.io/py/raise-utils.svg" alt="PyPI version" height="20"></a>
+<a href='https://raise.readthedocs.io/en/latest/?badge=latest'>
+    <img src='https://readthedocs.org/projects/raise/badge/?version=latest' alt='Documentation Status' />
+</a>
 <a href="https://travis-ci.org/yrahul3910/raise"><img src="https://travis-ci.org/yrahul3910/raise.svg?branch=master" /></a>
 <a href="https://www.codacy.com/manual/yrahul3910/raise?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=yrahul3910/raise&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/8352fafd16454ea995f43891d9571d22"/></a>&nbsp;
 </p> <hr />
