@@ -90,4 +90,11 @@ class ClassificationMetrics(Metric):
                    if metric != 'popt20']
         if "popt20" in self.metrics:
             metrics.insert(self.metrics.index("popt20"), get_popt20(self.data))
-        return metrics
+
+        list_metrics = []
+        for metric in metrics:
+            if isinstance(metric, np.ndarray):
+                list_metrics.append(metric.tolist())
+            else:
+                list_metrics.append(metric)
+        return list_metrics

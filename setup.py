@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='raise_utils',
-      version='1.2',
+      version='1.3',
       description='RAISE lab package (LGPL-3.0-or-later)',
       author='RAISE, NC State University',
       author_email='ryedida@ncsu.edu',
@@ -15,6 +15,7 @@ setup(name='raise_utils',
           'raise_utils.transform.text',
           'raise_utils.interpret',
           'raise_utils.hooks',
+          'raise_utils.utils',
           'raise_utils'
       ]
       )

@@ -1,6 +1,9 @@
 import random
 import pandas as pd
 
+from raise_utils import utils
+from raise_utils.data import Data
+
 
 class Learner:
 
@@ -75,28 +78,8 @@ class Learner:
 
         :return: None
         """
-
-        if (
-            self.x_train is None or
-            self.y_train is None or
-            self.x_test is None or
-            self.y_test is None
-        ):
-            raise AssertionError("Train/test data have issues.")
-
-        if len(self.x_train.shape) == 2:
-            if (
-                self.x_train.shape[0] != self.y_train.shape[0] or
-                self.x_test.shape[0] != self.y_test.shape[0] or
-                self.x_train.shape[1] != self.x_test.shape[1]
-            ):
-                raise AssertionError("Train/test data have issues.")
-        else:
-            if (
-                self.x_train.shape[0] != self.y_train.shape[0] or
-                self.x_test.shape[0] != self.y_test.shape[0]
-            ):
-                raise AssertionError("Train/test data have issues.")
+        utils._check_data(Data(self.x_train, self.x_test,
+                               self.y_train, self.y_test))
 
     def fit(self) -> None:
         """
