@@ -3,6 +3,7 @@
 <a href="http://ai4se.net">homepage</a>  | 
 <a href="https://github.com/yrahul3910/raise/tree/master/docs">quick guide</a>  |
 <a href="https://raise.readthedocs.io/en/latest/">docs</a>  |
+<a href="https://github.com/yrahul3910/raise/blob/master/CHANGES.md">change log</a>  |
 <a href="https://github.com/yrahul3910/raise/blob/master/LICENSE">license</a>  |
 <a href="https://github.com/yrahul3910/raise/blob/master/CODE_OF_CONDUCT.md">contribute</a>  |
 <a href="https://github.com/yrahul3910/raise/issues/">issues</a>  |
