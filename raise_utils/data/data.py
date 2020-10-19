@@ -4,6 +4,7 @@ from collections import Counter
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
+from keras.utils.np_utils import to_categorical
 
 
 class Data:
@@ -64,7 +65,7 @@ class DataLoader:
     """Data loading utilities"""
 
     @staticmethod
-    def from_files(base_path: str, files: list, target: str = "bug", col_start: int = 3, col_stop: int = -2) -> Data:
+    def from_files(base_path: str, files: list, target: str = "bug", col_start: int = 3, col_stop: int = -2, n_classes: int = 2) -> Data:
         """
         Builds data from a list of files, the last of which is the test set.
 
@@ -73,16 +74,24 @@ class DataLoader:
         :param target: Target column
         :param col_start: Column to start reading from. 3 for PROMISE defect prediction.
         :param col_stop: Column to stop reading. -2 for PROMISE defect prediction.
+        :param n_classes: Number of classes.
         :return: Data object
         """
         paths = [os.path.join(base_path, file_name) for file_name in files]
-        train_df = pd.concat([pd.read_csv(path) for path in paths[:-1]], ignore_index=True)
+        train_df = pd.concat([pd.read_csv(path)
+                              for path in paths[:-1]], ignore_index=True)
         test_df = pd.read_csv(paths[-1])
 
-        train_df, test_df = train_df.iloc[:, col_start:], test_df.iloc[:, col_start:]
+        train_df, test_df = train_df.iloc[:,
+                                          col_start:], test_df.iloc[:, col_start:]
         train_size = train_df[target].count()
         df = pd.concat([train_df, test_df], ignore_index=True)
-        df[target] = df[target].apply(lambda x: 0 if x == 0 else 1)
+
+        if n_classes == 2:
+            df[target] = df[target].apply(lambda x: 0 if x == 0 else 1)
+        elif n_classes > 2:
+            df[target] = to_categorical(
+                df[target], num_classes=n_classes, dtype=int)
 
         train_data = df.iloc[:train_size, :]
         test_data = df.iloc[train_size:, :]
