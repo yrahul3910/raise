@@ -51,6 +51,9 @@ class DODGEInterpreter:
 
             lines = [eval(line.split(':')[1])
                      for line in lines if line.startswith('iter')]
+
+            settings = [line.split(':')[1]
+                        for line in lines if line.startswith('setting')]
             n_runs = int(len(lines) // DODGE_ITER)
             n_metrics = len(lines[0]) - len(self.exclude_cols)
 
@@ -64,10 +67,13 @@ class DODGEInterpreter:
             lines = np.array(lines)
             lines = np.delete(lines, self.exclude_cols, -1)
 
+            settings = np.array(settings)
+
             assert lines.shape == (n_runs * DODGE_ITER, n_metrics)
 
             run_splits = lines.reshape(
                 (n_runs, DODGE_ITER, n_metrics))
+            settings = settings.reshape((n_runs, DODGE_ITER, n_metrics))
 
             if isinstance(self.max_by, int):
                 mapped_vals = np.apply_along_axis(
@@ -81,6 +87,8 @@ class DODGEInterpreter:
             max_idx = np.argmax(mapped_vals, axis=-1)
 
             medians[file.split('/')[-1]] = {metric: max_idx.choose(np.rollaxis(np.apply_along_axis(lambda p: p[i], -1, run_splits), -1, 0))
+                                            for i, metric in enumerate(self.metrics),
+                                            'setting': max_idx.choose(np.rollaxis(np.apply_along_axis(lambda p: p[i], -1, settings), -1, 0))
                                             for i, metric in enumerate(self.metrics)}
 
         return medians

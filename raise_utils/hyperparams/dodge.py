@@ -56,8 +56,6 @@ class DODGE:
 
             for counter in range(self.config.get('n_iters', 30)):
                 try:
-                    print(counter, flush=True)
-
                     if counter not in dic_func.keys():
                         dic_func[counter] = []
 
@@ -67,7 +65,7 @@ class DODGE:
                     keys = [k for k, v in func_str_counter_dic.items()
                             if v == 0]
                     key = random.choice(keys)
-                    print(key)
+                    print('setting:', key)
                     transform, model = func_str_dic[key]
                     transform.apply(data)
                     model.set_data(data.x_train, data.y_train,
