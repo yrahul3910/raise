@@ -77,7 +77,7 @@ class DataLoader:
         :param col_stop: Column to stop reading. -2 for PROMISE defect prediction.
         :param n_classes: Number of classes.
         :param hooks: List of hooks. These are passed the train/test DataFrames after
-        filtering columns
+            filtering columns
         :return: Data object
         """
         paths = [os.path.join(base_path, file_name) for file_name in files]
@@ -120,8 +120,8 @@ class DataLoader:
         :param col_start: Column to start reading at
         :param col_stop: Column to stop reading at
         :param hooks: List of hooks. This is passed after the columns are filtered.
-        The data is passed as a DataFrame (x) and a Series (y), before splitting for
-        train/test.
+            The data is passed as a DataFrame (x) and a Series (y), before splitting for
+            train/test.
         :return: Data object
         """
         df = pd.read_csv(path)

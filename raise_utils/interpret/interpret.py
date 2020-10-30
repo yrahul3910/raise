@@ -12,8 +12,6 @@ class DODGEInterpreter:
         """
         Initializes the interpreter.
 
-        Arguments:
-        ==========
         :param files - A list of files to be interpreted.
         :param max_by - Either a None, int, or Callable. If None, defaults to
                         maximizing the first entry, the metric maximized by DODGE.
@@ -22,9 +20,6 @@ class DODGEInterpreter:
         :param exclude_cols - List of column indices to exclude
         :param metrics - List of metrics passed to DODGE. If excluding columns,
                         do NOT include these in this list.
-
-        Returns:
-        ========
         :return DODGEInterpreter object
         """
         if files is None:
@@ -87,9 +82,9 @@ class DODGEInterpreter:
             max_idx = np.argmax(mapped_vals, axis=-1)
 
             medians[file.split('/')[-1]] = {metric: max_idx.choose(np.rollaxis(np.apply_along_axis(lambda p: p[i], -1, run_splits), -1, 0))
-                                            for i, metric in enumerate(self.metrics),
-                                            'setting': max_idx.choose(np.rollaxis(np.apply_along_axis(lambda p: p[i], -1, settings), -1, 0))
                                             for i, metric in enumerate(self.metrics)}
+            medians[file.split('/')[-1]]['setting'] = max_idx.choose(
+                np.rollaxis(np.apply_along_axis(lambda p: p[0], -1, settings), -1, 0))
 
         return medians
 
@@ -142,12 +137,10 @@ class ResultsInterpreter:
         """
         Adds DODGE to the result list
 
-        Params:
-        =======
-        i: A DODGEInterpreter object
-        merge_method: A function describing which files' results will be merged. It is
-        passed two arguments: the ResultsInterpreter filename and the
-        DODGEInterpreter filename.
+        :param i: A DODGEInterpreter object
+        :param merge_method: A function describing which files' results will be merged. It is
+            passed two arguments: the ResultsInterpreter filename and the
+            DODGEInterpreter filename.
         """
         dodge_results = i.interpret()
         self.dodge_results = dodge_results
