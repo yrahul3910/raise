@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from keras.utils.np_utils import to_categorical
+from raise_utils.hooks import Hook
 
 
 class Data:
@@ -65,7 +66,7 @@ class DataLoader:
     """Data loading utilities"""
 
     @staticmethod
-    def from_files(base_path: str, files: list, target: str = "bug", col_start: int = 3, col_stop: int = -2, n_classes: int = 2) -> Data:
+    def from_files(base_path: str, files: list, target: str = "bug", col_start: int = 3, col_stop: int = -2, n_classes: int = 2, hooks: list = None) -> Data:
         """
         Builds data from a list of files, the last of which is the test set.
 
@@ -75,6 +76,8 @@ class DataLoader:
         :param col_start: Column to start reading from. 3 for PROMISE defect prediction.
         :param col_stop: Column to stop reading. -2 for PROMISE defect prediction.
         :param n_classes: Number of classes.
+        :param hooks: List of hooks. These are passed the train/test DataFrames after
+        filtering columns
         :return: Data object
         """
         paths = [os.path.join(base_path, file_name) for file_name in files]
@@ -96,6 +99,10 @@ class DataLoader:
         train_data = df.iloc[:train_size, :]
         test_data = df.iloc[train_size:, :]
 
+        if hooks is not None:
+            for hook in hooks:
+                hook.call(train_data, test_data)
+
         X_train = train_data[train_data.columns[:col_stop]]
         y_train = train_data[target].astype("int")
         X_test = test_data[test_data.columns[:col_stop]]
@@ -104,7 +111,7 @@ class DataLoader:
         return Data(X_train, X_test, y_train, y_test)
 
     @staticmethod
-    def from_file(path: str, target="bug", col_start=3, col_stop=-2) -> Data:
+    def from_file(path: str, target="bug", col_start=3, col_stop=-2, hooks: list = None) -> Data:
         """
         Path to file
 
@@ -112,12 +119,19 @@ class DataLoader:
         :param target: Target column
         :param col_start: Column to start reading at
         :param col_stop: Column to stop reading at
+        :param hooks: List of hooks. This is passed after the columns are filtered.
+        The data is passed as a DataFrame (x) and a Series (y), before splitting for
+        train/test.
         :return: Data object
         """
         df = pd.read_csv(path)
         y = df[target].astype("int")
         x = df.drop(columns=target)
         x = x.iloc[:, col_start:col_stop]
+
+        if hooks is not None:
+            for hook in hooks:
+                hook.call(x, y)
 
         return Data(*train_test_split(x, y))
 
