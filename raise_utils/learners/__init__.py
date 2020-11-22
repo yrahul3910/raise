@@ -7,3 +7,4 @@ from raise_utils.learners.feedforward import FeedforwardDL
 from raise_utils.learners.lstm import TextDeepLearner
 from raise_utils.learners.multiclassdl import MulticlassDL
 from raise_utils.learners.learner import Learner
+from raise_utils.learners.autoencoder import Autoencoder

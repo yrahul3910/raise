@@ -44,6 +44,12 @@ class MulticlassDL(Learner):
 
         self.learner = self
         self.model = Sequential()
+
+        self.random_map = {
+            'n_layers': (2, 6),
+            'n_units': (3, 20),
+            'activation': ['relu', 'selu']
+        }
         self._instantiate_random_vals()
 
     def set_data(self, x_train: pd.DataFrame, y_train: pd.Series, x_test: pd.DataFrame, y_test: pd.Series) -> None:

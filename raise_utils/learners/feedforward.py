@@ -57,6 +57,12 @@ class FeedforwardDL(Learner):
 
         self.learner = self
         self.model = Sequential()
+
+        self.random_map = {
+            'n_layers': (2, 6),
+            'n_units': (3, 20),
+            'activation': ['relu', 'selu']
+        }
         self._instantiate_random_vals()
 
     def fit(self):
