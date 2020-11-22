@@ -1,6 +1,6 @@
 class NullTransform:
     def fit_transform(self, *args, **kwargs):
-        pass
+        return args
 
     def transform(self, *args, **kwargs):
-        pass
+        return args
