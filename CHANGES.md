@@ -7,3 +7,4 @@
 * `DODGEInterpreter` now also reports best settings (Fixed [#11](https://github.com/yrahul3910/raise/issues/11))
 * `DataLoader` now one-hot encodes multi-class targets (Fixed [#9](https://github.com/yrahul3910/raise/issues/9))
 * Added Hooks support for `DataLoader`
+* Added `Autoencoder` class to `raise_utils.learners`
