@@ -46,7 +46,7 @@ The RAISE Package
 ============================
 
 .. automodule:: raise_utils.learners
-   :members: Learner, NaiveBayes, DecisionTree, LogisticRegressionClassifier, BiasedSVM, SVM, RandomForest, FeedforwardDL, MulticlassDL
+   :members: Learner, NaiveBayes, DecisionTree, LogisticRegressionClassifier, BiasedSVM, SVM, RandomForest, FeedforwardDL, MulticlassDL, Autoencoder
 
 :code:`raise_utils.metrics`
 ===========================

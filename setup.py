@@ -8,6 +8,7 @@ setup(name='raise_utils',
       author_email='ryedida@ncsu.edu',
       long_description=open(os.path.join(
           os.path.dirname(__file__), 'README.md')).read(),
+      long_description_content_type='text/markdown',
       url='https://github.com/yrahul3910/raise',
       packages=[
           'raise_utils.data',
