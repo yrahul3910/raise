@@ -22,5 +22,14 @@ setup(name='raise_utils',
           'raise_utils.hooks',
           'raise_utils.utils',
           'raise_utils'
+      ],
+      install_requires=[
+          'sklearn',
+          'tensorflow',
+          'keras',
+          'numpy',
+          'pandas',
+          'cvxopt',
+          'imblearn'
       ]
       )
