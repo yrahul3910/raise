@@ -3,6 +3,7 @@ from keras.layers import Dense
 from keras.callbacks import EarlyStopping
 from keras import backend as K
 import numpy as np
+import tensorflow as tf
 from raise_utils.learners.learner import Learner
 from raise_utils.transform.wfo import fuzz_data
 from imblearn.over_sampling import SMOTE
@@ -28,12 +29,15 @@ class FeedforwardDL(Learner):
     A standard feed-forward neural network.
     """
 
-    def __init__(self, weighted=False, wfo=False, optimizer='adam', n_layers=3, n_units=19,
+    def __init__(self, weighted=False, wfo=False, smote=None, optimizer='adam', n_layers=3, n_units=19,
                  activation='relu', n_epochs=10, verbose=1, *args, **kwargs):
         """
         Initializes the deep learner.
         :param weighted: Whether to use a weighted loss function
         :param wfo: Whether to use weighted fuzzy oversampling
+        :param smote: Whether or not to use SMOTE. This can be used individually, and
+        is applied after weighted fuzzy oversampling. Leaving it to None will use the
+        recommended settings.
         :param optimizer: Choice of optimizer. Must be recognized by Keras.
         :param n_layers: Number of layers
         :param n_units: Number of units per layer
@@ -55,15 +59,26 @@ class FeedforwardDL(Learner):
         self.n_epochs = n_epochs
         self.loss = 'binary_crossentropy'
 
+        if (self.wfo and smote is None) or (smote == True):
+            self.smote = True
+        else:
+            self.smote = False
+
         self.learner = self
         self.model = Sequential()
 
         self.random_map = {
             'n_layers': (2, 6),
-            'n_units': (3, 20),
-            'activation': ['relu', 'selu']
+            'n_units': (3, 20)
         }
         self._instantiate_random_vals()
+
+    def set_data(self, x_train, y_train, x_test, y_test):
+        super().set_data(x_train, y_train, x_test, y_test)
+
+        if tf.__version__ >= '2.0.0':
+            # We are running TF 2.0, so need to type cast.
+            self.y_train = self.y_train.astype('float32')
 
     def fit(self):
         self._check_data()
@@ -83,9 +98,11 @@ class FeedforwardDL(Learner):
 
         if self.wfo:
             self.x_train, self.y_train = fuzz_data(self.x_train, self.y_train)
-            sm = SMOTE()
-            self.x_train, self.y_train = sm.fit_sample(
-                self.x_train, self.y_train)
+
+            if self.smote:
+                sm = SMOTE()
+                self.x_train, self.y_train = sm.fit_sample(
+                    self.x_train, self.y_train)
 
         for _ in range(self.n_layers):
             self.model.add(Dense(self.n_units, activation=self.activation))
@@ -98,11 +115,8 @@ class FeedforwardDL(Learner):
                 for hook in self.hooks['pre_train']:
                     hook.call(self)
 
-        self.model.fit(np.array(self.x_train), np.array(self.y_train), batch_size=512, epochs=self.n_epochs,
-                       validation_split=0.2, verbose=self.verbose, callbacks=[
-            EarlyStopping(monitor='val_loss', patience=15, min_delta=1e-3)
-        ])
-
+        self.model.fit(np.array(self.x_train), np.array(
+            self.y_train), epochs=self.n_epochs, verbose=self.verbose)
         if self.hooks is not None:
             if self.hooks.get('post_train', None):
                 for hook in self.hooks['post_train']:
@@ -114,4 +128,4 @@ class FeedforwardDL(Learner):
         :param x_test: Test data
         :return: np.ndarray
         """
-        return np.argmax(self.model.predict(x_test), axis=-1)
+        return (self.model.predict(x_test) > 0.5).astype('int32')

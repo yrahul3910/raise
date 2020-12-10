@@ -97,4 +97,5 @@ class ClassificationMetrics(Metric):
                 list_metrics.append(metric.tolist())
             else:
                 list_metrics.append(metric)
+
         return list_metrics

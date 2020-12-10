@@ -1,5 +1,5 @@
 from keras.models import Model
-from keras.layers import Dense
+from keras.layers import Dense, Input
 import numpy as np
 from raise_utils.learners.learner import Learner
 
@@ -27,6 +27,7 @@ class Autoencoder(Learner):
         self.n_out = n_out
         self.verbose = verbose
         self.loss = 'mse'
+        self.activation = 'relu'
 
         self.learner = self
         self.random_map = {
@@ -34,6 +35,9 @@ class Autoencoder(Learner):
             'n_out': (5, 11)
         }
         self._instantiate_random_vals()
+
+    def set_data(self, x_train, y_train, x_test, y_test):
+        super().set_data(x_train, y_train, x_test, y_test)
         self._instantiate_model()
 
     def _instantiate_model(self):
@@ -43,26 +47,42 @@ class Autoencoder(Learner):
         assert len(self.n_units) == self.n_layers
 
         enc_inp = Input((self.x_train.shape[1],))
+        layer_counter = 0
+
         enc_intermediate = Dense(
-            self.n_units[0], activation=self.activation)(enc_inp)
+            self.n_units[0], name=f'layer_{layer_counter}', activation=self.activation)(enc_inp)
+        layer_counter += 1
+
         for i in range(1, self.n_layers):
             enc_intermediate = Dense(
-                self.n_units[i], activation=self.activation)(enc_intermediate)
-        enc_intermediate = Dense(
-            self.n_out, activation='relu')(enc_intermediate)
+                self.n_units[i], name=f'layer_{layer_counter}', activation=self.activation)(enc_intermediate)
+            layer_counter += 1
 
-        dec_inp = Input((self.n_out,))
+        enc_intermediate = Dense(
+            self.n_out, name='encoded', activation='relu')(enc_intermediate)
+
         dec_intermediate = Dense(
-            self.n_units[-1], activation=self.activation)(dec_inp)
+            self.n_units[-1], name=f'layer_{layer_counter}', activation=self.activation)(enc_intermediate)
+        layer_counter += 1
+
         for u in reversed(self.n_units[:-1]):
             dec_intermediate = Dense(
-                u, activation=self.activation)(dec_intermediate)
+                u, name=f'layer_{layer_counter}', activation=self.activation)(dec_intermediate)
+            layer_counter += 1
+
         dec_intermediate = Dense(
-            self.x_train.shape[1], activation='relu')(dec_intermediate)
+            self.x_train.shape[1], name='decoded', activation='relu')(dec_intermediate)
 
         self.model = Model(inputs=enc_inp, outputs=dec_intermediate)
         self.encoder = Model(inputs=enc_inp, outputs=enc_intermediate)
-        self.decoder = Model(inputs=dec_inp, outputs=dec_intermediate)
+
+        self.model.summary()
+
+        dec_inp = Input(shape=(self.n_out,))
+        for layer in self.model.layers[-1 - len(self.n_units):]:
+            dec_intermediate_values = layer(
+                dec_intermediate_values) if 'dec_intermediate_values' in locals() else layer(dec_inp)
+        self.decoder = Model(inputs=dec_inp, outputs=dec_intermediate_values)
 
     def fit(self) -> None:
         """
@@ -73,6 +93,7 @@ class Autoencoder(Learner):
         if self.model is None:
             raise AssertionError('Model is None.')
 
+        self.model.compile(loss='mse', optimizer='adam')
         self.model.fit(self.x_train, self.x_train, epochs=self.n_epochs)
 
     def encode(self, x: np.ndarray) -> np.ndarray:

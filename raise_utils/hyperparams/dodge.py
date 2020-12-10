@@ -10,6 +10,8 @@ import itertools
 from raise_utils.metrics.metrics import ClassificationMetrics
 from raise_utils.transform.transform import Transform
 
+import gc
+
 
 class DODGE:
     """
@@ -29,18 +31,22 @@ class DODGE:
             self.file = open(os.path.join(
                 self.config['log_path'], self.config['name'] + '.txt'), 'w')
         self.post_train_hooks = self.config.get("post_train_hooks", None)
-        for learner in self.config["learners"]:
-            print(learner)
 
     def __del__(self):
         self.file.close()
+        gc.collect()
 
     def optimize(self):
+        for learner in self.config["learners"]:
+            print(learner, flush=True)
+
         dic = {}
         dic_func = {}
         for _ in range(self.config.get("n_runs", 1)):
             print("Run #", _, file=self.file)
             print("=" * len("Run #" + str(_)), file=self.file)
+            print("Run #", _)
+            print("=" * len("Run #" + str(_)))
 
             data: Data = self.config["data"][0]
 
@@ -87,6 +93,8 @@ class DODGE:
                     metrics.add_metrics(self.config["metrics"])
                     print('iter', counter, '\b:',
                           metrics.get_metrics(), file=self.file, flush=True)
+                    print('iter', counter, '\b:',
+                          metrics.get_metrics(), flush=True)
                     metric = metrics.get_metrics()[0]
 
                     if all(abs(t - metric) > 0.2 for t in lis_value):

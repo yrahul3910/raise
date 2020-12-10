@@ -4,6 +4,8 @@ import pandas as pd
 from raise_utils import utils
 from raise_utils.data import Data
 
+import gc
+
 
 class Learner:
 
@@ -24,6 +26,10 @@ class Learner:
         self.random_map = {}
         self.hooks = hooks
         self.x_train, self.x_test, self.y_train, self.y_test = None, None, None, None
+
+    def __del__(self):
+        del self.x_train, self.x_test, self.y_train, self.y_test
+        gc.collect()
 
     def __str__(self):
         attrs = filter(lambda x: not x.startswith(
