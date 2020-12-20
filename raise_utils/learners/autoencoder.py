@@ -11,7 +11,7 @@ class Autoencoder(Learner):
     A standard autoencoder architecture.
     """
 
-    def __init__(self, n_layers: int = 2, n_units: list = [10, 10], n_out: int = 10, n_epochs=500, verbose=1, *args, **kwargs):
+    def __init__(self, n_layers: int = 2, n_units: list = [10, 10], n_out: int = 10, n_epochs=500, activation='relu', verbose=1, *args, **kwargs):
         """
         Initializes the autoencoder.
 
@@ -29,12 +29,13 @@ class Autoencoder(Learner):
         self.n_out = n_out
         self.verbose = verbose
         self.loss = 'mse'
-        self.activation = 'relu'
+        self.activation = activation
 
         self.learner = self
         self.random_map = {
             'n_layers': (1, 3),
-            'n_out': (5, 11)
+            'n_out': (5, 11),
+            'activation': ['relu', 'selu']
         }
         self._instantiate_random_vals()
 
