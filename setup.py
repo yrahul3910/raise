@@ -2,7 +2,7 @@ from setuptools import setup
 import os
 
 setup(name='raise_utils',
-      version='1.3.1',
+      version='1.3.2',
       description='RAISE lab package (LGPL-3.0-or-later)',
       author='RAISE, NC State University',
       author_email='ryedida@ncsu.edu',
@@ -29,6 +29,6 @@ setup(name='raise_utils',
           'numpy==1.18.5',
           'pandas',
           'cvxopt',
-          'imblearn==0.7.0'
+          'imblearn'
       ]
       )
