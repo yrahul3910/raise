@@ -1,4 +1,5 @@
 pytest
+pytest-cov
 cvxopt
 pandas
 numpy==1.18.5
