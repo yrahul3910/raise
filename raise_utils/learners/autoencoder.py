@@ -25,7 +25,7 @@ class Autoencoder(Learner):
 
         self.n_layers = n_layers
         self.n_units = n_units
-        self.n_epochs = 500
+        self.n_epochs = n_epochs
         self.n_out = n_out
         self.verbose = verbose
         self.loss = 'mse'
