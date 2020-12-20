@@ -3,7 +3,7 @@ cvxopt
 pandas
 numpy
 keras===2.3.1
-tensorflow===1.15.4
+tensorflow===2.4.0
 torch
 ray[tune]
 coverage
