@@ -82,6 +82,9 @@ class MulticlassDL(Learner):
                 self.y_train, num_classes=self.n_classes)
             self.y_test = to_categorical(
                 self.y_test, num_classes=self.n_classes)
+        else:
+            self.y_train = to_categorical(
+                self.y_train, num_classes=self.n_classes)
 
         for _ in range(self.n_layers):
             self.model.add(Dense(self.n_units, activation=self.activation))
@@ -110,4 +113,5 @@ class MulticlassDL(Learner):
         :param x_test: Test data
         :return: np.ndarray
         """
-        return self.model.predict_classes(x_test)
+        preds = np.argmax(self.model.predict(x_test), axis=-1)
+        return to_categorical(preds, num_classes=self.n_classes)

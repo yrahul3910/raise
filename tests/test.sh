@@ -1,3 +1,4 @@
 #!/bin/bash
-export PYTHONPATH=$PYTHONPATH:$PWD/../
-coverage run -m pytest ../
+export PYTHONPATH=$PWD/../:$PYTHONPATH
+pytest --cov=raise_utils ../
+# coverage report -m
