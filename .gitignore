@@ -4,5 +4,7 @@ build/
 .pytest_cache/
 .DS_Store
 .*.swp
+.pypirc
+raise_utils.egg-info/
 .coverage
 
