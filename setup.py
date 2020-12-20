@@ -29,6 +29,6 @@ setup(name='raise_utils',
           'numpy==1.18.5',
           'pandas',
           'cvxopt',
-          'imblearn==0.5.0'
+          'imblearn==0.7.0'
       ]
       )
