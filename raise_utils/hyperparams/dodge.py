@@ -72,6 +72,7 @@ class DODGE:
                             if v == 0]
                     key = random.choice(keys)
                     print('setting:', key)
+                    print('setting:', key, file=self.file)
                     transform, model = func_str_dic[key]
                     transform.apply(data)
                     model.set_data(data.x_train, data.y_train,

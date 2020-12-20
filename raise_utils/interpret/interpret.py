@@ -44,11 +44,12 @@ class DODGEInterpreter:
             with open(file, 'r') as f:
                 lines = f.readlines()
 
+            settings = [line.split(':')[1]
+                        for line in lines if line.startswith('setting')]
+
             lines = [eval(line.split(':')[1])
                      for line in lines if line.startswith('iter')]
 
-            settings = [line.split(':')[1]
-                        for line in lines if line.startswith('setting')]
             n_runs = int(len(lines) // DODGE_ITER)
             n_metrics = len(lines[0]) - len(self.exclude_cols)
 

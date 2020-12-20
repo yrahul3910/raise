@@ -3,7 +3,7 @@ from raise_utils.metrics.impl import get_popt20
 from raise_utils.metrics.impl import get_pf
 from raise_utils.metrics.impl import get_recall
 from raise_utils.metrics.impl import get_roc_auc
-from raise_utils.metrics.impl import get_d2h
+from raise_utils.metrics.impl import get_d2h, get_d2h2
 from raise_utils.metrics.impl import get_f1_score
 from raise_utils.metrics.impl import get_precision
 from raise_utils.metrics.impl import get_confusion_matrix
@@ -14,6 +14,7 @@ name_map = {
     "accuracy": get_accuracy,
     "popt20": get_popt20,
     "pf": get_pf,
+    "d2h2": get_d2h2,
     "pd": get_recall,
     "recall": get_recall,
     "auc": get_roc_auc,
