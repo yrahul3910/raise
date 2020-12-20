@@ -1,7 +1,5 @@
-import tensorflow as tf
-
-from tf.keras.models import Model
-from tf.keras.layers import Dense, Input
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Dense, Input
 import numpy as np
 from raise_utils.learners.learner import Learner
 

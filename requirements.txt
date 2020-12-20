@@ -1,11 +1,8 @@
 pytest
 cvxopt
 pandas
-numpy
-keras===2.3.1
-tensorflow===1.15.4
-torch
-ray[tune]
+numpy==1.18.5
+tensorflow===2.4.0
 coverage
-scikit-learn===0.23.1
-imblearn
+scikit-learn===0.23.2
+imblearn==0.5.0

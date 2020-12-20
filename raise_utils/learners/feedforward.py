@@ -1,9 +1,9 @@
 import tensorflow as tf
 
-from tf.keras.models import Sequential
-from tf.keras.layers import Dense
-from tf.keras.callbacks import EarlyStopping
-from tf.keras import backend as K
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.callbacks import EarlyStopping
+from tensorflow.keras import backend as K
 import numpy as np
 from raise_utils.learners.learner import Learner
 from raise_utils.transform.wfo import fuzz_data
