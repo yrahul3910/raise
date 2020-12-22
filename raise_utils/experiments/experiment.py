@@ -26,6 +26,7 @@ class Experiment:
         self.data: list = json['data']  # list
         self.name: str = json.get('name', ''.join(
             random.choices(string.ascii_letters, k=10)))
+        self.post_train_hooks = json.get('post_train_hooks', None)
 
     def run(self):
         """
@@ -63,6 +64,10 @@ class Experiment:
                 learner.set_data(self.data.x_train, self.data.y_train,
                                  self.data.x_test, self.data.y_test)
                 learner.fit()
+
+                if self.post_train_hooks is not None:
+                    for hook in self.post_train_hooks:
+                        hook.call(learner, self.data)
 
             # Make predictions
             for learner in self.learners:

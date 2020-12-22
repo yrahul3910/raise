@@ -2,8 +2,8 @@ pytest
 pytest-cov
 cvxopt
 pandas
-numpy==1.19.2
+numpy~=1.19.2
 tensorflow===2.4.0
 coverage
-scikit-learn===0.23.2
+scikit-learn~=0.23.2
 imblearn

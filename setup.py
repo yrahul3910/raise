@@ -24,9 +24,9 @@ setup(name='raise_utils',
           'raise_utils'
       ],
       install_requires=[
-          'sklearn==0.23.2',
-          'tensorflow==2.4.0',
-          'numpy==1.19.2',
+          'scikit-learn~=0.23.2',
+          'tensorflow~=2.4.0',
+          'numpy>=1.19.2',
           'pandas',
           'cvxopt',
           'imblearn'

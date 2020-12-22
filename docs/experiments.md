@@ -5,13 +5,14 @@ This module allows for a slightly automated pipeline. An instance of `Experiment
 ```python
 {
   "runs": int,  # 20
-  "transforms": list[str]  # []
-  "metrics": list[str]  # ["accuracy"]
-  "random": Union[bool, dict]  # False
-  "learners": list[Learner]  # None; will raise KeyError if not passed
+  "transforms": list[str],  # []
+  "metrics": list[str],  # ["accuracy"]
+  "random": Union[bool, dict],  # False
+  "learners": list[Learner],  # None; will raise KeyError if not passed
   "log_path": str,  # ./log/;  path must exist
-  "data": list[Data]  # None; raises KeyError if not present
-  "name": str  # random string; name of the experiment
+  "data": list[Data],  # None; raises KeyError if not present
+  "name": str,  # random string; name of the experiment
+  "post_train_hooks": Union[None, list]  # list of hooks to run post-training
 }
 ```
 
