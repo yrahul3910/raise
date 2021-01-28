@@ -69,7 +69,7 @@ class DODGEInterpreter:
 
             run_splits = lines.reshape(
                 (n_runs, DODGE_ITER, n_metrics))
-            settings = settings.reshape((n_runs, DODGE_ITER, n_metrics))
+            settings = settings.reshape((n_runs, DODGE_ITER))
 
             if isinstance(self.max_by, int):
                 mapped_vals = np.apply_along_axis(

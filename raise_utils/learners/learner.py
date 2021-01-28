@@ -22,7 +22,7 @@ class Learner:
         self.random = random
         self.learner = None
         self.name = name
-        self.name = name
+        self.__name__ = name
         self.random_map = {}
         self.hooks = hooks
         self.x_train, self.x_test, self.y_train, self.y_test = None, None, None, None
