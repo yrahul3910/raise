@@ -79,13 +79,14 @@ class DODGEInterpreter:
                     self.max_by, axis=-1, arr=run_splits)
 
             assert mapped_vals.shape == (n_runs, DODGE_ITER)
+            assert settings.shape == (n_runs, DODGE_ITER)
 
             max_idx = np.argmax(mapped_vals, axis=-1)
 
             medians[file.split('/')[-1]] = {metric: max_idx.choose(np.rollaxis(np.apply_along_axis(lambda p: p[i], -1, run_splits), -1, 0))
                                             for i, metric in enumerate(self.metrics)}
             medians[file.split('/')[-1]]['setting'] = max_idx.choose(
-                np.rollaxis(np.apply_along_axis(lambda p: p[0], -1, settings), -1, 0))
+                np.rollaxis(settings, -1, 0))
 
         return medians
 

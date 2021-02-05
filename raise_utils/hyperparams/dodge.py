@@ -92,10 +92,10 @@ class DODGE:
                     else:
                         metrics = ClassificationMetrics(data.y_test, preds)
                     metrics.add_metrics(self.config["metrics"])
-                    print('iter', counter, '\b:',
-                          metrics.get_metrics(), file=self.file, flush=True)
-                    print('iter', counter, '\b:',
-                          metrics.get_metrics(), flush=True)
+                    print('iter', counter, ':',
+                          metrics.get_metrics(), file=self.file)
+                    print('iter', counter, ':',
+                          metrics.get_metrics())
                     metric = metrics.get_metrics()[0]
 
                     if all(abs(t - metric) > 0.2 for t in lis_value):

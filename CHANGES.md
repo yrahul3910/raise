@@ -4,6 +4,7 @@
 
 * Bug fixes in `DODGEInterpreter`
 * Bug fixes in `Learner`
+* Bug fixes in `DODGE`
 
 ## 1.3.1
 
