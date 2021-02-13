@@ -145,7 +145,7 @@ def get_popt20(data) -> float:
             recall += [hit / total_true if total_true else 0.0]
         return recall
 
-    data.sort_values(by=["bug", "loc"], ascending=[0, 1], inplace=True)
+    data.sort_values(by=["bug", "loc"], inplace=True)
     x_sum = float(sum(data['loc']))
     x = data['loc'].apply(lambda t: t / x_sum)
     xx = subtotal(x)
@@ -154,7 +154,10 @@ def get_popt20(data) -> float:
     yy = get_recall_(data['bug'].values)
     xxx = [i for i in xx if i <= 0.2]
     yyy = yy[:len(xxx)]
-    s_opt = round(auc(xxx, yyy), 3)
+    try:
+        s_opt = round(auc(xxx, yyy), 3)
+    except ValueError:
+        s_opt = 0
 
     # get AUC_worst
     xx = subtotal(x[::-1])
@@ -163,7 +166,7 @@ def get_popt20(data) -> float:
     yyy = yy[:len(xxx)]
     try:
         s_wst = round(auc(xxx, yyy), 3)
-    except FloatingPointError:
+    except:
         s_wst = 0
 
     # get AUC_prediction

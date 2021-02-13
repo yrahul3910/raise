@@ -18,11 +18,10 @@ class Data:
         :param other: Other Data object
         :return: Data
         """
-        x_train = np.concatenate((self.x_train, other.x_train), axis=0)
-        x_test = np.concatenate((self.x_test, other.x_test), axis=0)
-        y_train = np.concatenate((self.y_train, other.y_train), axis=0)
-        y_test = np.concatenate((self.y_test, other.y_test), axis=0)
-
+        x_train = pd.concat((self.x_train, other.x_train), axis=0)
+        x_test = pd.concat((self.x_test, other.x_test), axis=0)
+        y_train = pd.concat((self.y_train, other.y_train), axis=0)
+        y_test = pd.concat((self.y_test, other.y_test), axis=0)
         return Data(x_train, x_test, y_train, y_test)
 
     def __iter__(self):
@@ -52,20 +51,21 @@ class Data:
 
     def get_popt_data(self, preds):
         preds = pd.Series(np.array(preds).squeeze(), name="prediction")
+        self.x_test.reset_index(inplace=True, drop=True)
+        self.y_test.reset_index(drop=True, inplace=True)
         if isinstance(self.x_train, pd.DataFrame):
-            return pd.concat((self.x_train, self.y_train, preds), axis=1)
+            return pd.concat((self.x_test, self.y_test, preds), axis=1)
         else:
-            return pd.DataFrame({
-                "data": self.x_test,
-                "bug": self.y_test,
-                "prediction": preds
-            })
+            df = pd.DataFrame(self.x_test)
+            df["bug"] = self.y_test
+            df["prediction"] = preds
+            return df
 
 
 class DataLoader:
     """Data loading utilities"""
 
-    @staticmethod
+    @ staticmethod
     def from_files(base_path: str, files: list, target: str = "bug", col_start: int = 3, col_stop: int = -2, n_classes: int = 2, hooks: list = None) -> Data:
         """
         Builds data from a list of files, the last of which is the test set.
@@ -110,7 +110,7 @@ class DataLoader:
 
         return Data(X_train, X_test, y_train, y_test)
 
-    @staticmethod
+    @ staticmethod
     def from_file(path: str, target="bug", col_start=3, col_stop=-2, hooks: list = None) -> Data:
         """
         Path to file
@@ -139,7 +139,7 @@ class DataLoader:
 class TextDataLoader:
     """Class for loading text data."""
 
-    @staticmethod
+    @ staticmethod
     def from_file(filename, splitter=">>>"):
         """
         Reads data from a file, where data and labels are separated by splitter.
