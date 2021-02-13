@@ -29,6 +29,7 @@ setup(name='raise_utils',
           'numpy>=1.19.2',
           'pandas',
           'cvxopt',
+          'ray[tune]',
           'imblearn'
       ]
       )
