@@ -71,20 +71,6 @@ class THE:
 
 
 # -----------------------------------------------------
-def cliffsDeltaSlow(lst1, lst2, dull=THE.cliffs.dull):
-    """Returns true if there are more than 'dull' difference.
-       Warning: O(N)^2."""
-    n = gt = lt = 0.0
-    for x in lst1:
-        for y in lst2:
-            n += 1
-            if x > y:
-                gt += 1
-            if x < y:
-                lt += 1
-    return abs(lt - gt) / n <= dull
-
-
 def cliffsDelta(lst1, lst2, dull=THE.cliffs.dull):
     "By pre-soring the lists, this cliffsDelta runs in NlogN time"
 

@@ -91,3 +91,8 @@ class Transform:
             else:
                 data.x_train, data.y_train = self.transformer.fit_sample(
                     data.x_train, data.y_train)
+
+        if self.name == "none":
+            # Fix weirdness with NullTransform.
+            data.x_train = data.x_train[0]
+            data.x_test = data.x_test[0]
