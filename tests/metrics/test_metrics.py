@@ -18,10 +18,10 @@ def test_popt20_needs_add_data():
 def test_metrics():
     metrics = ClassificationMetrics([1, 0, 1, 1, 1, 0], [0, 1, 0, 1, 1, 0])
     metrics.add_metrics(['accuracy', 'pf', 'pd', 'recall',
-                         'd2h', 'f1', 'prec', 'conf'])
+                         'd2h', 'f1', 'prec', 'conf', 'd2h2'])
     results = metrics.get_metrics()
 
-    assert len(results) == 8
+    assert len(results) == 9
     assert results[0] == 0.5  # Accuracy
     assert results[1] == 0.5  # pf
     assert results[2] == 0.5  # recall
@@ -30,3 +30,4 @@ def test_metrics():
     assert results[5] - 4 / 7 < 1e-3
     assert results[6] == 2. / 3
     assert results[7] == (2, 1, 1, 2)
+    assert results[8] == 1. / math.sqrt(2) - math.sqrt(3./2) / 2

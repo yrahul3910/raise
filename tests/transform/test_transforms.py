@@ -1,6 +1,9 @@
 from raise_utils.transform import Transform
-from raise_utils.data import DataLoader
+from raise_utils.transform.wfo import WeightedFuzzyOversampler
+from raise_utils.transform.text.tfidf import TfIdf
+from raise_utils.data import DataLoader, TextDataLoader
 import numpy as np
+import pytest
 
 
 def test_null():
@@ -37,6 +40,14 @@ def test_wfo():
     assert len_pre < len_post
 
 
+def test_wfo_transform_raises_error():
+    data = DataLoader.from_file('../promise/log4j-1.1.csv')
+    transform = WeightedFuzzyOversampler()
+
+    with pytest.raises(NotImplementedError):
+        transform.transform(data.x_test)
+
+
 def test_rwfo():
     data = DataLoader.from_file('../promise/log4j-1.1.csv')
 
@@ -57,3 +68,44 @@ def test_cfs():
 
     len_post = data.x_train.shape[1]
     assert len_pre > len_post
+
+
+def test_hasing_works():
+    data = TextDataLoader.from_file('../pits/pitsA.txt')
+    transform = Transform('hashing', random=True)
+    transform.apply(data)
+
+    assert True
+
+
+def test_tfidf_works():
+    data = TextDataLoader.from_file('../pits/pitsA.txt')
+    transform = Transform('tfidf', random=True)
+    transform.apply(data)
+
+    assert True
+
+
+def test_tf_works():
+    data = TextDataLoader.from_file('../pits/pitsA.txt')
+    transform = Transform('tf', random=True)
+    transform.apply(data)
+
+    assert True
+
+
+def test_lda_works():
+    data = TextDataLoader.from_file('../pits/pitsA.txt')
+    transform = Transform('tf')
+    transform.apply(data)
+    transform = Transform('lda', random=True)
+    transform.apply(data)
+
+    assert True
+
+
+def test_text_transformers_raise_err():
+    tfidf = TfIdf(random=True)
+
+    with pytest.raises(AssertionError):
+        tfidf.transform([])

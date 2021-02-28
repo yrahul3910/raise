@@ -27,14 +27,6 @@ def midd(x, y):
     return -entropyd(list(zip(x, y))) + entropyd(x) + entropyd(y)
 
 
-def cmidd(x, y, z):
-    """
-    Discrete mutual information estimator given a list of samples which can be any hashable object
-    """
-
-    return entropyd(list(zip(y, z))) + entropyd(list(zip(x, z))) - entropyd(list(zip(x, y, z))) - entropyd(z)
-
-
 def hist(sx):
     # Histogram from list of samples
     d = dict()
@@ -54,15 +46,6 @@ def elog(x):
         return 0
     else:
         return x * log(x)
-
-
-# Utility functions
-def vectorize(scalarlist):
-    """
-    Turn a list of scalars into a list of one-d vectors
-    """
-
-    return [(x,) for x in scalarlist]
 
 
 def zip2(*args):
