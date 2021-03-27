@@ -42,16 +42,7 @@ def entropyfromprobs(probs, base=2):
 
 def elog(x):
     # for entropy, 0 log 0 = 0. but we get an error for putting log 0
-    if x <= 0. or x >= 1.:
-        return 0
-    else:
-        return x * log(x)
-
-
-def zip2(*args):
-    # zip2(x,y) takes the lists of vectors and makes it a list of vectors in a joint space
-    # E.g. zip2([[1],[2],[3]],[[4],[5],[6]]) = [[1,4],[2,5],[3,6]]
-    return [sum(sublist, []) for sublist in zip(*args)]
+    return x * log(x) if x > 0 and x < 1 else 0
 
 
 def information_gain(f1, f2):

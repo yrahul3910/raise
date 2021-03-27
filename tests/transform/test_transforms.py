@@ -1,4 +1,5 @@
 from raise_utils.transform import Transform
+from raise_utils.transform.cfs import CFS
 from raise_utils.transform.wfo import WeightedFuzzyOversampler
 from raise_utils.transform.text.tfidf import TfIdf
 from raise_utils.data import DataLoader, TextDataLoader
@@ -68,6 +69,14 @@ def test_cfs():
 
     len_post = data.x_train.shape[1]
     assert len_pre > len_post
+
+
+def test_cfs_raises():
+    data = DataLoader.from_file('../promise/log4j-1.1.csv')
+    transform = CFS()
+
+    with pytest.raises(AssertionError):
+        transform.transform(data.x_test)
 
 
 def test_hasing_works():

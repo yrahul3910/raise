@@ -6,3 +6,6 @@ pytest --cov=raise_utils --cov-report=xml ../
 if [ "$1" = "--coverage" ]; then
     coverage report -m --skip-covered --sort=cover
 fi
+
+# Remove temp files
+rm test_dodge.txt test_experiment
