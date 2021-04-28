@@ -2,19 +2,27 @@ import numpy as np
 
 
 def fuzz_data(X, y, radii=(0., .3, .03)):
-    idx = np.where(y == 1)[0]
-    frac = len(idx) * 1. / len(y)
+    # identify the majority class
+    counts = [sum(y == i) for i in range(len(np.unique(y)))]
+    majority = np.argmax(counts)
 
     fuzzed_x = []
     fuzzed_y = []
+    for c in range(len(np.unique(y))):
+        if c == majority:
+            continue
 
-    for row in X[idx]:
-        for i, r in enumerate(np.arange(*radii)):
-            for _ in range(int((1. / frac) / pow(2., i))):
-                fuzzed_x.append([val - r for val in row])
-                fuzzed_x.append([val + r for val in row])
-                fuzzed_y.append(1)
-                fuzzed_y.append(1)
+        # run wfo on class c
+        idx = np.where(y == c)[0]
+        frac = len(idx) * 1. / len(y)
+
+        for row in X[idx]:
+            for i, r in enumerate(np.arange(*radii)):
+                for _ in range(int((1. / frac) / pow(2., i))):
+                    fuzzed_x.append([val - r for val in row])
+                    fuzzed_x.append([val + r for val in row])
+                    fuzzed_y.append(c)
+                    fuzzed_y.append(c)
 
     return np.concatenate((X, np.array(fuzzed_x)), axis=0), np.concatenate((y, np.array(fuzzed_y)))
 
