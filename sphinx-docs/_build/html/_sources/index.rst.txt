@@ -40,7 +40,7 @@ The RAISE Package
 =============================
 
 .. automodule:: raise_utils.interpret
-   :members: DODGEInterpreter, ResultsInterpreter
+   :members: DODGEInterpreter, ResultsInterpreter, ScottKnott
 
 :code:`raise_utils.learners`
 ============================
