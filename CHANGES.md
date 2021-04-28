@@ -1,5 +1,12 @@
 # Change Log
 
+## 1.4.0
+
+* Bug fixes in `WeightedFuzzyOversampling`
+* Added `raise_utils.interpret.ScottKnott`
+* Relaxed TensorFlow version dependency
+* Added many more test cases--and bug fixes along with them!
+
 ## 1.3.2
 
 * Bug fixes in `DODGEInterpreter`
