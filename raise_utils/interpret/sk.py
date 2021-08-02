@@ -63,7 +63,7 @@ class THE:
     char = o(skip="?")
     rx = o(show="%4s %10s %s")
     tile = o(width=50,
-             chops=[0.1, 0.3, 0.5, 0.7, 0.9],
+             chops=[0.1, 0.25, 0.5, 0.75, 0.9],
              marks=[" ", "-", "-", "-", " "],
              bar="|",
              star="*",

@@ -2,7 +2,7 @@ from setuptools import setup
 import os
 
 setup(name='raise_utils',
-      version='1.4.0',
+      version='1.5.0',
       description='RAISE lab package (LGPL-3.0-or-later)',
       author='RAISE, NC State University',
       author_email='ryedida@ncsu.edu',
@@ -24,8 +24,8 @@ setup(name='raise_utils',
           'raise_utils'
       ],
       install_requires=[
-          'scikit-learn~=0.23.2',
-          'tensorflow~=2.4.0',
+          'scikit-learn>=0.23.2',
+          'tensorflow>=2.0.0',
           'numpy>=1.19.2',
           'pandas',
           'cvxopt',

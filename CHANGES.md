@@ -1,5 +1,12 @@
 # Change Log
 
+## 1.5.0
+
+* **Breaking change:** Renamed `raise_utils.transform` to `raise_utils.transforms`
+* Added `GHOST` to `raise_utils.hyperparams`
+* Relaxed `tensorflow` dependency to `>=2.0.0`
+* Added `common_transforms` to `raise_utils.transforms`
+
 ## 1.4.0
 
 * Bug fixes in `WeightedFuzzyOversampling`

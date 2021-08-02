@@ -37,6 +37,8 @@ text_transforms = [
     "lda"
 ]
 
+common_transforms = ['normalize', 'minmax', 'maxabs', 'robust', 'kernel']
+
 
 class Transform:
     """An encapsulation for data transforms."""
