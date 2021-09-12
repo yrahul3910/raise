@@ -1,2 +1,2 @@
-from raise_utils.transform.transform import Transform
-from raise_utils.transform.transform import common_transforms
+from raise_utils.transforms.transform import Transform
+from raise_utils.transforms.transform import common_transforms

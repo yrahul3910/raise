@@ -6,7 +6,7 @@ from tensorflow.keras.callbacks import EarlyStopping
 from tensorflow.keras import backend as K
 import numpy as np
 from raise_utils.learners.learner import Learner
-from raise_utils.transform.wfo import fuzz_data
+from raise_utils.transforms.wfo import fuzz_data
 from imblearn.over_sampling import SMOTE
 
 

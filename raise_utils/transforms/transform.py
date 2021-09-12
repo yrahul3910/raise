@@ -5,12 +5,12 @@ from sklearn.preprocessing import MaxAbsScaler
 from sklearn.preprocessing import RobustScaler
 from sklearn.preprocessing import KernelCenterer
 from imblearn.over_sampling import SMOTE
-from raise_utils.transform.cfs import CFS
-from raise_utils.transform.inliers import OutlierRemoval
-from raise_utils.transform.null import NullTransform
-from raise_utils.transform.text.transform import TextTransform
-from raise_utils.transform.wfo import WeightedFuzzyOversampler
-from raise_utils.transform.wfo import RadiallyWeightedFuzzyOversampler
+from raise_utils.transforms.cfs import CFS
+from raise_utils.transforms.inliers import OutlierRemoval
+from raise_utils.transforms.null import NullTransform
+from raise_utils.transforms.text.transform import TextTransform
+from raise_utils.transforms.wfo import WeightedFuzzyOversampler
+from raise_utils.transforms.wfo import RadiallyWeightedFuzzyOversampler
 import numpy as np
 
 from raise_utils.data.data import Data
@@ -91,7 +91,7 @@ class Transform:
                 if self.name != "wfo" and self.name != "rwfo":
                     data.x_test = self.transformer.transform(data.x_test)
             else:
-                data.x_train, data.y_train = self.transformer.fit_sample(
+                data.x_train, data.y_train = self.transformer.fit_resample(
                     data.x_train, data.y_train)
 
         if self.name == "none":
