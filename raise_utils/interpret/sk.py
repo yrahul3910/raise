@@ -251,14 +251,14 @@ class Rx(Mine):
     @staticmethod
     def sk(rxs, effect=THE.cliffs.dull[0]):
         "sort treatments and rank them"
-		effect_dict = {
-			'small': THE.cliffs.dull[0],
-			'medium': THE.cliffs.dull[1],
-			'large': THE.cliffs.dull[2]
-		}
+        effect_dict = {
+            'small': THE.cliffs.dull[0],
+            'medium': THE.cliffs.dull[1],
+            'large': THE.cliffs.dull[2]
+        }
 
-		if effect in effect_dict:
-			effect = effect_dict[effect]
+        if effect in effect_dict:
+            effect = effect_dict[effect]
 
         def divide(lo, hi, b4, rank):
             cut = left = right = None
