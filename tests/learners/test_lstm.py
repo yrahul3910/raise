@@ -1,8 +1,6 @@
 from raise_utils.learners import TextDeepLearner
 from raise_utils.data import TextDataLoader
-from raise_utils.transform import Transform
 import pytest
-import warnings
 
 
 def test_lstm_works():
