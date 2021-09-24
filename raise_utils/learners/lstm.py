@@ -91,7 +91,7 @@ class TextDeepLearner(Learner):
         :param x_test: Test data
         :return: np.ndarray
         """
-        return self.learner.predict_classes(self.x_test)
+        return (self.learner.predict(self.x_test) > 0.5).astype('int32')
 
     def predict(self, x_test):
         """

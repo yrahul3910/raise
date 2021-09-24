@@ -102,7 +102,7 @@ class FeedforwardDL(Learner):
 
             if self.smote:
                 sm = SMOTE()
-                self.x_train, self.y_train = sm.fit_sample(
+                self.x_train, self.y_train = sm.fit_resample(
                     self.x_train, self.y_train)
 
         for _ in range(self.n_layers):

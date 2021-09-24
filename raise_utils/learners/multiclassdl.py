@@ -75,7 +75,7 @@ class MulticlassDL(Learner):
         if self.wfo:
             self.x_train, self.y_train = fuzz_data(self.x_train, self.y_train)
             sm = SMOTE()
-            self.x_train, self.y_train = sm.fit_sample(
+            self.x_train, self.y_train = sm.fit_resample(
                 self.x_train, self.y_train)
 
             self.y_train = to_categorical(
