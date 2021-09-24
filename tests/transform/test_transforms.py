@@ -1,7 +1,7 @@
-from raise_utils.transform import Transform
-from raise_utils.transform.cfs import CFS
-from raise_utils.transform.wfo import WeightedFuzzyOversampler
-from raise_utils.transform.text.tfidf import TfIdf
+from raise_utils.transforms import Transform
+from raise_utils.transforms.cfs import CFS
+from raise_utils.transforms.wfo import WeightedFuzzyOversampler
+from raise_utils.transforms.text.tfidf import TfIdf
 from raise_utils.data import DataLoader, TextDataLoader
 import numpy as np
 import pytest
