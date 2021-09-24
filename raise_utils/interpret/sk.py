@@ -56,7 +56,7 @@ class THE:
     cliffs = o(dull=[0.147,  # small
                      0.33,  # medium
                      0.474  # large
-                     ][0])
+                     ])
     bs = o(conf=0.05,
            b=500)
     mine = o(private="_")
@@ -71,7 +71,7 @@ class THE:
 
 
 # -----------------------------------------------------
-def cliffsDelta(lst1, lst2, dull=THE.cliffs.dull):
+def cliffsDelta(lst1, lst2, dull=THE.cliffs.dull[0]):
     "By pre-soring the lists, this cliffsDelta runs in NlogN time"
 
     def runs(lst):
@@ -249,8 +249,16 @@ class Rx(Mine):
             print(THE.rx.show % (rx.rank, rx.rx, rx.tiles()))
 
     @staticmethod
-    def sk(rxs):
+    def sk(rxs, effect=THE.cliffs.dull[0]):
         "sort treatments and rank them"
+		effect_dict = {
+			'small': THE.cliffs.dull[0],
+			'medium': THE.cliffs.dull[1],
+			'large': THE.cliffs.dull[2]
+		}
+
+		if effect in effect_dict:
+			effect = effect_dict[effect]
 
         def divide(lo, hi, b4, rank):
             cut = left = right = None

@@ -6,6 +6,7 @@
 * Added `GHOST` to `raise_utils.hyperparams`
 * Relaxed `tensorflow` dependency to `>=2.0.0`
 * Added `common_transforms` to `raise_utils.transforms`
+* Added the `effect` option to `raise_utils.interpret.ScottKnott`.
 
 ## 1.4.0
 
