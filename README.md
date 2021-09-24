@@ -17,7 +17,7 @@
 <a href='https://raise.readthedocs.io/en/latest/?badge=latest'>
     <img src='https://readthedocs.org/projects/raise/badge/?version=latest' alt='Documentation Status' />
 </a>
-<a href="https://travis-ci.org/yrahul3910/raise"><img src="https://travis-ci.org/yrahul3910/raise.svg?branch=master" /></a>
+<a href="https://circleci.com/gh/yrahul3910/raise/tree/master"><img src="https://circleci.com/gh/yrahul3910/raise/tree/master.svg?style=svg" alt="CircleCI" /></a>
 <a href="https://www.codacy.com/manual/yrahul3910/raise?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=yrahul3910/raise&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/8352fafd16454ea995f43891d9571d22"/></a>&nbsp;
 <a href="https://codecov.io/gh/yrahul3910/raise">
     <img src="https://codecov.io/gh/yrahul3910/raise/branch/master/graph/badge.svg?token=6U8KR6PYZA"/>
