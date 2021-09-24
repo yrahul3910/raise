@@ -38,4 +38,7 @@ jobs:
       - run:
           name: Run tests
           # This assumes pytest is installed via the install-package step above
-          command: cd tests && ./test.sh && bash <(curl -s https://codecov.io/bash)
+          command: cd tests && ./test.sh 
+      - run:
+          name: Upload to codecov
+          command: bash <(curl -s https://codecov.io/bash)

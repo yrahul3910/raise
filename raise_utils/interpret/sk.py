@@ -16,35 +16,6 @@ Ouputs treatments, clustered such that things that have similar
 results get the same ranks.
 """
 
-
-# -----------------------------------------------------
-# Examples
-
-def skDemo(n=5):
-    # Rx.data is one way to run the code
-    return Rx.data(x1=[0.34, 0.49, 0.51, 0.6] * n,
-                   x2=[0.6, 0.7, 0.8, 0.89] * n,
-                   x3=[0.13, 0.23, 0.38, 0.38] * n,
-                   x4=[0.6, 0.7, 0.8, 0.9] * n,
-                   x5=[0.1, 0.2, 0.3, 0.4] * n)
-
-
-"""
-Another is to make a file
-
-x1  0.34  0.49  0.51  0.6
-x2  0.6   0.7   0.8   0.9
-x3  0.15  0.25  0.4   0.35
-x4  0.6   0.7   0.8   0.9
-x5  0.1   0.2   0.3   0.4
-
-Then call 
-
-   Rx.fileIn( fileName )
-
-"""
-
-
 # -----------------------------------------------------
 # Config
 
@@ -350,28 +321,6 @@ def thing(x):
         except ValueError:
             return x
 
-
-# -------------------------------------------------------
-def _cliffsDelta():
-    "demo function"
-    lst1 = [1, 2, 3, 4, 5, 6, 7] * 100
-    n = 1
-    for _ in range(10):
-        lst2 = [x * n for x in lst1]
-        print(cliffsDelta(lst1, lst2), n)  # should return False
-        n *= 1.03
-
-
-def bsTest(n=1000, mu1=10, sigma1=1, mu2=10.2, sigma2=1):
-    def g(mu, sigma): return random.gauss(mu, sigma)
-
-    x = [g(mu1, sigma1) for i in range(n)]
-    y = [g(mu2, sigma2) for i in range(n)]
-    return n, mu1, sigma1, mu2, sigma2, \
-        'same' if bootstrap(x, y) else 'different'
-
-
-# -------------------------------------------------------
 
 if __name__ == "__main__":
     Rx.fileIn(sys.argv[1])
