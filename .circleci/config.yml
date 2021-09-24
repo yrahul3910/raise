@@ -41,4 +41,4 @@ jobs:
           command: cd tests && ./test.sh 
       - run:
           name: Upload to codecov
-          command: bash <(curl -s https://codecov.io/bash)
+          command: cd tests && bash <(curl -s https://codecov.io/bash)
