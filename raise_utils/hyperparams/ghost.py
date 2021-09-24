@@ -1,4 +1,4 @@
-from raise_utils.transform import Transform
+from raise_utils.transforms import Transform
 from raise_utils.hyperparams import DODGE
 from raise_utils.learners import FeedforwardDL, Autoencoder
 import numpy as np
