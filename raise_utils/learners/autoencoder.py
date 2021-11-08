@@ -96,7 +96,7 @@ class Autoencoder(Learner):
 
         self.model.compile(loss='mse', optimizer='adam')
         self.model.fit(self.x_train, self.x_train, epochs=self.n_epochs)
-		self.learner = self.model
+        self.learner = self.model
 
     def encode(self, x: np.ndarray) -> np.ndarray:
         """
