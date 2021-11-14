@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.5.1
+
+* `Autoencoder` now uses Early Stopping.
+* Bug fixes in import statements
+
 ## 1.5.0
 
 * **Breaking change:** Renamed `raise_utils.transform` to `raise_utils.transforms`

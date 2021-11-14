@@ -1,5 +1,6 @@
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Dense, Input
+from tensorflow.keras.callbacks import EarlyStopping
 import numpy as np
 from raise_utils.learners.learner import Learner
 
@@ -95,7 +96,9 @@ class Autoencoder(Learner):
             raise AssertionError('Model is None.')
 
         self.model.compile(loss='mse', optimizer='adam')
-        self.model.fit(self.x_train, self.x_train, epochs=self.n_epochs)
+        early_stopping = EarlyStopping(patience=10, min_delta=1e-3)
+        self.model.fit(self.x_train, self.x_train,
+                       epochs=self.n_epochs, callbacks=[early_stopping])
         self.learner = self.model
 
     def encode(self, x: np.ndarray) -> np.ndarray:
