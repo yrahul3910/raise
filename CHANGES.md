@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.5.2
+
+* Added `bs` option to `FeedforwardDL`
+* Bug fixes in Autoencoder
+* FeedforwardDL now uses Early Stopping
+
 ## 1.5.1
 
 * `Autoencoder` now uses Early Stopping.
