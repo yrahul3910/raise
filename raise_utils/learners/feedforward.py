@@ -119,7 +119,7 @@ class FeedforwardDL(Learner):
                     hook.call(self)
 
         self.model.fit(np.array(self.x_train), np.array(
-            self.y_train), epochs=self.n_epochs, bs=self.bs, verbose=self.verbose)
+            self.y_train), epochs=self.n_epochs, batch_size=self.bs, verbose=self.verbose)
         if self.hooks is not None:
             if self.hooks.get('post_train', None):
                 for hook in self.hooks['post_train']:

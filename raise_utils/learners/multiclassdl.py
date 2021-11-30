@@ -15,11 +15,11 @@ class MulticlassDL(Learner):
     A standard feed-forward neural network.
     """
 
-    def __init__(self, wfo=False, n_classes=3, optimizer='adam', n_layers=3, n_units=19,
+    def __init__(self, wfo=False, bs=128, n_classes=3, optimizer='adam', n_layers=3, n_units=19,
                  activation='relu', n_epochs=10, verbose=1, *args, **kwargs):
         """
         Initializes the deep learner.
-        :param weighted: Whether to use a weighted loss function
+        :param bs: Batch size
         :param wfo: Whether to use weighted fuzzy oversampling
         :param optimizer: Choice of optimizer. Must be recognized by Keras.
         :param n_layers: Number of layers
@@ -34,6 +34,7 @@ class MulticlassDL(Learner):
 
         self.activation = activation
         self.wfo = wfo
+        self.bs = bs
         self.n_classes = n_classes
         self.optimizer = optimizer
         self.verbose = verbose
@@ -97,7 +98,7 @@ class MulticlassDL(Learner):
                 for hook in self.hooks['pre_train']:
                     hook.call(self)
 
-        self.model.fit(np.array(self.x_train), np.array(self.y_train), batch_size=512, epochs=self.n_epochs,
+        self.model.fit(np.array(self.x_train), np.array(self.y_train), batch_size=self.bs, epochs=self.n_epochs,
                        validation_split=0.2, verbose=self.verbose, callbacks=[
             EarlyStopping(monitor='val_loss', patience=15, min_delta=1e-3)
         ])
