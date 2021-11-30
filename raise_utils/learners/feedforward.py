@@ -30,11 +30,12 @@ class FeedforwardDL(Learner):
     A standard feed-forward neural network.
     """
 
-    def __init__(self, weighted=False, wfo=False, smote=None, optimizer='adam', n_layers=3, n_units=19,
+    def __init__(self, weighted=False, bs=128, wfo=False, smote=None, optimizer='adam', n_layers=3, n_units=19,
                  activation='relu', n_epochs=10, verbose=1, *args, **kwargs):
         """
         Initializes the deep learner.
         :param weighted: Whether to use a weighted loss function
+        :param bs: Batch size
         :param wfo: Whether to use weighted fuzzy oversampling
         :param smote: Whether or not to use SMOTE. This can be used individually, and
         is applied after weighted fuzzy oversampling. Leaving it to None will use the
@@ -52,6 +53,7 @@ class FeedforwardDL(Learner):
 
         self.activation = activation
         self.weighted = weighted
+        self.bs = bs
         self.wfo = wfo
         self.optimizer = optimizer
         self.verbose = verbose
@@ -117,7 +119,7 @@ class FeedforwardDL(Learner):
                     hook.call(self)
 
         self.model.fit(np.array(self.x_train), np.array(
-            self.y_train), epochs=self.n_epochs, verbose=self.verbose)
+            self.y_train), epochs=self.n_epochs, bs=self.bs, verbose=self.verbose)
         if self.hooks is not None:
             if self.hooks.get('post_train', None):
                 for hook in self.hooks['post_train']:
