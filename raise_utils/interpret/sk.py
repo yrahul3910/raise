@@ -19,6 +19,7 @@ results get the same ranks.
 # -----------------------------------------------------
 # Config
 
+
 class o:
     def __init__(i, **d): i.__dict__.update(**d)
 
@@ -154,7 +155,7 @@ class Mine:
 class Rx(Mine):
     "place to manage pairs of (TreatmentName,ListofResults)"
 
-    def __init__(self, rx="", vals=None):
+    def __init__(self, rx="", vals=None, dull=THE.cliffs.dull[0]):
         if vals is None:
             vals = []
         self.rx = rx
@@ -171,7 +172,7 @@ class Rx(Mine):
         return i.med < j.med
 
     def __eq__(i, j):
-        return cliffsDelta(i.vals, j.vals)  # and \
+        return cliffsDelta(i.vals, j.vals, dull=self.dull)  # and \
         # bootstrap(i.vals,j.vals)
 
     def __repr__(i):
@@ -239,7 +240,7 @@ class Rx(Mine):
                 right0 = Rx.sum(rxs[j:hi])
                 now = left0.xpect(right0, b4)
                 if now > best:
-                    if left0 != right0:
+                    if not cliffsDelta(left0.vals, right0.vals, dull=effect):
                         best, cut, left, right = now, j, kopy(
                             left0), kopy(right0)
             if cut:

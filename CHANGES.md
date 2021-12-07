@@ -1,10 +1,13 @@
 # Change Log
 
-## 1.5.2
+## 1.6.0
 
 * Added `bs` option to `FeedforwardDL`
 * Bug fixes in Autoencoder
 * FeedforwardDL now uses Early Stopping
+* Added backward compatibility in `DODGEInterpreter` for older versions
+* Bug fix in `DODGEInterpreter`
+* Bug fixes in `ScottKnott`
 
 ## 1.5.1
 
