@@ -3,6 +3,7 @@ import string
 import os
 import sys
 import numpy as np
+from copy import deepcopy
 
 from raise_utils.data.data import Data
 import itertools
@@ -48,7 +49,7 @@ class DODGE:
             print("Run #", _)
             print("=" * len("Run #" + str(_)))
 
-            data: Data = self.config["data"][0]
+            data: Data = deepcopy(self.config["data"][0])
 
             func_str_dic = {}
             func_str_counter_dic = {}
