@@ -40,9 +40,9 @@ class DODGE:
         for learner in self.config["learners"]:
             print(learner, flush=True)
 
-        dic = {}
-        dic_func = {}
         for _ in range(self.config.get("n_runs", 1)):
+            dic = {}
+            dic_func = {}
             print("Run #", _, file=self.file)
             print("=" * len("Run #" + str(_)), file=self.file)
             print("Run #", _)
