@@ -38,10 +38,12 @@ class DODGE:
         gc.collect()
 
     def optimize(self):
-        for learner in self.config["learners"]:
-            print(learner, flush=True)
+        scores = []
 
         for _ in range(self.config.get("n_runs", 1)):
+            cur_best_score = 0.
+            cur_best_metrics = []
+
             dic = {}
             dic_func = {}
             print("Run #", _, file=self.file)
@@ -99,6 +101,10 @@ class DODGE:
                           metrics.get_metrics())
                     metric = metrics.get_metrics()[0]
 
+                    if metric > cur_best_score:
+                        cur_best_score = metric
+                        cur_best_metrics = metrics.get_metrics()
+
                     if all(abs(t - metric) > 0.2 for t in lis_value):
                         lis_value.append(metric)
                         func_str_counter_dic[key] += 1
@@ -113,7 +119,11 @@ class DODGE:
                 except ValueError:
                     raise
 
+            scores.append(cur_best_metrics)
+
         dic["settings"] = dic_func
         print(dic, file=self.file)
+        print()
+        print('Median performance:', np.median(scores, axis=0))
         self.file.flush()
         self.file.close()

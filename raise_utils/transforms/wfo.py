@@ -6,6 +6,9 @@ def fuzz_data(X, y, radii=(0., .3, .03)):
     counts = [sum(y == i) for i in range(len(np.unique(y)))]
     majority = np.argmax(counts)
 
+    if len(counts) == 1:
+        return X, y
+
     fuzzed_x = []
     fuzzed_y = []
     for c in range(len(np.unique(y))):
@@ -24,7 +27,9 @@ def fuzz_data(X, y, radii=(0., .3, .03)):
                     fuzzed_y.append(c)
                     fuzzed_y.append(c)
 
-    return np.concatenate((X, np.array(fuzzed_x)), axis=0), np.concatenate((y, np.array(fuzzed_y)))
+    X_final = np.concatenate((X, np.array(fuzzed_x)), axis=0)
+    y_final = np.concatenate((y, np.array(fuzzed_y)))
+    return X_final, y_final
 
 
 class WeightedFuzzyOversampler:
@@ -38,7 +43,6 @@ class WeightedFuzzyOversampler:
 class RadiallyWeightedFuzzyOversampler:
     def fit_transform(self, x_train, y_train):
         # Use the Mueller method for generating a d-sphere
-
         idx = np.where(y_train == 1)[0]
         frac = len(idx) * 1. / len(y_train)
 

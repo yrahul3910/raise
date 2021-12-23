@@ -2,7 +2,9 @@
 
 ## 1.6.1
 
-* Bug fix in `DODGE`
+* Bug fixes in `DODGE`
+* `DODGE` does not print the learners anymore
+* `DODGE` prints out the median performance every run
 
 ## 1.6.0
 
