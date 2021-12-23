@@ -37,7 +37,11 @@ class DODGE:
         self.file.close()
         gc.collect()
 
-    def optimize(self):
+    def optimize(self) -> np.ndarray:
+        """
+        Performs hyper-parameter optimization using DODGE, and returns the
+        median performance.
+        """
         scores = []
 
         for _ in range(self.config.get("n_runs", 1)):
@@ -127,3 +131,5 @@ class DODGE:
         print('Median performance:', np.median(scores, axis=0))
         self.file.flush()
         self.file.close()
+
+        return np.median(scores, axis=0)
