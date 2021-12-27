@@ -9,7 +9,7 @@ class DODGEInterpreter:
     """Interprets the results of DODGE-generated files"""
 
     def __init__(self, files=None, max_by: Union[None, int, Callable[..., str]] = None,
-                 exclude_cols=None, metrics=None, settings=True) -> None:
+                 exclude_cols=None, metrics=None, n_iters=30, settings=True) -> None:
         """
         Initializes the interpreter.
 
@@ -21,6 +21,7 @@ class DODGEInterpreter:
         :param exclude_cols - List of column indices to exclude
         :param metrics - List of metrics passed to DODGE. If excluding columns,
                         do NOT include these in this list.
+        :param n_iters - The n_iter setting passed to DODGE.
         :param settings - Provides compatibility for older versions of DODGE, that
                         did not print settings. For those versions, set to False.
         :return DODGEInterpreter object
@@ -38,10 +39,11 @@ class DODGEInterpreter:
             self.max_by = max_by
         self.exclude_cols = exclude_cols
         self.metrics = metrics
+        self.n_iters = n_iters
         self.settings = settings
 
     def interpret(self) -> dict:
-        DODGE_ITER = 30
+        DODGE_ITER = self.n_iters
         medians = {}
 
         for file in self.files:

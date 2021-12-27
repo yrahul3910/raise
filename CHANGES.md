@@ -5,6 +5,7 @@
 * Bug fixes in `DODGE`
 * `DODGE` does not print the learners anymore
 * `DODGE` prints out the median performance every run
+* New `n_iters` option added to `DODGEInterpreter`
 
 ## 1.6.0
 
