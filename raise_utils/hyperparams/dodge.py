@@ -104,7 +104,7 @@ class DODGE:
                       metrics.get_metrics())
                 metric = metrics.get_metrics()[0]
 
-                if metric > cur_best_score:
+                if metric >= cur_best_score:
                     cur_best_score = metric
                     cur_best_metrics = metrics.get_metrics()
 

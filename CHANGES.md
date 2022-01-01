@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.6.2
+
+* Bug fix in `DODGE`
+
 ## 1.6.1
 
 * Bug fixes in `DODGE`
