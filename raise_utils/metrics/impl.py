@@ -89,6 +89,17 @@ def get_pf(y_true, y_pred) -> float:
     return 1. * fp / (fp + tn) if fp + tn != 0 else 0
 
 
+def get_pd_pf(y_true, y_pred) -> float:
+    """
+    Returns the value of recall - false alarm rate.
+
+    :param y_true: True labels
+    :param y_pred: Predictions
+    :return: Recall - false alarm rate
+    """
+    return get_recall(y_true, y_pred) - get_pf(y_true, y_pred)
+
+
 def get_roc_auc(y_true, y_pred) -> float:
     """
     Returns the area under the pd/pf curve

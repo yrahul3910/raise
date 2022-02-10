@@ -10,7 +10,8 @@ class Autoencoder(Learner):
     A standard autoencoder architecture.
     """
 
-    def __init__(self, n_layers: int = 2, n_units: list = [10, 10], n_out: int = 10, n_epochs=500, activation='relu', verbose=1, *args, **kwargs):
+    def __init__(self, n_layers: int = 2, n_units: list = (10, 10), n_out: int = 10, n_epochs=500, activation='relu',
+                 bs=128, verbose=1, *args, **kwargs):
         """
         Initializes the autoencoder.
 
@@ -18,6 +19,7 @@ class Autoencoder(Learner):
         :param n_units: The number of units in each hidden layer.
         :param n_out: The number of encoded dimensions.
         :param n_epochs: The number of epochs to train
+        :param bs: The batch size to use in training
         :param verbose: Whether training should be verbose
         """
         super().__init__(*args, **kwargs)
@@ -26,6 +28,7 @@ class Autoencoder(Learner):
         self.n_units = n_units
         self.n_epochs = n_epochs
         self.n_out = n_out
+        self.bs = bs
         self.verbose = verbose
         self.loss = 'mse'
         self.activation = activation
@@ -98,7 +101,7 @@ class Autoencoder(Learner):
         self.model.compile(loss='mse', optimizer='adam')
         early_stopping = EarlyStopping(monitor='loss', patience=10, min_delta=1e-3)
         self.model.fit(self.x_train, self.x_train,
-                       epochs=self.n_epochs, callbacks=[early_stopping])
+                       epochs=self.n_epochs, batch_size=self.bs, callbacks=[early_stopping], verbose=self.verbose)
         self.learner = self.model
 
     def encode(self, x: np.ndarray) -> np.ndarray:

@@ -104,8 +104,12 @@ class FeedforwardDL(Learner):
 
             if self.smote:
                 sm = SMOTE()
-                self.x_train, self.y_train = sm.fit_resample(
-                    self.x_train, self.y_train)
+
+                try:
+                    self.x_train, self.y_train = sm.fit_resample(
+                        self.x_train, self.y_train)
+                except ValueError:
+                    print('[WARN] FeedforwardDL: SMOTE failed.')
 
         for _ in range(self.n_layers):
             self.model.add(Dense(self.n_units, activation=self.activation))

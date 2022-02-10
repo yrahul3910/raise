@@ -6,9 +6,12 @@ The following metrics are supported:
  
 * `accuracy`   
 * `popt20`  
-* `pf`  
+* `pf`  (false alarm rate)
 * `pd` or `recall`  
 * `auc`  
-* `d2h`  
+* `d2h`  (d2h, but with reduced emphasis on pf)
+* `d2h2` (the original d2h)
 * `f1`  
 * `prec`
+* `pd-pf` (recall - false alarm rate)
+* `conf` (the confusion matrix)

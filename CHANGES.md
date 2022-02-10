@@ -3,6 +3,9 @@
 ## 1.6.2
 
 * Bug fix in `DODGE`
+* Added `bs` option to `Autoencoder`
+* Bug fix in `Autoencoder`
+* SMOTE failing in `FeedforwardDL` now prints a warning instead of raising a `ValueError`.
 
 ## 1.6.1
 
