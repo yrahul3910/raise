@@ -2,7 +2,7 @@
 
 ## 1.6.3
 
-* Added G-1 score and IFA (initial false alarm) to metrics (thanks @HuyTu7!)
+* Added G-1 score and IFA (initial false alarm) to metrics (thanks [@HuyTu7](https://github.com/HuyTu7)!)
 * Added `GHOST` and `BinaryGHOST` to `raise_utils.hyperparams`
 
 ## 1.6.2
