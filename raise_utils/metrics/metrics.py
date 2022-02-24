@@ -7,6 +7,8 @@ from raise_utils.metrics.impl import get_d2h, get_d2h2
 from raise_utils.metrics.impl import get_f1_score
 from raise_utils.metrics.impl import get_precision
 from raise_utils.metrics.impl import get_pd_pf
+from raise_utils.metrics.impl import get_ifa
+from raise_utils.metrics.impl import get_g1_score
 from raise_utils.metrics.impl import get_confusion_matrix
 import numpy as np
 
@@ -20,8 +22,10 @@ name_map = {
     "recall": get_recall,
     "auc": get_roc_auc,
     "d2h": get_d2h,
+    "ifa": get_ifa,
     "f1": get_f1_score,
     "prec": get_precision,
+    "g1": get_g1_score,
     "pd-pf": get_pd_pf,
     "conf": get_confusion_matrix
 }

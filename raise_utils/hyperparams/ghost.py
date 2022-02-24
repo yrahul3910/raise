@@ -1,82 +1,109 @@
+from raise_utils.learners import FeedforwardDL, Autoencoder, Learner
+from raise_utils.data import Data
 from raise_utils.transforms import Transform
 from raise_utils.hyperparams import DODGE
-from raise_utils.learners import FeedforwardDL, Autoencoder
+from raise_utils.utils import warn
 import numpy as np
 
 
-class GHOST:
+class BinaryGHOST(Learner):
     """
-    Implements the GHOST algorithm (Yedida & Menzies, 2021). The ablation study from the paper can be performed using this class as well.
-
-    Reference: https://arxiv.org/abs/2008.03835
+    Implements the original, 2-class GHOST algorithm.
     """
 
-    def __init__(self, data, metrics: list, log_path: str = './log/', name: str = 'ghost',
-                 n_learners: int = 30, weighted: bool = True, wfo: bool = True, smote: bool = True,
-                 ultrasample: bool = True, **ae_kws):
+    def __init__(self, metrics: list, ultrasample: bool = True,
+                 autoencode: bool = True, ae_thresh: float = 1e3,
+                 ae_layers: list = (10, 7), ae_out: int = 5, n_epochs: int = 50,
+                 max_evals: int = 30, bs=512, name='experiment', *args, **kwargs):
         """
-        Initializes the configuration.
+        Initializes the GHOST algorithm. Several of these are internal parameters exposed for completeness.
+        If you do not understand what a parameter does, the default value should work.
 
-        :param {Data} data - A Data object.
-        :param {list} metrics - A list of metrics. GHOST optimizes for the first metric.
-        :param {str} log_path - The log path.
-        :param {str} name - The name of the log file.
-        :param {int} n_learners - The number of learners GHOST should use.
-        :param {bool} weighted - Whether to use weighted loss functions.
-        :param {bool} wfo - Whether to use weighted fuzzy oversampling.
-        :param {bool} smote - Whether to use SMOTE.
-        :param {bool} ultrasample - Whether to use ultrasampling
-        :param **ae_kws - Keywords passed to the Autoencoder object. By default,
-        sets `n_layers=2, n_units=[10, 7], n_out=5`.
+        :param metrics: A list of metrics supplied by raise_utils.metrics to print out.
+        :param ultrasample: If True, perform ultrasampling.
+        :param autoencode: If True, uses an autoencoder.
+        :param ae_thresh: The threshold loss for the autoencoder.
+        :param ae_layers: The number of units in each layer of the autoencoder.
+        :param ae_out: The number of units the autoencoder outputs.
+        :param n_epochs: The number of epochs to train for
+        :param max_evals: The max number of hyper-parameter evaluations.
+        :param bs: Batch size to use for feedforward learner.
+        :param name: A name for the DODGE runs.
         """
-        self.data = data
+        super().__init__(*args, **kwargs)
+        self.name = name
         self.metrics = metrics
-        self.weighted = weighted
-        self.wfo = wfo
         self.ultrasample = ultrasample
+        self.autoencode = autoencode
+        self.n_epochs = n_epochs
+        self.ae_thresh = ae_thresh
+        self.ae_layers = ae_layers
+        self.max_evals = max_evals
+        self.ae_out = ae_out
+        self.bs = bs
 
-        if ae_kws == {}:
-            ae_kws = {
-                'n_layers': 2,
-                'n_units': [10, 7],
-                'n_out': 5
-            }
+    def fit(self):
+        self._check_data()
 
-        self.ae_kws = ae_kws
+        self.x_train = np.array(self.x_train)
+        self.x_test = np.array(self.x_test)
+        self.y_train = np.array(self.y_train).squeeze()
+        self.y_test = np.array(self.y_test).squeeze()
 
-    def optimize(self):
+        data = Data(self.x_train, self.x_test, self.y_train, self.y_test)
+
         if self.ultrasample:
             transform = Transform('wfo')
-            transform.apply(self.data)
+            transform.apply(data)
 
-            # Reverse labels
-            self.data.y_train = 1. - self.data.y_train
-            self.data.y_test = 1. - self.data.y_test
+            data.y_train = 1. - data.y_train
+            data.y_test = 1. - data.y_test
 
-            # Autoencode the inputs
-            loss = 1e4
-            while loss > 1e3:
-                ae = Autoencoder(**self.ae_kws)
-                ae.set_data(*self.data)
-                ae.fit()
+            if not self.autoencode:
+                warn(
+                    '[GHOST] autoencode is False, but ultrasample is True. This is not the standard.')
 
-                loss = ae.model.history.history['loss'][-1]
+            if self.autoencode:
+                loss = 1 + self.ae_thresh
+                tries = 0
+                while loss > self.ae_thresh and tries < 3:
+                    ae = Autoencoder(n_layers=len(self.ae_layers),
+                                     n_units=self.ae_layers, n_out=self.ae_out)
 
-            self.data.x_train = ae.encode(np.array(self.data.x_train))
-            self.data.x_test = ae.encode(np.array(self.data.x_test))
+                    # We can't use set_data because it does unwanted things with multi-class systems.
+                    ae.set_data(*data)
+                    ae.fit()
+
+                    loss = ae.model.history.history['loss'][-1]
+                    tries += 1
+
+                if tries < 3:
+                    data.x_train = ae.encode(np.array(data.x_train))
+                    data.x_test = ae.encode(np.array(data.x_test))
 
         dodge_config = {
-            'n_runs': 100,
-            'data': [self.data],
+            'n_runs': 20,
+            'data': [data],
             'metrics': self.metrics,
-            'learners': [FeedforwardDL(weighted=self.weighted, wfo=self.wfo, smote=self.smote,
-                                       random={'n_units': (
-                                           2, 6), 'n_layers': (2, 5)},
-                                       n_epochs=50) for _ in range(self.n_learners)],
-            'log_path': self.log_path,
+            'learners': [],
+            'log_path': './log/',
+            'transforms': ['standardize', 'normalize', 'minmax'] * 30,
             'random': True,
             'name': self.name
         }
 
+        for _ in range(30):
+            dodge_config['learners'].append(
+                FeedforwardDL(weighted=True, wfo=True, smote=True,
+                              random={'n_units': (2, 6), 'n_layers': (2, 5)},
+                              n_epochs=self.n_epochs, verbose=0)
+            )
+
         dodge = DODGE(dodge_config)
         dodge.optimize()
+
+    def predict(self, x_test):
+        """
+        Makes predictions on x_test.
+        """
+        raise NotImplementedError

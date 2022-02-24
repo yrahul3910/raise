@@ -13,5 +13,7 @@ The following metrics are supported:
 * `d2h2` (the original d2h)
 * `f1`  
 * `prec`
+* `g1`
+* `ifa` (initial false alarms)
 * `pd-pf` (recall - false alarm rate)
 * `conf` (the confusion matrix)

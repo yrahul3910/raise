@@ -31,13 +31,14 @@ The RAISE package is an attempt to unify code, and incorporate PEP8 standards. T
 ## Install
 
 ```
-pip3 install raise-utils
+pip3 install raise_utils
 ```
 
 ## Python Support
 
-Only Python 3 is supported, Python 2 is not. Because TensorFlow and sklearn do not yet support Python 3.9, this is not yet compatible with Python 3.9; please use an older version until then.
+Only Python 3 is supported, Python 2 is not. 
 
 ## Documentation
 
 Read our docs [here](https://github.com/yrahul3910/raise/tree/master/docs).
+You can find examples [in our examples directory](https://github.com/yrahul3910/raise/tree/master/raise_utils/examples).

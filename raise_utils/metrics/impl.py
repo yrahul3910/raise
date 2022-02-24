@@ -133,6 +133,35 @@ def get_d2h2(y_true, y_pred) -> float:
     return 1. / math.sqrt(2) - math.sqrt(2.*get_pf(y_true, y_pred) ** 2 + (1. - get_recall(y_true, y_pred)) ** 2) / math.sqrt(2)
 
 
+def get_ifa(y_true, y_pred) -> float:
+    ifa = 0
+    actual_results = np.asarray(y_true)
+    predicted_results = np.asarray(y_pred)
+    index = 0
+    for i, j in zip(actual_results, predicted_results):
+        if ((i == "yes") and (j == "yes")) or ((i == 1) and (j == 0)):
+            break
+        elif ((i == "no") and (j == "yes")) or ((i == 0) and (j == 1)):
+            ifa += 1
+        index += 1
+    return ifa
+
+
+def get_g1_score(y_true, y_pred) -> float:
+    """
+    Returns the G-1 score
+
+    :param y_true: True labels
+    :param y_pred: Predictions
+    :return: G-1 score
+    """
+    tp, tn, fp, fn = get_confusion_matrix(y_true, y_pred)
+    pf = 1. * fp / (fp + tn) if fp + tn != 0 else 0
+    recall = 1. * tp / (tp+fn) if tp + fn != 0 else 0
+    g_score = (2 * recall * (1 - pf)) / (recall + 1 - pf) if recall + 1 - pf != 0 else 0
+    return g_score
+
+
 def get_popt20(data) -> float:
     """
     Get popt20 score.
