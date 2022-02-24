@@ -30,6 +30,7 @@ setup(name='raise_utils',
           'pandas',
           'cvxopt',
           'colorama',
+          'hyperopt',
           'ray[tune]',
           'imblearn'
       ]

@@ -7,7 +7,7 @@
 <a href="https://github.com/yrahul3910/raise/blob/master/LICENSE">license</a>  |
 <a href="https://github.com/yrahul3910/raise/blob/master/CODE_OF_CONDUCT.md">contribute</a>  |
 <a href="https://github.com/yrahul3910/raise/issues/">issues</a>  |
-<a href="mailto:timm@ieee.org">contact</a>
+<a href="mailto:r.yedida@pm.me">contact</a>
 </p>
 <p align="center">
 <img src="https://img.shields.io/badge/language-python-orange.svg">&nbsp;
