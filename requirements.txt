@@ -4,6 +4,7 @@ cvxopt
 pandas
 numpy~=1.19.2
 tensorflow>=2.0.0
+colorama
 coverage
 ray[tune]
 scikit-learn>=0.23.2
