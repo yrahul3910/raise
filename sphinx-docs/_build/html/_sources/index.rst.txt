@@ -34,7 +34,7 @@ The RAISE Package
 ===============================
 
 .. automodule:: raise_utils.hyperparams
-   :members: DODGE
+   :members: DODGE, GHOST, BinaryGHOST, RayTune
 
 :code:`raise_utils.interpret`
 =============================
@@ -54,9 +54,9 @@ The RAISE Package
 .. automodule:: raise_utils.metrics
    :members: ClassificationMetrics
 
-:code:`raise_utils.transform`
-=============================
+:code:`raise_utils.transforms`
+==============================
 
-.. automodule:: raise_utils.transform
+.. automodule:: raise_utils.transforms
    :members: Transform
 

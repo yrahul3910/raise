@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Index &#8212; RAISE 1.2.0 documentation</title>
+    <title>Index &#8212; RAISE 1.6.3 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/classic.css" />
     
@@ -26,7 +26,7 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">RAISE 1.2.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">RAISE 1.6.3 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Index</a></li> 
       </ul>
     </div>  
@@ -56,6 +56,7 @@
  | <a href="#P"><strong>P</strong></a>
  | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
  | <a href="#W"><strong>W</strong></a>
  
 </div>
@@ -70,6 +71,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="index.html#raise_utils.metrics.ClassificationMetrics.add_metrics">add_metrics() (raise_utils.metrics.ClassificationMetrics method)</a>
 </li>
+      <li><a href="index.html#raise_utils.transforms.Transform.apply">apply() (raise_utils.transforms.Transform method)</a>
+</li>
       <li><a href="index.html#raise_utils.learners.Autoencoder">Autoencoder (class in raise_utils.learners)</a>
 </li>
   </ul></td>
@@ -79,6 +82,10 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="index.html#raise_utils.learners.BiasedSVM">BiasedSVM (class in raise_utils.learners)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="index.html#raise_utils.hyperparams.BinaryGHOST">BinaryGHOST (class in raise_utils.hyperparams)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -128,9 +135,13 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="index.html#raise_utils.learners.FeedforwardDL">FeedforwardDL (class in raise_utils.learners)</a>
 </li>
-      <li><a href="index.html#raise_utils.learners.Autoencoder.fit">fit() (raise_utils.learners.Autoencoder method)</a>
+      <li><a href="index.html#raise_utils.hyperparams.BinaryGHOST.fit">fit() (raise_utils.hyperparams.BinaryGHOST method)</a>
 
       <ul>
+        <li><a href="index.html#raise_utils.hyperparams.GHOST.fit">(raise_utils.hyperparams.GHOST method)</a>
+</li>
+        <li><a href="index.html#raise_utils.learners.Autoencoder.fit">(raise_utils.learners.Autoencoder method)</a>
+</li>
         <li><a href="index.html#raise_utils.learners.BiasedSVM.fit">(raise_utils.learners.BiasedSVM method)</a>
 </li>
         <li><a href="index.html#raise_utils.learners.FeedforwardDL.fit">(raise_utils.learners.FeedforwardDL method)</a>
@@ -154,11 +165,13 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="index.html#raise_utils.interpret.ResultsInterpreter.get_medians">get_medians() (raise_utils.interpret.ResultsInterpreter method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="index.html#raise_utils.metrics.ClassificationMetrics.get_metrics">get_metrics() (raise_utils.metrics.ClassificationMetrics method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="index.html#raise_utils.interpret.ScottKnott.get_results">get_results() (raise_utils.interpret.ScottKnott method)</a>
+</li>
+      <li><a href="index.html#raise_utils.hyperparams.GHOST">GHOST (class in raise_utils.hyperparams)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -212,6 +225,8 @@
 </li>
         <li><a href="index.html#module-raise_utils.metrics">raise_utils.metrics</a>
 </li>
+        <li><a href="index.html#module-raise_utils.transforms">raise_utils.transforms</a>
+</li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -232,7 +247,11 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="index.html#raise_utils.hyperparams.DODGE.optimize">optimize() (raise_utils.hyperparams.DODGE method)</a>
+
+      <ul>
+        <li><a href="index.html#raise_utils.hyperparams.RayTune.optimize">(raise_utils.hyperparams.RayTune method)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -241,9 +260,13 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="index.html#raise_utils.interpret.ScottKnott.pprint">pprint() (raise_utils.interpret.ScottKnott method)</a>
 </li>
-      <li><a href="index.html#raise_utils.learners.BiasedSVM.predict">predict() (raise_utils.learners.BiasedSVM method)</a>
+      <li><a href="index.html#raise_utils.hyperparams.BinaryGHOST.predict">predict() (raise_utils.hyperparams.BinaryGHOST method)</a>
 
       <ul>
+        <li><a href="index.html#raise_utils.hyperparams.GHOST.predict">(raise_utils.hyperparams.GHOST method)</a>
+</li>
+        <li><a href="index.html#raise_utils.learners.BiasedSVM.predict">(raise_utils.learners.BiasedSVM method)</a>
+</li>
         <li><a href="index.html#raise_utils.learners.FeedforwardDL.predict">(raise_utils.learners.FeedforwardDL method)</a>
 </li>
         <li><a href="index.html#raise_utils.learners.Learner.predict">(raise_utils.learners.Learner method)</a>
@@ -285,8 +308,6 @@
         <li><a href="index.html#module-raise_utils.hyperparams">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     raise_utils.interpret
 
@@ -294,6 +315,8 @@
         <li><a href="index.html#module-raise_utils.interpret">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     raise_utils.learners
 
@@ -308,7 +331,16 @@
         <li><a href="index.html#module-raise_utils.metrics">module</a>
 </li>
       </ul></li>
+      <li>
+    raise_utils.transforms
+
+      <ul>
+        <li><a href="index.html#module-raise_utils.transforms">module</a>
+</li>
+      </ul></li>
       <li><a href="index.html#raise_utils.learners.RandomForest">RandomForest (class in raise_utils.learners)</a>
+</li>
+      <li><a href="index.html#raise_utils.hyperparams.RayTune">RayTune (class in raise_utils.hyperparams)</a>
 </li>
       <li><a href="index.html#raise_utils.interpret.ResultsInterpreter">ResultsInterpreter (class in raise_utils.interpret)</a>
 </li>
@@ -322,9 +354,11 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="index.html#raise_utils.interpret.ScottKnott">ScottKnott (class in raise_utils.interpret)</a>
 </li>
-      <li><a href="index.html#raise_utils.learners.Autoencoder.set_data">set_data() (raise_utils.learners.Autoencoder method)</a>
+      <li><a href="index.html#raise_utils.hyperparams.GHOST.set_data">set_data() (raise_utils.hyperparams.GHOST method)</a>
 
       <ul>
+        <li><a href="index.html#raise_utils.learners.Autoencoder.set_data">(raise_utils.learners.Autoencoder method)</a>
+</li>
         <li><a href="index.html#raise_utils.learners.FeedforwardDL.set_data">(raise_utils.learners.FeedforwardDL method)</a>
 </li>
         <li><a href="index.html#raise_utils.learners.Learner.set_data">(raise_utils.learners.Learner method)</a>
@@ -335,6 +369,14 @@
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="index.html#raise_utils.learners.SVM">SVM (class in raise_utils.learners)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="index.html#raise_utils.transforms.Transform">Transform (class in raise_utils.transforms)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -378,7 +420,7 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">RAISE 1.2.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="index.html">RAISE 1.6.3 documentation</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">Index</a></li> 
       </ul>
     </div>
