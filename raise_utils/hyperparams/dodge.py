@@ -8,6 +8,7 @@ from copy import deepcopy
 from raise_utils.data.data import Data
 import itertools
 
+from raise_utils.learners import Learner
 from raise_utils.metrics.metrics import ClassificationMetrics
 from raise_utils.transforms.transform import Transform
 
@@ -26,6 +27,7 @@ class DODGE:
         :param verbose: Whether to print debug info.
         """
         self.config = config
+        self.best_learner = None
         if self.config["log_path"] is None:
             self.file = sys.stdout
         else:
@@ -37,7 +39,7 @@ class DODGE:
         self.file.close()
         gc.collect()
 
-    def optimize(self) -> np.ndarray:
+    def optimize(self) -> tuple[np.ndarray, tuple[Transform, Learner]]:
         """
         Performs hyper-parameter optimization using DODGE, and returns the
         median performance.
@@ -106,6 +108,7 @@ class DODGE:
 
                 if metric >= cur_best_score:
                     cur_best_score = metric
+                    self.best_learner = (transform, model)
                     cur_best_metrics = metrics.get_metrics()
 
                 if all(abs(t - metric) > 0.2 for t in lis_value):
@@ -129,4 +132,10 @@ class DODGE:
         self.file.flush()
         self.file.close()
 
-        return np.median(scores, axis=0)
+        return np.median(scores, axis=0), self.best_learner
+
+    def predict(self, x_test):
+        transform, learner = self.best_learner
+        data = Data(None, x_test, None, None)
+        transform.apply(data)
+        return learner.predict(data.x_test)

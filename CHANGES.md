@@ -1,5 +1,13 @@
 # Change Log
 
+## 2.0.0
+
+* **Breaking change:** `DODGE.optimize` now returns a tuple of median results and best configuration.
+* `DODGE` now has a `predict` function.
+* `BinaryGHOST` now has a `n_runs` parameter.
+* `BinaryGHOST` now returns the same values as `DODGE`.
+* `BinaryGHOST` now has a `predict` function.
+
 ## 1.6.3
 
 * Added G-1 score and IFA (initial false alarm) to metrics (thanks [@HuyTu7](https://github.com/HuyTu7)!)

@@ -12,7 +12,7 @@ class BinaryGHOST(Learner):
     """
 
     def __init__(self, metrics: list, ultrasample: bool = True,
-                 autoencode: bool = True, ae_thresh: float = 1e3,
+                 autoencode: bool = True, ae_thresh: float = 1e3, n_runs: int = 20,
                  ae_layers: list = (10, 7), ae_out: int = 5, n_epochs: int = 50,
                  max_evals: int = 30, bs=512, name='experiment', *args, **kwargs):
         """
@@ -25,6 +25,7 @@ class BinaryGHOST(Learner):
         :param ae_thresh: The threshold loss for the autoencoder.
         :param ae_layers: The number of units in each layer of the autoencoder.
         :param ae_out: The number of units the autoencoder outputs.
+        :param n_runs: Number of times to run DODGE.
         :param n_epochs: The number of epochs to train for
         :param max_evals: The max number of hyper-parameter evaluations.
         :param bs: Batch size to use for feedforward learner.
@@ -36,11 +37,13 @@ class BinaryGHOST(Learner):
         self.ultrasample = ultrasample
         self.autoencode = autoencode
         self.n_epochs = n_epochs
+        self.n_runs = n_runs
         self.ae_thresh = ae_thresh
         self.ae_layers = ae_layers
         self.max_evals = max_evals
         self.ae_out = ae_out
         self.bs = bs
+        self.dodge = None
 
     def fit(self):
         self._check_data()
@@ -82,7 +85,7 @@ class BinaryGHOST(Learner):
                     data.x_test = ae.encode(np.array(data.x_test))
 
         dodge_config = {
-            'n_runs': 20,
+            'n_runs': self.n_runs,
             'data': [data],
             'metrics': self.metrics,
             'learners': [],
@@ -100,10 +103,14 @@ class BinaryGHOST(Learner):
             )
 
         dodge = DODGE(dodge_config)
-        dodge.optimize()
+        self.dodge = dodge
+        return dodge.optimize()
 
     def predict(self, x_test):
         """
         Makes predictions on x_test.
         """
-        raise NotImplementedError
+        if self.dodge is None:
+            raise AssertionError('fit must be called before predict.')
+
+        return self.dodge.predict(x_test)
