@@ -11,7 +11,7 @@ class BinaryGHOST(Learner):
     Implements the original, 2-class GHOST algorithm.
     """
 
-    def __init__(self, metrics: list, ultrasample: bool = True,
+    def __init__(self, metrics: list, ultrasample: bool = True, smote: bool = True,
                  autoencode: bool = True, ae_thresh: float = 1e3, n_runs: int = 20,
                  ae_layers: list = (10, 7), ae_out: int = 5, n_epochs: int = 50,
                  max_evals: int = 30, bs=512, name='experiment', *args, **kwargs):
@@ -21,6 +21,7 @@ class BinaryGHOST(Learner):
 
         :param metrics: A list of metrics supplied by raise_utils.metrics to print out.
         :param ultrasample: If True, perform ultrasampling.
+        :param smote: If True, perform SMOTE.
         :param autoencode: If True, uses an autoencoder.
         :param ae_thresh: The threshold loss for the autoencoder.
         :param ae_layers: The number of units in each layer of the autoencoder.
@@ -35,6 +36,7 @@ class BinaryGHOST(Learner):
         self.name = name
         self.metrics = metrics
         self.ultrasample = ultrasample
+        self.smote = smote
         self.autoencode = autoencode
         self.n_epochs = n_epochs
         self.n_runs = n_runs
@@ -70,22 +72,23 @@ class BinaryGHOST(Learner):
                 loss = 1 + self.ae_thresh
                 tries = 0
                 while loss > self.ae_thresh and tries < 3:
-                    ae = Autoencoder(n_layers=len(self.ae_layers),
+                    self.ae = Autoencoder(n_layers=len(self.ae_layers),
                                      n_units=self.ae_layers, n_out=self.ae_out)
 
                     # We can't use set_data because it does unwanted things with multi-class systems.
-                    ae.set_data(*data)
-                    ae.fit()
+                    self.ae.set_data(*data)
+                    self.ae.fit()
 
-                    loss = ae.model.history.history['loss'][-1]
+                    loss = self.ae.model.history.history['loss'][-1]
                     tries += 1
 
                 if tries < 3:
-                    data.x_train = ae.encode(np.array(data.x_train))
-                    data.x_test = ae.encode(np.array(data.x_test))
+                    data.x_train = self.ae.encode(np.array(data.x_train))
+                    data.x_test = self.ae.encode(np.array(data.x_test))
 
         dodge_config = {
             'n_runs': self.n_runs,
+            'n_iters': self.max_evals,
             'data': [data],
             'metrics': self.metrics,
             'learners': [],
@@ -97,7 +100,7 @@ class BinaryGHOST(Learner):
 
         for _ in range(30):
             dodge_config['learners'].append(
-                FeedforwardDL(weighted=True, wfo=True, smote=True,
+                FeedforwardDL(weighted=True, wfo=True, smote=self.smote,
                               random={'n_units': (2, 6), 'n_layers': (2, 5)},
                               n_epochs=self.n_epochs, verbose=0)
             )
@@ -112,5 +115,8 @@ class BinaryGHOST(Learner):
         """
         if self.dodge is None:
             raise AssertionError('fit must be called before predict.')
+
+        if self.autoencode:
+            x_test = self.ae.encode(x_test)
 
         return self.dodge.predict(x_test)

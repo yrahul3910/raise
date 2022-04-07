@@ -39,7 +39,7 @@ class DODGE:
         self.file.close()
         gc.collect()
 
-    def optimize(self) -> tuple[np.ndarray, tuple[Transform, Learner]]:
+    def optimize(self) -> tuple:
         """
         Performs hyper-parameter optimization using DODGE, and returns the
         median performance.
@@ -136,6 +136,6 @@ class DODGE:
 
     def predict(self, x_test):
         transform, learner = self.best_learner
-        data = Data(None, x_test, None, None)
+        data = Data(x_test, x_test, None, None)
         transform.apply(data)
         return learner.predict(data.x_test)

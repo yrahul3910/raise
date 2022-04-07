@@ -7,6 +7,7 @@
 * `BinaryGHOST` now has a `n_runs` parameter.
 * `BinaryGHOST` now returns the same values as `DODGE`.
 * `BinaryGHOST` now has a `predict` function.
+* `BinaryGHOST` now has a `smote` parameter.
 
 ## 1.6.3
 
