@@ -5,7 +5,7 @@
 * **Breaking change:** `DODGE.optimize` now returns a tuple of median results and best configuration.
 * `DODGE` now has a `predict` function.
 * `BinaryGHOST` now has a `n_runs` parameter.
-* `BinaryGHOST` now returns the same values as `DODGE`.
+* `BinaryGHOST.fit()` now returns the same values as `DODGE`.
 * `BinaryGHOST` now has a `predict` function.
 * `BinaryGHOST` now has a `smote` parameter.
 

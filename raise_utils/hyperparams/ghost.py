@@ -82,7 +82,7 @@ class BinaryGHOST(Learner):
                     loss = self.ae.model.history.history['loss'][-1]
                     tries += 1
 
-                if tries < 3:
+                if tries <= 3:
                     data.x_train = self.ae.encode(np.array(data.x_train))
                     data.x_test = self.ae.encode(np.array(data.x_test))
 
