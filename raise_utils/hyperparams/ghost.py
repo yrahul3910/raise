@@ -1,3 +1,4 @@
+import os
 from raise_utils.learners import FeedforwardDL, Autoencoder, Learner
 from raise_utils.data import Data
 from raise_utils.transforms import Transform
@@ -85,6 +86,9 @@ class BinaryGHOST(Learner):
                 if tries <= 3:
                     data.x_train = self.ae.encode(np.array(data.x_train))
                     data.x_test = self.ae.encode(np.array(data.x_test))
+
+        if not os.path.exists('log/'):
+            os.mkdir('./log/')
 
         dodge_config = {
             'n_runs': self.n_runs,

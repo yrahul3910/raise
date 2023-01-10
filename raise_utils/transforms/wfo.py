@@ -13,8 +13,10 @@ def fuzz_data(X, y, radii=(0., .3, .03)):
     fuzzed_x = []
     fuzzed_y = []
 
+    n_classes = 2
     # If y is one-hot encoded, we need to temporarily undo that
     if len(y.shape) > 1:
+        n_classes = y.shape[1]
         y = np.argmax(y, axis=1)
 
     for c in range(len(np.unique(y))):
@@ -37,8 +39,8 @@ def fuzz_data(X, y, radii=(0., .3, .03)):
     y_final = np.concatenate((y, np.array(fuzzed_y)))
 
     # If we have more than two classes, we need to re-encode y
-    if len(np.unique(y_final)) > 2:
-        y_final = to_categorical(y_final, num_classes=len(np.unique(y_final)))
+    if n_classes > 2:
+        y_final = to_categorical(y_final, num_classes=n_classes)
 
     return X_final, y_final
 

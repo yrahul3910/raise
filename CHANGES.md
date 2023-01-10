@@ -1,5 +1,10 @@
 # Change Log
 
+## 2.0.2
+
+* Bug fix: `wfo` transform can fail in some multi-class cases.
+* Bug fix: `MulticlassGHOST` will now create a `log` directory if it does not already exist.
+
 ## 2.0.1
 
 * Bug fix: Added one-hot encoding support to the `wfo` transform.
