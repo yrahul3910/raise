@@ -1,5 +1,9 @@
 # Change Log
 
+## 2.0.1
+
+* Bug fix: Added one-hot encoding support to the `wfo` transform.
+
 ## 2.0.0
 
 * **Breaking change:** `DODGE.optimize` now returns a tuple of median results and best configuration.

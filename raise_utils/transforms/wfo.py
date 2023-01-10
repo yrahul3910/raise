@@ -1,4 +1,5 @@
 import numpy as np
+from tensorflow.keras.utils import to_categorical
 
 
 def fuzz_data(X, y, radii=(0., .3, .03)):
@@ -11,6 +12,11 @@ def fuzz_data(X, y, radii=(0., .3, .03)):
 
     fuzzed_x = []
     fuzzed_y = []
+
+    # If y is one-hot encoded, we need to temporarily undo that
+    if len(y.shape) > 1:
+        y = np.argmax(y, axis=1)
+
     for c in range(len(np.unique(y))):
         if c == majority:
             continue
@@ -29,6 +35,11 @@ def fuzz_data(X, y, radii=(0., .3, .03)):
 
     X_final = np.concatenate((X, np.array(fuzzed_x)), axis=0)
     y_final = np.concatenate((y, np.array(fuzzed_y)))
+
+    # If we have more than two classes, we need to re-encode y
+    if len(np.unique(y_final)) > 2:
+        y_final = to_categorical(y_final, num_classes=len(np.unique(y_final)))
+
     return X_final, y_final
 
 

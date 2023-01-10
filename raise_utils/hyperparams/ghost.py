@@ -105,9 +105,8 @@ class BinaryGHOST(Learner):
                               n_epochs=self.n_epochs, verbose=0)
             )
 
-        dodge = DODGE(dodge_config)
-        self.dodge = dodge
-        return dodge.optimize()
+        self.dodge = DODGE(dodge_config)
+        return self.dodge.optimize()
 
     def predict(self, x_test):
         """
