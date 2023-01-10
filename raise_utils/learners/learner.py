@@ -75,8 +75,13 @@ class Learner:
         """
         self.x_train = x_train
         self.x_test = x_test
-        self.y_train = pd.Series(y_train).apply(lambda x: 0 if x == 0 else 1)
-        self.y_test = pd.Series(y_test).apply(lambda x: 0 if x == 0 else 1)
+
+        if len(y_train.shape) == 1:
+            self.y_train = pd.Series(y_train).apply(lambda x: 0 if x == 0 else 1)
+            self.y_test = pd.Series(y_test).apply(lambda x: 0 if x == 0 else 1)
+        else:
+            self.y_train = y_train
+            self.y_test = y_test
 
     def _check_data(self) -> None:
         """
