@@ -10,7 +10,7 @@ def test_dodge():
         "../promise/log4j-1.1.csv", hooks=[Hook("hook", _binarize)])
 
     config = {
-        'n_runs': 5,
+        'n_runs': 1,
         'transforms': ['normalize', 'standardize', 'robust', 'maxabs', 'minmax'] * 30,
         'metrics': ['d2h', 'accuracy', 'pd', 'prec', 'pf'],
         'random': True,

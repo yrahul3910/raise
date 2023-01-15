@@ -94,11 +94,7 @@ class DODGE:
 
                 preds = model.predict(data.x_test)
 
-                if len(data.y_test.shape) > 1:
-                    metrics = ClassificationMetrics(
-                        np.argmax(data.y_test, axis=-1), preds)
-                else:
-                    metrics = ClassificationMetrics(data.y_test, preds)
+                metrics = ClassificationMetrics(data.y_test, preds)
                 metrics.add_metrics(self.config["metrics"])
                 print('iter', counter, ':',
                       metrics.get_metrics(), file=self.file)

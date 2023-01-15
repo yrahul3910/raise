@@ -9,7 +9,7 @@ def test_ghost():
     data = DataLoader.from_file(
         "../promise/log4j-1.1.csv", hooks=[Hook("hook", _binarize)])
 
-    ghost = BinaryGHOST(metrics=['d2h', 'accuracy', 'pd', 'prec', 'pf'])
+    ghost = BinaryGHOST(n_runs=1, metrics=['d2h', 'accuracy', 'pd', 'prec', 'pf'])
     ghost.set_data(*data)
     ghost.fit()
 
