@@ -1,7 +1,6 @@
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.callbacks import EarlyStopping
-from tensorflow.keras import backend as K
 from tensorflow.keras.utils import to_categorical
 import numpy as np
 import pandas as pd
@@ -79,14 +78,6 @@ class MulticlassDL(Learner):
             self.x_train, self.y_train = sm.fit_resample(
                 self.x_train, self.y_train)
 
-            self.y_train = to_categorical(
-                self.y_train, num_classes=self.n_classes)
-            self.y_test = to_categorical(
-                self.y_test, num_classes=self.n_classes)
-        else:
-            self.y_train = to_categorical(
-                self.y_train, num_classes=self.n_classes)
-
         for _ in range(self.n_layers):
             self.model.add(Dense(self.n_units, activation=self.activation))
 
@@ -97,6 +88,10 @@ class MulticlassDL(Learner):
             if self.hooks.get('pre_train', None):
                 for hook in self.hooks['pre_train']:
                     hook.call(self)
+
+        # Last check for shapes
+        if len(self.y_train.shape) == 1:
+            self.y_train = to_categorical(self.y_train, num_classes=self.n_classes)
 
         self.model.fit(np.array(self.x_train), np.array(self.y_train), batch_size=self.bs, epochs=self.n_epochs,
                        validation_split=0.2, verbose=self.verbose, callbacks=[

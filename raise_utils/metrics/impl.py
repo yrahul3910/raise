@@ -29,6 +29,11 @@ def get_accuracy(y_true, y_pred) -> float:
     :param y_pred: Predictions
     :return: Accuracy score
     """
+    if len(y_true.shape) > 1:
+        y_true = y_true.argmax(axis=1)
+    if len(y_pred.shape) > 1:
+        y_pred = y_pred.argmax(axis=1)
+
     return accuracy_score(y_true, y_pred)
 
 
