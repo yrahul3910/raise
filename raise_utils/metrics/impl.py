@@ -29,6 +29,12 @@ def get_accuracy(y_true, y_pred) -> float:
     :param y_pred: Predictions
     :return: Accuracy score
     """
+    # We need to cast to np.array so that .shape exists
+    if isinstance(y_true, list):
+        y_true = np.array(y_true)
+    if isinstance(y_pred, list):
+        y_pred = np.array(y_pred)
+
     if len(y_true.shape) > 1:
         y_true = y_true.argmax(axis=1)
     if len(y_pred.shape) > 1:

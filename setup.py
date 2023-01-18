@@ -2,7 +2,7 @@ from setuptools import setup
 import os
 
 setup(name='raise_utils',
-      version='2.0.1',
+      version='2.0.2',
       description='RAISE lab package (LGPL-3.0-or-later)',
       author='RAISE, NC State University',
       author_email='ryedida@ncsu.edu',

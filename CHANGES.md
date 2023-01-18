@@ -4,6 +4,7 @@
 
 * Bug fix: `wfo` transform can fail in some multi-class cases.
 * Bug fix: `MulticlassGHOST` will now create a `log` directory if it does not already exist.
+* Bug fix: Accuracy is now correctly computed for multi-class settings.
 
 ## 2.0.1
 
