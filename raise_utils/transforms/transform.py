@@ -11,9 +11,13 @@ from raise_utils.transforms.null import NullTransform
 from raise_utils.transforms.text.transform import TextTransform
 from raise_utils.transforms.wfo import WeightedFuzzyOversampler
 from raise_utils.transforms.wfo import RadiallyWeightedFuzzyOversampler
+from raise_utils.data import Data
 import numpy as np
+import pyximport
 
-from raise_utils.data.data import Data
+from remove_labels import Smooth
+
+pyximport.install()
 
 transformers = {
     "normalize": Normalizer,
@@ -24,6 +28,7 @@ transformers = {
     "standardize": StandardScaler,
     "smote": SMOTE,
     "cfs": CFS,
+    "smooth": Smooth,
     "rwfo": RadiallyWeightedFuzzyOversampler,
     "wfo": WeightedFuzzyOversampler,
     "outlier": OutlierRemoval,
