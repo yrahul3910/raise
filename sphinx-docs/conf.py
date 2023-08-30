@@ -22,7 +22,7 @@ copyright = '2020, RAISE Lab, NC State University'
 author = 'RAISE Lab, NC State University'
 
 # The full version, including alpha/beta/rc tags
-release = '2.0.0'
+release = '2.0.3'
 
 
 # -- General configuration ---------------------------------------------------

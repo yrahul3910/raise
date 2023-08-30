@@ -22,6 +22,10 @@ def _check_data(data: Data) -> None:
             data.x_test.shape[0] != data.y_test.shape[0] or
             data.x_train.shape[1] != data.x_test.shape[1]
         ):
+            print('x_train:', data.x_train.shape)
+            print('y_train:', data.y_train.shape)
+            print('x_test:', data.x_test.shape)
+            print('y_test:', data.y_test.shape)
             raise AssertionError("Train/test data have a shape mismatch.")
     else:
         if (

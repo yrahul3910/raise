@@ -1,5 +1,9 @@
 # Change Log
 
+## 2.0.3
+
+* Useful debug info printed when data shape mismatch occurs.
+
 ## 2.0.2
 
 * Bug fix: `wfo` transform can fail in some multi-class cases.
