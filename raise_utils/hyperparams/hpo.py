@@ -11,9 +11,26 @@ provides some general objective functions for convenience.
 """
 from typing import Callable
 
+from raise_utils.data import Data
+from raise_utils.metrics import ClassificationMetrics
 from hyperopt import hp, fmin, tpe
 from bohb import BOHB
 import bohb.configspace as bohb_space
+
+
+class MetricObjective:
+    def __init__(self, metrics: list, data: Data, get_model: Callable):
+        self.metrics = metrics
+        self.data = data
+        self.get_model = get_model
+
+    def __call__(self, config):
+        model = self.get_model(config)
+        model.set_data(*self.data)
+        model.fit()
+
+        metrics = ClassificationMetrics(self.data.y_test, model.predict(self.data.x_test))
+        return metrics.get_metrics()
 
 
 class HPO:
