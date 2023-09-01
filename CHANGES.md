@@ -3,6 +3,7 @@
 ## 2.0.3
 
 * Useful debug info printed when data shape mismatch occurs.
+* Add `HPO` class to add hyperopt and BOHB to `raise_utils.hyperparams`.
 
 ## 2.0.2
 
