@@ -1,0 +1,70 @@
+"""
+Implements a general class for multiple HPO algorithms. For now, only hyperopt and BOHB are supported.
+This class expects the hpo_space to be defined in the following format:
+{
+    "param1": [categories],
+    "param2": (lower, upper),  # lower inclusive, upper exclusive
+    ...
+}
+For generality, this class expects an objective function that is *minimized*. This class also
+provides some general objective functions for convenience.
+"""
+from typing import Callable
+
+from hyperopt import hp, fmin, tpe
+from bohb import BOHB
+import bohb.configspace as bohb_space
+
+
+class HPO:
+    ALGORITHMS = ["hyperopt", "bohb"]
+
+    def __init__(self, objective: Callable, space: dict, algorithm: str, max_evals: int = 30):
+        self.objective = objective
+        self.hpo_space = space
+        self.max_evals = max_evals
+
+        if algorithm not in self.ALGORITHMS:
+            raise ValueError("Algorithm must be one of " + str(self.ALGORITHMS))
+
+        self.algorithm = algorithm
+
+    def _run_bohb(self):
+        # Convert the space to bohb format
+        space = []
+        for key, val in self.hpo_space.items():
+            if isinstance(val, list):
+                space.append(bohb_space.CategoricalHyperparameter(key, val))
+            elif isinstance(val, tuple):
+                if isinstance(val[0], int):
+                    space.append(bohb_space.IntegerUniformHyperparameter(key, *val))
+                else:
+                    space.append(bohb_space.UniformHyperparameter(key, *val))
+            else:
+                raise ValueError(f"Key {key} must be a list or tuple")
+
+        opt = BOHB(configspace=space, min_budget=1, max_budget=self.max_evals)
+        logs = opt.optimize()
+        return logs.best["hyperparameter"]
+
+    def _run_hyperopt(self):
+        # Convert the space to hyperopt format
+        space = {}
+        for key, val in self.hpo_space.items():
+            if isinstance(val, list):
+                space[key] = hp.choice(key, val)
+            elif isinstance(val, tuple):
+                if isinstance(val[0], int):
+                    space[key] = hp.randint(key, *val)
+                else:
+                    space[key] = hp.uniform(key, *val)
+            else:
+                raise ValueError("Space must be a list or tuple")
+
+        return fmin(self.objective, space, algo=tpe.suggest, max_evals=self.max_evals)
+
+    def run(self):
+        if self.algorithm == "hyperopt":
+            return self._run_hyperopt()
+        elif self.algorithm == "bohb":
+            return self._run_bohb()

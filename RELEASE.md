@@ -18,7 +18,7 @@ This document is for the devs only, and contains release instructions.
   username = __token__
   password = ENTER TOKEN HERE
 ```
-2. Change the version number in `raise_utils/__init__.py`, `setup.py`, and `sphinx-docs/conf.py`.
+2. Change the version number in `raise_utils/__init__.py`, `setup.py`, `pyproject.toml`, and `sphinx-docs/conf.py`.
 3. Run `release.sh` and enter the PyPI password when prompted.
 4. Go to `sphinx-docs` and run `make html`.
 5. Go to [Read The Docs](https://readthedocs.io), log in, and prompt a build of the docs.

@@ -1,5 +1,6 @@
 __pycache__/
 build/
+dist/
 .codacy-coverage/
 .pytest_cache/
 .DS_Store
