@@ -24,7 +24,7 @@ class MetricObjective:
         self.data = data
         self.get_model = get_model
 
-    def __call__(self, config):
+    def __call__(self, config, *args, **kwargs):
         model = self.get_model(config)
         model.set_data(*self.data)
         model.fit()
