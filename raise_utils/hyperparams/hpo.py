@@ -79,7 +79,11 @@ class HPO:
             else:
                 raise ValueError("Space must be a list or tuple")
 
-        return fmin(self.objective, space, algo=tpe.suggest, max_evals=self.max_evals)
+        best = fmin(self.objective, space, algo=tpe.suggest, max_evals=self.max_evals)
+        for key, val in self.hpo_space.items():
+            if isinstance(val, list):
+                best[key] = val[best[key]]
+        return best
 
     def run(self):
         if self.algorithm == "hyperopt":
