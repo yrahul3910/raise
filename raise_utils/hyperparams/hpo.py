@@ -30,6 +30,7 @@ class MetricObjective:
         model.fit()
 
         metrics = ClassificationMetrics(self.data.y_test, model.predict(self.data.x_test))
+        metrics.add_metrics(self.metrics)
         return -metrics.get_metrics()[0]
 
 
