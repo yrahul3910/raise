@@ -1,7 +1,7 @@
 import tensorflow as tf
 
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Dense, Input
 from tensorflow.keras.callbacks import EarlyStopping
 from tensorflow.keras import backend as K
 import numpy as np
@@ -90,6 +90,8 @@ class FeedforwardDL(Learner):
         self.x_test = np.array(self.x_test)
         self.y_train = np.array(self.y_train).squeeze()
         self.y_test = np.array(self.y_test).squeeze()
+
+        self.model.add(Input(shape=(self.x_train.shape[1],)))
 
         if self.weighted:
             frac = sum(self.y_train) * 1. / len(self.y_train)
