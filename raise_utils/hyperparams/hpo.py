@@ -63,7 +63,7 @@ class HPO:
 
         opt = BOHB(configspace=bohb_space.ConfigurationSpace(space), evaluate=self.objective, min_budget=1, max_budget=self.max_evals)
         logs = opt.optimize()
-        return logs.best["hyperparameter"]
+        return logs.best["hyperparameter"].to_dict()
 
     def _run_hyperopt(self):
         # Convert the space to hyperopt format
