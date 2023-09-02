@@ -30,7 +30,7 @@ class MetricObjective:
         model.fit()
 
         metrics = ClassificationMetrics(self.data.y_test, model.predict(self.data.x_test))
-        return metrics.get_metrics()
+        return -metrics.get_metrics()[0]
 
 
 class HPO:
