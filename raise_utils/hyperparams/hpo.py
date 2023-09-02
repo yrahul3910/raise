@@ -61,7 +61,7 @@ class HPO:
             else:
                 raise ValueError(f"Key {key} must be a list or tuple")
 
-        opt = BOHB(configspace=space, min_budget=1, max_budget=self.max_evals)
+        opt = BOHB(configspace=space, evaluate=self.objective, min_budget=1, max_budget=self.max_evals)
         logs = opt.optimize()
         return logs.best["hyperparameter"]
 
