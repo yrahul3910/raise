@@ -1,5 +1,8 @@
-from setuptools import setup
+from setuptools import setup, Extension
+from Cython.Build import cythonize
 import os
+
+ext_modules = cythonize("raise_utils/transforms/remove_labels.pyx")
 
 setup(name='raise_utils',
       version='2.0.3',
@@ -33,5 +36,6 @@ setup(name='raise_utils',
           'hyperopt',
           'ray[tune]',
           'imblearn'
-      ]
+      ],
+      ext_modules=ext_modules
       )

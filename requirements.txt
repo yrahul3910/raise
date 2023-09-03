@@ -11,3 +11,4 @@ ray[tune]
 scikit-learn>=0.23.2
 imblearn
 bohb-hpo
+Cython

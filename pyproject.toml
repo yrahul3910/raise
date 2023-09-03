@@ -26,5 +26,5 @@ tensorflow = ["tensorflow>=2.0.0"]
 tensorflow_macos = ["tensorflow-macos>=2.0.0"]
 
 [build-system]
-requires = ["setuptools", "wheel"]
+requires = ["setuptools", "wheel", "Cython"]
 build-backend = "setuptools.build_meta"
