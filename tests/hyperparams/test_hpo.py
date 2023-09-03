@@ -5,7 +5,6 @@ from raise_utils.learners import FeedforwardDL
 from raise_utils.transforms import Transform
 from raise_utils.hyperparams import HPO, MetricObjective
 
-
 options = {
     'n_units': (2, 10),
     'n_layers': (2, 6),

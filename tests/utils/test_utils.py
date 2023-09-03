@@ -50,4 +50,4 @@ def test_error():
     output_content = custom_output.getvalue()
     sys.stdout = sys.__stdout__
 
-    assert "[ERROR] test" in output_content
+    assert "[ERR] test" in output_content
