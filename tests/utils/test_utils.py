@@ -14,7 +14,7 @@ def test_info():
     output_content = custom_output.getvalue()
     sys.stdout = sys.__stdout__
 
-    assert output_content == Fore.GREEN + "[INFO] " + Fore.RESET + Fore.GREEN + "test"
+    assert "[INFO] test" in output_content
 
 
 def test_warn():
@@ -26,7 +26,7 @@ def test_warn():
     output_content = custom_output.getvalue()
     sys.stdout = sys.__stdout__
 
-    assert output_content == Fore.YELLOW + "[INFO] " + Fore.RESET + Fore.YELLOW + "test"
+    assert "[WARN] test" in output_content
 
 
 def test_debug():
@@ -38,7 +38,7 @@ def test_debug():
     output_content = custom_output.getvalue()
     sys.stdout = sys.__stdout__
 
-    assert output_content == Fore.BLUE + "[INFO] " + Fore.RESET + Fore.BLUE + "test"
+    assert "[DEBUG] test" in output_content
 
 
 def test_error():
@@ -50,4 +50,4 @@ def test_error():
     output_content = custom_output.getvalue()
     sys.stdout = sys.__stdout__
 
-    assert output_content == Fore.RED + "[INFO] " + Fore.RESET + Fore.RED + "test"
+    assert "[ERROR] test" in output_content

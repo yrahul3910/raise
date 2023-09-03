@@ -41,7 +41,9 @@ data_orig = DataLoader.from_file(
 
 
 def test_hyperopt():
-    obj = MetricObjective(['pd', 'pf', 'prec', 'auc'], deepcopy(data_orig), get_model)
+    data = deepcopy(data_orig)
+    load_model = lambda config: get_model(data, config)
+    obj = MetricObjective(['pd', 'pf', 'prec', 'auc'], data, load_model)
     hpo = HPO(
         objective=obj,
         space=options,
