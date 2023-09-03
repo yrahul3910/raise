@@ -15,9 +15,9 @@ from raise_utils.data import Data
 import numpy as np
 import pyximport
 
-from remove_labels import Smooth
-
 pyximport.install()
+
+from remove_labels import Smooth
 
 transformers = {
     "normalize": Normalizer,
