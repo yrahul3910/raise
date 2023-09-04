@@ -13,7 +13,7 @@
 <img src="https://img.shields.io/badge/language-python-orange.svg">&nbsp;
 <img src="https://img.shields.io/badge/license-LGPL-green.svg">&nbsp;
 <a href="https://badge.fury.io/py/raise-utils"><img src="https://badge.fury.io/py/raise-utils.svg" alt="PyPI version" height="20"></a>
-<a href="https://pepy.tech/project/raise-utils"><img src="https://pepy.tech/badge/raise-utils" /></a>
+<a href="https://pepy.tech/project/raise-utils"><img src="https://static.pepy.tech/badge/raise-utils" alt="Downloads" />
 <a href='https://raise.readthedocs.io/en/latest/?badge=latest'>
     <img src='https://readthedocs.org/projects/raise/badge/?version=latest' alt='Documentation Status' />
 </a>
