@@ -1,5 +1,10 @@
 # Change Log
 
+## 2.1.0
+
+* Added `KruskalWallis` class to `raise_utils.interpret`.
+* Fixed installation issue.
+
 ## 2.0.3
 
 * Useful debug info printed when data shape mismatch occurs.

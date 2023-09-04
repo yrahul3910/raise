@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "raise-utils"
-version = "2.0.4"
+version = "2.1.0"
 description = "RAISE lab package"
 authors = ["Rahul Yedida <rahul.yedida@pm.me>"]
 license = "LGPL 2.1"
