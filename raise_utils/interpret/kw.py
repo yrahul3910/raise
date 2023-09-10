@@ -34,7 +34,7 @@ class KruskalWallis:
 
             for i in range(num_groups):
                 for j in range(i + 1, num_groups):
-                    _, p = stats.mannwhitneyu(self.data[groups[i]], self.data[groups[j]], alternative='two-sided')
+                    _, p = stats.mannwhitneyu(self.data[groups[i]], self.data[groups[j]], alternative='less')
                     p_values[i, j] = p
                     p_values[j, i] = p
 
@@ -43,7 +43,7 @@ class KruskalWallis:
             print()
 
             # Apply Bonferroni correction for multiple comparisons
-            adjusted_p_values = multipletests(p_values.ravel(), method='fdr_bh')[1].reshape(p_values.shape)
+            adjusted_p_values = multipletests(p_values.ravel(), method='fdr_tsbh')[1].reshape(p_values.shape)
             post_hoc = pd.DataFrame(adjusted_p_values, index=groups, columns=groups)
 
             print("Pairwise Mann-Whitney U tests with Benjamini/Hochberg correction:")
