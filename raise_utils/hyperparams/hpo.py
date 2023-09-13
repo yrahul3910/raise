@@ -16,6 +16,7 @@ from raise_utils.metrics import ClassificationMetrics
 from hyperopt import hp, fmin, tpe
 from bohb import BOHB
 import bohb.configspace as bohb_space
+import numpy as np
 
 
 class MetricObjective:
