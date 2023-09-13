@@ -4,6 +4,8 @@
 
 * Added `KruskalWallis` class to `raise_utils.interpret`.
 * Fixed installation issue.
+* Add `EarlyStopping` to `FeedforwardDL`.
+* Add `random` to `HPO` class.
 
 ## 2.0.3
 

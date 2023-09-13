@@ -35,7 +35,7 @@ class MetricObjective:
 
 
 class HPO:
-    ALGORITHMS = ["hyperopt", "bohb"]
+    ALGORITHMS = ["random", "hyperopt", "bohb"]
 
     def __init__(self, objective: Callable, space: dict, algorithm: str, max_evals: int = 30):
         self.objective = objective
@@ -65,6 +65,27 @@ class HPO:
         logs = opt.optimize()
         return logs.best["hyperparameter"].to_dict()
 
+    def _run_random(self):
+        # Run random search and return the best config
+        best = None
+        best_score = float("inf")
+        for _ in range(self.max_evals):
+            config = {}
+            for key, val in self.hpo_space.items():
+                if isinstance(val, tuple):
+                    config[key] = np.random.choice(val)
+                elif isinstance(val, list) and isinstance(val[0], int):
+                    config[key] = np.random.randint(val[0], val[1])
+                else:
+                    config[key] = np.random.uniform(val[0], val[1])
+
+            score = self.objective(config)
+            if score < best_score:
+                best_score = score
+                best = config
+
+        return best
+
     def _run_hyperopt(self):
         # Convert the space to hyperopt format
         space = {}
@@ -90,3 +111,5 @@ class HPO:
             return self._run_hyperopt()
         elif self.algorithm == "bohb":
             return self._run_bohb()
+        elif self.algorithm == "random":
+            return self._run_random()

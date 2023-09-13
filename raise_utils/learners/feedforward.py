@@ -124,8 +124,10 @@ class FeedforwardDL(Learner):
                 for hook in self.hooks['pre_train']:
                     hook.call(self)
 
+        early_stopping = EarlyStopping(monitor='loss', patience=10)
         self.model.fit(np.array(self.x_train), np.array(
-            self.y_train), epochs=self.n_epochs, batch_size=self.bs, verbose=self.verbose)
+            self.y_train), epochs=self.n_epochs, batch_size=self.bs,
+            callbacks=[early_stopping], verbose=self.verbose)
         if self.hooks is not None:
             if self.hooks.get('post_train', None):
                 for hook in self.hooks['post_train']:
