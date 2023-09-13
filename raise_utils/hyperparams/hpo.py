@@ -73,9 +73,9 @@ class HPO:
         for _ in range(self.max_evals):
             config = {}
             for key, val in self.hpo_space.items():
-                if isinstance(val, tuple):
+                if isinstance(val, list):
                     config[key] = np.random.choice(val)
-                elif isinstance(val, list) and isinstance(val[0], int):
+                elif isinstance(val, tuple) and isinstance(val[0], int):
                     config[key] = np.random.randint(val[0], val[1])
                 else:
                     config[key] = np.random.uniform(val[0], val[1])
