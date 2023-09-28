@@ -96,6 +96,9 @@ class Transform:
                 if self.name != "wfo" and self.name != "rwfo":
                     data.x_test = self.transformer.transform(data.x_test)
             else:
+                if len(data.x_train) > self.transformer.k_neighbors:
+                    self.transformer = SMOTE(k_neighbors=len(data.x_train) - 1)
+
                 data.x_train, data.y_train = self.transformer.fit_resample(
                     data.x_train, data.y_train)
 
