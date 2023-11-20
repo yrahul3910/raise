@@ -28,7 +28,7 @@ class KruskalWallis:
             print(f"Group with the largest median: {max_group}")
 
             # Perform pairwise Mann-Whitney U tests
-            groups = list(data.keys())
+            groups = list(self.data.keys())
             num_groups = len(groups)
             p_values = np.zeros((num_groups, num_groups))
 
