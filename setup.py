@@ -2,10 +2,13 @@ from setuptools import setup, Extension
 from Cython.Build import cythonize
 import os
 
-ext_modules = cythonize("raise_utils/transforms/remove_labels.pyx")
+ext_modules = cythonize(Extension(
+    name="remove_labels",
+    sources=["raise_utils/transforms/remove_labels.pyx"]
+))
 
 setup(name='raise_utils',
-      version='2.1.0',
+      version='2.1.2',
       description='RAISE lab package (LGPL-3.0-or-later)',
       author='RAISE, NC State University',
       author_email='ryedida@ncsu.edu',
@@ -34,7 +37,6 @@ setup(name='raise_utils',
           'cvxopt',
           'colorama',
           'hyperopt',
-          'ray[tune]',
           'imblearn',
           'Cython',
           'tabulate'
