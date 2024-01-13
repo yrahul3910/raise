@@ -1,9 +1,9 @@
 import warnings
 
-from tensorflow.keras import Sequential
-from tensorflow.keras.layers import Dense, LSTM, Embedding, SpatialDropout1D
-from tensorflow.keras.preprocessing.sequence import pad_sequences
-from tensorflow.keras.preprocessing.text import Tokenizer
+from keras import Sequential
+from keras.layers import Dense, LSTM, Embedding, SpatialDropout1D
+from keras.preprocessing.sequence import pad_sequences
+from keras_nlp.tokenizers import Tokenizer
 
 import numpy as np
 from raise_utils.learners.learner import Learner

@@ -1,7 +1,7 @@
-from data import DataLoader
-from hyperparams.dodge import DODGE
-from learners import FeedforwardDL
-from transform.transform import Transform
+from raise_utils.data import DataLoader
+from raise_utils.hyperparams.dodge import DODGE
+from raise_utils.learners import FeedforwardDL
+from raise_utils.transforms import Transform
 
 if __name__ == "__main__":
     data = DataLoader.from_files("./promise/", ["camel-1.2.csv", "camel-1.4.csv", "camel-1.6.csv"])

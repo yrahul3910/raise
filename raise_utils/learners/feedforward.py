@@ -1,9 +1,7 @@
-import tensorflow as tf
-
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Input
-from tensorflow.keras.callbacks import EarlyStopping
-from tensorflow.keras import backend as K
+from keras.models import Sequential
+from keras.layers import Dense, Input
+from keras.callbacks import EarlyStopping
+from keras import backend as K
 import numpy as np
 from raise_utils.learners.learner import Learner
 from raise_utils.transforms.wfo import fuzz_data
@@ -79,9 +77,7 @@ class FeedforwardDL(Learner):
     def set_data(self, x_train, y_train, x_test, y_test):
         super().set_data(x_train, y_train, x_test, y_test)
 
-        if tf.__version__ >= '2.0.0':
-            # We are running TF 2.0, so need to type cast.
-            self.y_train = self.y_train.astype('float32')
+        self.y_train = self.y_train.astype('float32')
 
     def fit(self):
         self._check_data()

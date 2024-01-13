@@ -4,7 +4,7 @@ from raise_utils.data import Data
 from raise_utils.transforms import Transform
 from raise_utils.utils import warn, info
 from hyperopt import hp, fmin, tpe, space_eval
-from tensorflow.keras.utils import to_categorical
+from keras.utils import to_categorical
 from typing import Callable
 from tabulate import tabulate
 import numpy as np

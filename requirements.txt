@@ -3,7 +3,7 @@ pytest-cov
 cvxopt
 pandas
 numpy~=1.22.3
-tensorflow>=2.0.0
+keras>=3.0.0
 colorama
 hyperopt
 coverage
@@ -13,3 +13,5 @@ imblearn
 bohb-hpo
 Cython
 tabulate
+statsmodels
+keras_nlp

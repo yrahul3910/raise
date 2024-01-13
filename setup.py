@@ -31,7 +31,7 @@ setup(name='raise_utils',
       ],
       install_requires=[
           'scikit-learn>=0.23.2',
-          'tensorflow',
+          'keras',
           'numpy>=1.19.2',
           'pandas',
           'cvxopt',
@@ -39,7 +39,9 @@ setup(name='raise_utils',
           'hyperopt',
           'imblearn',
           'Cython',
-          'tabulate'
+          'tabulate',
+          'statsmodels',
+          'keras_nlp'
       ],
       ext_modules=ext_modules
       )

@@ -22,10 +22,9 @@ imblearn = "^0.0"
 bohb-hpo = "^0.5.2"
 Cython = "^0.29.24"
 tabulate = "^0.8.9"
-
-[tool.poetry.extras]
-tensorflow = ["tensorflow>=2.0.0"]
-tensorflow_macos = ["tensorflow-macos>=2.0.0"]
+keras = "^3.0.0"
+statsmodels = "^0.14.0"
+keras_nlp = "^0.7.0"
 
 [build-system]
 requires = ["setuptools", "wheel", "Cython"]

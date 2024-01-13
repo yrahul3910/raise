@@ -8,7 +8,6 @@ from copy import deepcopy
 from raise_utils.data.data import Data
 import itertools
 
-from raise_utils.learners import Learner
 from raise_utils.metrics.metrics import ClassificationMetrics
 from raise_utils.transforms.transform import Transform
 

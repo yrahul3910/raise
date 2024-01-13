@@ -17,7 +17,7 @@ import pyximport
 
 pyximport.install()
 
-from .remove_labels import Smooth
+from remove_labels import Smooth
 
 transformers = {
     "normalize": Normalizer,
