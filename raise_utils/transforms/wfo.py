@@ -1,5 +1,5 @@
 import numpy as np
-from tensorflow.keras.utils import to_categorical
+from keras.utils import to_categorical
 
 
 def fuzz_data(X, y, radii=(0., .3, .03)):

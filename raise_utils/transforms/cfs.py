@@ -1,10 +1,6 @@
 import pandas as pd
 import numpy as np
-import scipy.spatial as ss
-from scipy.special import digamma
 from math import log
-import numpy.random as nr
-import random
 import warnings
 
 warnings.filterwarnings("ignore")

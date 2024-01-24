@@ -34,13 +34,13 @@ The RAISE Package
 ===============================
 
 .. automodule:: raise_utils.hyperparams
-   :members: DODGE, GHOST, BinaryGHOST, RayTune
+   :members: DODGE, GHOST, BinaryGHOST
 
 :code:`raise_utils.interpret`
 =============================
 
 .. automodule:: raise_utils.interpret
-   :members: DODGEInterpreter, ResultsInterpreter, ScottKnott
+   :members: DODGEInterpreter, ResultsInterpreter, ScottKnott, KruskalWallis
 
 :code:`raise_utils.learners`
 ============================

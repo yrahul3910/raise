@@ -1,6 +1,6 @@
-from tensorflow.keras.models import Model
-from tensorflow.keras.layers import Dense, Input
-from tensorflow.keras.callbacks import EarlyStopping
+from keras.models import Model
+from keras.layers import Dense, Input
+from keras.callbacks import EarlyStopping
 import numpy as np
 from raise_utils.learners.learner import Learner
 

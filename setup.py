@@ -8,7 +8,7 @@ ext_modules = cythonize(Extension(
 ))
 
 setup(name='raise_utils',
-      version='2.1.2',
+      version='2.1.3',
       description='RAISE lab package (LGPL-3.0-or-later)',
       author='RAISE, NC State University',
       author_email='ryedida@ncsu.edu',
@@ -31,7 +31,7 @@ setup(name='raise_utils',
       ],
       install_requires=[
           'scikit-learn>=0.23.2',
-          'keras',
+          'keras>=3.0.0',
           'numpy>=1.19.2',
           'pandas',
           'cvxopt',
