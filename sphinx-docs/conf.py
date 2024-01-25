@@ -9,7 +9,7 @@
 project = 'raise-utils'
 copyright = '2024, Rahul Yedida'
 author = 'Rahul Yedida'
-release = '2.1.3'
+release = '2.1.4'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
