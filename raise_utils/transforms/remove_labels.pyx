@@ -12,8 +12,8 @@ def remove_labels(x_train, y_train):
     lost_idx_len = int(len(y_train) - np.sqrt(len(y_train)))
     lost_idx = np.random.choice(len(y_train), size=lost_idx_len, replace=False).astype(int)
 
-    x_train = np.array(x_train, dtype=np.float32)
-    y_train = np.array(y_train, dtype=np.long)
+    x_train = np.array(x_train, dtype=float)
+    y_train = np.array(y_train, dtype=int)
 
     x_lost = x_train[lost_idx]
     x_rest = np.delete(x_train, lost_idx, axis=0)
@@ -24,7 +24,7 @@ def remove_labels(x_train, y_train):
         x_lost = x_lost.reshape(1, -1)
     if x_rest.shape[0] == 1:
         x_rest = x_rest.reshape(1, -1)
-    
+
     cdef float[:, :] x_lost_view = x_lost
     cdef float[:, :] x_rest_view = x_rest
     cdef long[:] y_lost_view = y_lost

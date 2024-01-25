@@ -1,5 +1,17 @@
 # Change Log
 
+## 2.1.4
+
+* Bug fixes
+
+## 2.1.3
+
+* Bug fixes
+
+## 2.1.2
+
+* Bug fixes
+
 ## 2.1.0
 
 * Added `KruskalWallis` class to `raise_utils.interpret`.

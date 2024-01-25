@@ -14,4 +14,3 @@ bohb-hpo
 Cython
 tabulate
 statsmodels
-keras_nlp
