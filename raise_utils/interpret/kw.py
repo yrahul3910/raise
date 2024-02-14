@@ -64,5 +64,8 @@ class KruskalWallis:
                 print("The group with the largest median IS NOT significantly better than all the others, ", end='')
 
             print(f'and the highest p-value is {round(max(post_hoc[max_group]), 2)}')
+
+            return post_hoc, max_group, significantly_better
         else:
             print("There is no significant difference among the groups.")
+            return None

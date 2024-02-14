@@ -1,5 +1,11 @@
 # Change Log
 
+## 2.2.0
+
+* **Breaking change:** `raise_utils.learners.TextDeepLearner` has been removed.
+* `KruskalWallis.pprint()` now returns a DataFrame of adjusted p-values, the best-performing group, and whether it is
+    significantly different from the others.
+
 ## 2.1.4
 
 * Bug fixes

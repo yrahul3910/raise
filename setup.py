@@ -8,7 +8,7 @@ ext_modules = cythonize(Extension(
 ))
 
 setup(name='raise_utils',
-      version='2.1.4',
+      version='2.2.0',
       description='RAISE lab package (LGPL-3.0-or-later)',
       author='RAISE, NC State University',
       author_email='ryedida@ncsu.edu',
@@ -40,8 +40,7 @@ setup(name='raise_utils',
           'imblearn',
           'Cython',
           'tabulate',
-          'statsmodels',
-          'keras_nlp'
+          'statsmodels'
       ],
       ext_modules=ext_modules
       )

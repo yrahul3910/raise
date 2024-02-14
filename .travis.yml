@@ -3,7 +3,7 @@ language: python
 python:
   - "3.8"
 install:
-  - pip install -r requirements.txt
+  - pip install -r requirements.txt && pip install tensorflow
 script:
   - cd raise_utils/transforms && cythonize -i -a remove_labels.pyx
   - cd tests && ./test.sh
