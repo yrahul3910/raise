@@ -3,6 +3,7 @@ import string
 import os
 import sys
 import numpy as np
+import keras
 from copy import deepcopy
 
 from raise_utils.data.data import Data
@@ -12,6 +13,9 @@ from raise_utils.metrics.metrics import ClassificationMetrics
 from raise_utils.transforms.transform import Transform
 
 import gc
+
+if keras.config.backend() == "torch":
+    from torch import Tensor
 
 
 class DODGE:
@@ -56,7 +60,14 @@ class DODGE:
             print("Run #", _)
             print("=" * len("Run #" + str(_)))
 
-            data: Data = deepcopy(self.config["data"][0])
+            if keras.config.backend() == "torch" and isinstance(self.config["data"][0].x_train, Tensor):
+                x_train = self.config["data"][0].x_train.detach().numpy()
+                x_test = self.config["data"][0].x_test.detach().numpy()
+                y_train = deepcopy(self.config["data"][0].y_train)
+                y_test = deepcopy(self.config["data"][0].y_test)
+                data = Data(x_train, x_test, y_train, y_test)
+            else:
+                data: Data = deepcopy(self.config["data"][0])
 
             func_str_dic = {}
             func_str_counter_dic = {}

@@ -13,11 +13,15 @@ from raise_utils.transforms.wfo import WeightedFuzzyOversampler
 from raise_utils.transforms.wfo import RadiallyWeightedFuzzyOversampler
 from raise_utils.data import Data
 import numpy as np
+import keras
 import pyximport
 
 pyximport.install()
 
-from .remove_labels import Smooth
+from .remove_labels import Smooth  # noqa: F402
+
+if keras.config.backend() == "torch":
+    from torch import FloatTensor, Tensor
 
 transformers = {
     "normalize": Normalizer,
@@ -86,6 +90,12 @@ class Transform:
             self.transformer.fit_transform(data)
             data.x_test = self.transformer.transform(data.x_test)
         else:
+            revert_to_tensor = False
+            if keras.config.backend() == "torch" and isinstance(data.x_train, Tensor):
+                data.x_train = data.x_train.detach().numpy()
+                data.x_test = data.x_test.detach().numpy()
+                revert_to_tensor = True
+
             if self.name != "smote":
                 if self.name in ["wfo", "cfs", "rwfo", "smooth"]:
                     data.x_train, data.y_train = self.transformer.fit_transform(
@@ -101,6 +111,10 @@ class Transform:
 
                 data.x_train, data.y_train = self.transformer.fit_resample(
                     data.x_train, data.y_train)
+
+            if revert_to_tensor:
+                data.x_train = FloatTensor(data.x_train)
+                data.x_test = FloatTensor(data.x_test)
 
         if self.name == "none":
             # Fix weirdness with NullTransform.

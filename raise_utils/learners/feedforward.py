@@ -7,6 +7,9 @@ from raise_utils.learners.learner import Learner
 from raise_utils.transforms.wfo import fuzz_data
 from imblearn.over_sampling import SMOTE
 
+if keras.config.backend() == "torch":
+    from torch import Tensor
+
 
 def weighted_categorical_crossentropy(weights):
     """
@@ -82,12 +85,16 @@ class FeedforwardDL(Learner):
     def fit(self):
         self._check_data()
 
-        self.x_train = np.array(self.x_train)
-        self.x_test = np.array(self.x_test)
-        self.y_train = np.array(self.y_train).squeeze()
-        self.y_test = np.array(self.y_test).squeeze()
+        if keras.config.backend() == "torch" and isinstance(self.x_train, Tensor):
+            self.x_train = self.x_train.detach().numpy()
+            self.x_test = self.x_test.detach().numpy()
+        else:
+            self.x_train = np.array(self.x_train)
+            self.x_test = np.array(self.x_test)
+            self.y_train = np.array(self.y_train).squeeze()
+            self.y_test = np.array(self.y_test).squeeze()
 
-        self.model.add(Input(shape=(self.x_train.shape[1],)))
+        #self.model.add(Input(shape=(self.x_train.shape[1],)))
 
         if self.weighted:
             frac = sum(self.y_train) * 1. / len(self.y_train)

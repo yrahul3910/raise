@@ -194,12 +194,11 @@ class CFS:
         self.cols = []
 
     def fit_transform(self, x_train: pd.DataFrame, y_train):
-        self.cols = np.array(x_train.columns)[[
-            cfs(x_train.values, y_train.values)]].tolist()
-        return x_train[self.cols], y_train
+        self.cols = cfs(x_train.values, y_train.values)
+        return np.array(x_train)[:, self.cols], y_train
 
     def transform(self, x_test):
         if len(self.cols) == 0:
             raise AssertionError("Empty cols.")
 
-        return x_test[self.cols]
+        return np.array(x_test)[self.cols]

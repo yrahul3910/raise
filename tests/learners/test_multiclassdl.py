@@ -5,7 +5,7 @@ from raise_utils.hooks import Hook
 
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
-from tensorflow.keras.utils import to_categorical
+from keras.utils import to_categorical
 
 
 def test_dl_works():

@@ -3,6 +3,7 @@ from raise_utils.data import Data
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 import numpy as np
+import keras
 
 
 def test_autoencoder():
@@ -30,7 +31,10 @@ def test_can_decode():
     learner.set_data(*data)
     learner.fit()
 
-    print(np.linalg.norm(learner.decode(
-        learner.encode(data.x_test)
-    ) - data.x_test))
+    decoded = learner.decode(learner.encode(data.x_test))
+
+    if keras.config.backend() == 'torch':
+        decoded = decoded.detach().numpy()
+
+    print(np.linalg.norm(decoded - data.x_test))
     assert True
