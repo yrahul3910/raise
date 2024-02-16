@@ -1,7 +1,7 @@
 from keras.models import Sequential
 from keras.layers import Dense, Input
 from keras.callbacks import EarlyStopping
-from keras import backend as K
+import keras
 import numpy as np
 from raise_utils.learners.learner import Learner
 from raise_utils.transforms.wfo import fuzz_data
@@ -14,11 +14,11 @@ def weighted_categorical_crossentropy(weights):
     Variables:
     weights: numpy array of shape (C,) where C is the number of classes
     """
-    weights = K.variable(weights)
+    weights = keras.Variable(weights)
 
     def loss(y_true, y_pred):
-        return K.mean(
-            K.binary_crossentropy(y_true, y_pred) * weights)
+        return keras.ops.mean(
+            keras.losses.binary_crossentropy(y_true, y_pred) * weights)
 
     return loss
 

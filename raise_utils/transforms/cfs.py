@@ -194,7 +194,7 @@ class CFS:
         self.cols = []
 
     def fit_transform(self, x_train: pd.DataFrame, y_train):
-        self.cols = x_train.columns[[
+        self.cols = np.array(x_train.columns)[[
             cfs(x_train.values, y_train.values)]].tolist()
         return x_train[self.cols], y_train
 
