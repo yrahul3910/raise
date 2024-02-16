@@ -1,29 +1,15 @@
 from keras.models import Sequential
-from keras.layers import Dense, Input
+from keras.layers import Dense
 from keras.callbacks import EarlyStopping
 import keras
 import numpy as np
 from raise_utils.learners.learner import Learner
 from raise_utils.transforms.wfo import fuzz_data
 from imblearn.over_sampling import SMOTE
+from sklearn.utils import class_weight
 
 if keras.config.backend() == "torch":
     from torch import Tensor
-
-
-def weighted_categorical_crossentropy(weights):
-    """
-    A weighted version of keras.objectives.categorical_crossentropy
-    Variables:
-    weights: numpy array of shape (C,) where C is the number of classes
-    """
-    weights = keras.Variable(weights)
-
-    def loss(y_true, y_pred):
-        return keras.ops.mean(
-            keras.losses.binary_crossentropy(y_true, y_pred) * weights)
-
-    return loss
 
 
 class FeedforwardDL(Learner):
@@ -94,15 +80,12 @@ class FeedforwardDL(Learner):
             self.y_train = np.array(self.y_train).squeeze()
             self.y_test = np.array(self.y_test).squeeze()
 
-        #self.model.add(Input(shape=(self.x_train.shape[1],)))
-
         if self.weighted:
-            frac = sum(self.y_train) * 1. / len(self.y_train)
-
-            if isinstance(self.weighted, int):
-                self.weighted = 1.
-            self.loss = weighted_categorical_crossentropy(
-                weights=(1., self.weighted / frac))
+            weights = class_weight.compute_class_weight('balanced',
+                                                        classes=np.unique(self.y_train),
+                                                        y=self.y_train)
+        else:
+            weights = None
 
         if self.wfo:
             self.x_train, self.y_train = fuzz_data(self.x_train, self.y_train)
@@ -130,7 +113,7 @@ class FeedforwardDL(Learner):
         early_stopping = EarlyStopping(monitor='loss', patience=10)
         self.model.fit(np.array(self.x_train), np.array(
             self.y_train), epochs=self.n_epochs, batch_size=self.bs,
-            callbacks=[early_stopping], verbose=self.verbose)
+            callbacks=[early_stopping], verbose=self.verbose, class_weight=weights)
         if self.hooks is not None:
             if self.hooks.get('post_train', None):
                 for hook in self.hooks['post_train']:
