@@ -35,9 +35,12 @@ jobs:
           # app-dir: ~/project/package-directory/  # If you're requirements.txt isn't in the root directory.
           # pip-dependency-file: test-requirements.txt  # if you have a different name for your requirements file, maybe one that combines your runtime and test requirements.
       - run:
+          name: Cythonize remove_labels.pyx
+          command: cd raise_utils/transforms && cythonize -i -a remove_labels.pyx
+      - run:
           name: Run tests
           # This assumes pytest is installed via the install-package step above
-          command: pip install tensorflow && cd tests && ./test.sh
+          command: pip install tensorflow && pip uninstall -y keras && pip install "keras>=3.0.0" && cd tests && ./test.sh
       - run:
           name: Upload to codecov
           command: cd tests && bash <(curl -s https://codecov.io/bash)
