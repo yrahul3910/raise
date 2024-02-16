@@ -84,6 +84,7 @@ class FeedforwardDL(Learner):
             weights = class_weight.compute_class_weight('balanced',
                                                         classes=np.unique(self.y_train),
                                                         y=self.y_train)
+            weights = {i: weights[i] for i in range(len(weights))}
         else:
             weights = None
 
