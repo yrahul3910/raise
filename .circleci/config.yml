@@ -37,7 +37,7 @@ jobs:
       - run:
           name: Run tests
           # This assumes pytest is installed via the install-package step above
-          command: cd tests && ./test.sh
+          command: pip install tensorflow && cd tests && ./test.sh
       - run:
           name: Upload to codecov
           command: cd tests && bash <(curl -s https://codecov.io/bash)
