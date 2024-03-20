@@ -1,5 +1,9 @@
 # Change Log
 
+## 2.2.1
+
+* Bug fixes
+
 ## 2.2.0
 
 * Fully moved to Keras 3--both TensorFlow and PyTorch backends are supported. JAX might work, but it is not officially

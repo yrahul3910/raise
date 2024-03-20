@@ -18,7 +18,7 @@ import pyximport
 
 pyximport.install()
 
-from .remove_labels import Smooth  # noqa: F402
+from remove_labels import Smooth  # noqa: F402
 
 if keras.config.backend() == "torch":
     from torch import FloatTensor, Tensor

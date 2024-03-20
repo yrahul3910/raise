@@ -8,7 +8,7 @@ ext_modules = cythonize(Extension(
 ))
 
 setup(name='raise_utils',
-      version='2.2.0',
+      version='2.2.1',
       description='RAISE lab package (LGPL-3.0-or-later)',
       author='RAISE, NC State University',
       author_email='ryedida@ncsu.edu',
