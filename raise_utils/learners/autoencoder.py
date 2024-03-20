@@ -82,8 +82,6 @@ class Autoencoder(Learner):
         self.model = Model(inputs=enc_inp, outputs=dec_intermediate)
         self.encoder = Model(inputs=enc_inp, outputs=enc_intermediate)
 
-        self.model.summary()
-
         dec_inp = Input(shape=(self.n_out,))
         for layer in self.model.layers[-1 - len(self.n_units):]:
             dec_intermediate_values = layer(
