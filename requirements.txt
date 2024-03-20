@@ -7,7 +7,6 @@ keras>=3.0.0
 colorama
 hyperopt
 coverage
-ray[tune]
 scikit-learn>=0.23.2
 imblearn
 bohb-hpo

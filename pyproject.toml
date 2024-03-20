@@ -16,7 +16,6 @@ numpy = "^1.23.2"
 colorama = "^0.4.6"
 hyperopt = "^0.2.7"
 coverage = "^7.2.7"
-ray = {extras = ["tune"], version = "^2.5.0"}
 scikit-learn = ">=0.23.2"
 imblearn = "^0.0"
 bohb-hpo = "^0.5.2"
@@ -24,6 +23,7 @@ Cython = "^0.29.24"
 tabulate = "^0.8.9"
 keras = "^3.0.0"
 statsmodels = "^0.14.0"
+python = ">=3.9"
 
 [build-system]
 requires = ["setuptools", "wheel", "Cython"]
