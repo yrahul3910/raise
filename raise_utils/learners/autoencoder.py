@@ -1,3 +1,4 @@
+import keras
 from keras.models import Model
 from keras.layers import Dense, Input
 from keras.callbacks import EarlyStopping
@@ -113,7 +114,12 @@ class Autoencoder(Learner):
         if self.model is None:
             raise AssertionError('Model is None.')
 
-        return self.encoder(x)
+        encoded = self.encoder(x)
+
+        if keras.config.backend() == "torch":
+            encoded = encoded.detach().numpy()
+
+        return encoded
 
     def decode(self, x: np.ndarray) -> np.ndarray:
         """
