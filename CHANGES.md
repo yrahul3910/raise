@@ -1,5 +1,9 @@
 # Change Log
 
+## 2.2.2
+
+* Bug fix in Scott-Knott
+
 ## 2.2.1
 
 * Bug fixes
