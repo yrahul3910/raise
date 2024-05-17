@@ -31,4 +31,4 @@ class ScottKnott:
 
     def get_results(self):
         """Gets the Scott-Knott results."""
-        return Rx.sk(Rx.data(**self.data))
+        return Rx.sk(Rx.data(**self.data), effect=self.effect)
