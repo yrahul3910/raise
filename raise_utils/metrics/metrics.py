@@ -46,19 +46,6 @@ class Metric:
         self.data = None
         self.metrics = []
 
-
-class ClassificationMetrics(Metric):
-    """Handles classification metrics"""
-
-    def add_data(self, data) -> None:
-        """
-        Adds data for the popt20 metric
-
-        :param data: Pandas DataFrame. Must include the columns "bug", "loc", and "prediction"
-        :return: None
-        """
-        self.data = data
-
     def add_metric(self, metric: str) -> None:
         """
         Adds a metric to the object
@@ -83,7 +70,23 @@ class ClassificationMetrics(Metric):
         :return: None
         """
         for metric in metrics:
-            self.add_metric(metric)
+            try:
+                self.add_metric(metric)
+            except ValueError | AssertionError:
+                continue
+
+
+class ClassificationMetrics(Metric):
+    """Handles classification metrics"""
+
+    def add_data(self, data) -> None:
+        """
+        Adds data for the popt20 metric
+
+        :param data: Pandas DataFrame. Must include the columns "bug", "loc", and "prediction"
+        :return: None
+        """
+        self.data = data
 
     def get_metrics(self) -> list:
         """
@@ -98,4 +101,4 @@ class ClassificationMetrics(Metric):
         if "popt20" in self.metrics:
             metrics.insert(self.metrics.index("popt20"), get_popt20(self.data))
 
-        return [metric.tolist() if isinstance(metric, list) else metric for metric in metrics]
+        return [metric.tolist() if isinstance(metric, np.ndarray) else metric for metric in metrics]
