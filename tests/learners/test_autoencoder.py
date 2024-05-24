@@ -21,7 +21,7 @@ def test_can_encode():
     learner.set_data(*data)
     learner.fit()
 
-    encoded = learner.encode(data.x_test)
+    _ = learner.encode(data.x_test)
     assert True
 
 

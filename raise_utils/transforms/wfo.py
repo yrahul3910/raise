@@ -65,7 +65,7 @@ class RadiallyWeightedFuzzyOversampler:
         radii = (.1, 1., .1)
         for row in x_train[idx]:
             for i, r in enumerate(np.arange(*radii)):
-                for j in range(int((1. / frac) / pow(2., i))):
+                for _ in range(int((1. / frac) / pow(2., i))):
                     u = np.random.normal(0, r, x_train.shape[1])
                     norm = np.sum(u ** 2) ** 0.5
                     r = np.random.random() ** (1. / x_train.shape[1])

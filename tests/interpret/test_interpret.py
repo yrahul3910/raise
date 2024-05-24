@@ -30,7 +30,7 @@ def test_dodge_interpreter_raises():
         files=['./interpret/test.txt'], metrics=['accuracy'], max_by=0)
 
     with pytest.raises(ValueError):
-        results = interp.interpret()
+        _ = interp.interpret()
 
 
 def test_maxby_func():

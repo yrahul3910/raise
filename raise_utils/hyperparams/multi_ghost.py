@@ -3,7 +3,7 @@ from raise_utils.metrics import ClassificationMetrics
 from raise_utils.data import Data
 from raise_utils.transforms import Transform
 from raise_utils.utils import warn, info
-from hyperopt import hp, fmin, tpe, space_eval
+from hyperopt import hp, fmin, tpe
 from keras.utils import to_categorical
 from typing import Callable
 from tabulate import tabulate
@@ -188,7 +188,7 @@ class GHOST(Learner):
 
             return obj
 
-        best = fmin(_objective, hp_space, algo=tpe.suggest,
+        _ = fmin(_objective, hp_space, algo=tpe.suggest,
                     max_evals=self.max_evals)
 
         results_df = pd.DataFrame(results_table, columns=['n_units', 'n_layers', 'objective', *self.metrics])

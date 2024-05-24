@@ -1,9 +1,3 @@
-#!/usr/bin/env python3
-
-from copy import deepcopy as kopy
-import sys
-import random
-
 """
 Scott-Knot test + non parametric effect size + significance tests.
 Tim Menzies, 2019. Share and enjoy. No warranty. Caveat Emptor.
@@ -15,13 +9,11 @@ and larger data)
 Ouputs treatments, clustered such that things that have similar
 results get the same ranks.
 """
-
-# -----------------------------------------------------
-# Config
+from copy import deepcopy as kopy
 
 
 class o:
-    def __init__(i, **d): i.__dict__.update(**d)
+    def __init__(self, **d): self.__dict__.update(**d)
 
 
 class THE:
@@ -71,61 +63,6 @@ def cliffsDelta(lst1, lst2, dull=THE.cliffs.dull[0]):
     return abs(d) <= dull
 
 
-def bootstrap(y0, z0, conf=THE.bs.conf, b=THE.bs.b):
-    """
-    two  lists y0,z0 are the same if the same patterns can be seen in all of them, as well
-    as in 100s to 1000s  sub-samples from each.
-    From p220 to 223 of the Efron text  'introduction to the boostrap'.
-    Typically, conf=0.05 and b is 100s to 1000s.
-    """
-
-    class Sum():
-        def __init__(self, some=None):
-            if some is None:
-                some = []
-            self.sum = self.n = i.mu = 0
-            self.all = []
-            for one_ in some:
-                self.put(one_)
-
-        def put(self, x):
-            self.all.append(x)
-            self.sum += x
-            self.n += 1
-            self.mu = float(self.sum) / self.n
-
-        def __add__(self, i2): return Sum(self.all + i2.all)
-
-    def test_statistic(y, z):
-        tmp1 = tmp2 = 0
-        for y1 in y.all:
-            tmp1 += (y1 - y.mu) ** 2
-        for z1 in z.all:
-            tmp2 += (z1 - z.mu) ** 2
-        s1 = float(tmp1) / (y.n - 1)
-        s2 = float(tmp2) / (z.n - 1)
-        delta = z.mu - y.mu
-        if s1 + s2:
-            delta = delta / ((s1 / y.n + s2 / z.n) ** 0.5)
-        return delta
-
-    def one(lst):
-        return lst[int(random.uniform(0, (len(lst))))]
-
-    y, z = Sum(y0), Sum(z0)
-    x = y + z
-    yhat = [y1 - y.mu + x.mu for y1 in y.all]
-    zhat = [z1 - z.mu + x.mu for z1 in z.all]
-    bigger = 0
-    for i in range(b):
-        if test_statistic(Sum([one(yhat) for _ in yhat]),
-                          Sum([one(zhat) for _ in zhat])) > test_statistic(y, z):
-            bigger += 1
-    return bigger / b >= conf
-
-
-# -------------------------------------------------------
-# misc functions
 def same(x): return x
 
 
@@ -133,25 +70,12 @@ class Mine:
     "class that, amongst other times, pretty prints objects"
     oid = 0
 
-    def identify(i):
+    def identify(self):
         Mine.oid += 1
-        i.oid = Mine.oid
-        return i.oid
-
-    def __repr__(i):
-        pre = i.__class__.__name__ + '{'
-
-        def q(z):
-            if isinstance(z, str):
-                return "'%s'" % z
-            if callable(z):
-                return "fun(%s)" % z.__name__
-            return str(z)
-
-        return pre + ", ".join(['%s=%s' % (k, q(v))])
+        self.oid = Mine.oid
+        return self.oid
 
 
-# -------------------------------------------------------
 class Rx(Mine):
     "place to manage pairs of (TreatmentName,ListofResults)"
 
@@ -168,20 +92,19 @@ class Rx(Mine):
     def tiles(self, lo=0, hi=1):
         return xtile(self.vals, lo, hi)
 
-    def __lt__(i, j):
-        return i.med < j.med
+    def __lt__(self, other):
+        return self.med < other.med
 
-    def __eq__(i, j):
-        return cliffsDelta(i.vals, j.vals, dull=self.dull)  # and \
-        # bootstrap(i.vals,j.vals)
+    def __eq__(self, other):
+        return cliffsDelta(self.vals, other.vals, dull=self.dull)  # and \
 
-    def __repr__(i):
-        return '%4s %10s %s' % (i.rank, i.rx, i.tiles())
+    def __repr__(self):
+        return '%4s %10s %s' % (self.rank, self.rx, self.tiles())
 
-    def xpect(i, j, b4):
-        "Expected value of difference in emans before and after a split"
-        n = i.n + j.n
-        return i.n / n * (b4.med - i.med) ** 2 + j.n / n * (j.med - b4.med) ** 2
+    def xpect(self, j, b4):
+        "Expected value of difference in means before and after a split"
+        n = self.n + j.n
+        return self.n / n * (b4.med - self.med) ** 2 + j.n / n * (j.med - b4.med) ** 2
 
     # -- end instance methods --------------------------
 
@@ -189,21 +112,6 @@ class Rx(Mine):
     def data(**d):
         "convert dictionary to list of treatments"
         return [Rx(k, v) for k, v in d.items()]
-
-    @staticmethod
-    def fileIn(f):
-        d = {}
-        what = None
-        for word in words(f):
-            x = thing(word)
-            if isinstance(x, str):
-                what = x
-                d[what] = d.get(what, [])
-            else:
-                if x > 1:
-                    x /= 100
-                d[what] += [x]
-        Rx.show(Rx.sk(Rx.data(**d)))
 
     @staticmethod
     def sum(rxs):
@@ -221,7 +129,7 @@ class Rx(Mine):
             print(THE.rx.show % (rx.rank, rx.rx, rx.tiles()))
 
     @staticmethod
-    def sk(rxs, effect=THE.cliffs.dull[0]):
+    def sk(rxs, effect='small'):
         "sort treatments and rank them"
         effect_dict = {
             'small': THE.cliffs.dull[0],
@@ -321,7 +229,3 @@ def thing(x):
             return float(x)
         except ValueError:
             return x
-
-
-if __name__ == "__main__":
-    Rx.fileIn(sys.argv[1])

@@ -96,7 +96,7 @@ def get_pf(y_true, y_pred) -> float:
     :param y_pred: Predictions
     :return: False alarm rate
     """
-    _, tn, fp, fn = get_confusion_matrix(y_true, y_pred)
+    _, tn, fp, _ = get_confusion_matrix(y_true, y_pred)
     return 1. * fp / (fp + tn) if fp + tn != 0 else 0
 
 
@@ -217,7 +217,7 @@ def get_popt20(data) -> float:
     yyy = yy[:len(xxx)]
     try:
         s_wst = round(auc(xxx, yyy), 3)
-    except:
+    except ValueError:
         s_wst = 0
 
     # get AUC_prediction

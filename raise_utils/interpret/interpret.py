@@ -1,7 +1,7 @@
+import ast
 from raise_utils.interpret.sk import Rx
 from statistics import median
 from typing import Union, Callable
-from numpy import array
 import numpy as np
 
 
@@ -54,7 +54,7 @@ class DODGEInterpreter:
                 settings = [line.split(':')[1]
                             for line in lines if line.startswith('setting')]
 
-            lines = [eval(line.split(':')[1])
+            lines = [ast.literal_eval(line.split(':')[1])
                      for line in lines if line.startswith('iter')]
 
             n_runs = int(len(lines) // DODGE_ITER)
@@ -127,7 +127,7 @@ class ResultsInterpreter:
         """
         with open(filename, "r") as f:
             line = f.readline()
-        line = eval(line)
+        line = ast.literal_eval(line)
         self.learners = list(line.keys())
         self.metrics = list(line[self.learners[0]].keys())
         return line
