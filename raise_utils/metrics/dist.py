@@ -13,7 +13,7 @@ def get_smape(P, Q):
     total = 0.
     for x in P:
         for y in Q:
-            total += 1./ len(x) * np.sum(2 * np.abs(y - x) / (np.abs(x) + np.abs(y) + np.finfo(float).eps))
+            total += 1./ len(x) * np.sum(np.abs(y - x) / (np.abs(x) + np.abs(y) + np.finfo(float).eps))
 
     return total / (len(P) * len(Q))
 

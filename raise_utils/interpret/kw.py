@@ -68,4 +68,4 @@ class KruskalWallis:
             return post_hoc, max_group, significantly_better
         else:
             print("There is no significant difference among the groups.")
-            return None
+            return None, None, None
