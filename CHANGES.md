@@ -2,6 +2,7 @@
 
 ## 2.3.0 (Under development)
 
+* Scott-Knott now also performs a bootstrap test.
 * Added distribution metrics (Jensen-Shannon, Kullback-Leibler, SMAPE) in `raise_utils.metrics.dist`. Note that the values you get from these will likely differ from other implementations, because we use a k-nearest neighbor-based KDE.
 * Bug fix in `KruskalWallis` when there was no significant difference between group means.
 

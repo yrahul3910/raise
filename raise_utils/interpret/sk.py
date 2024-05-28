@@ -9,33 +9,78 @@ and larger data)
 Ouputs treatments, clustered such that things that have similar
 results get the same ranks.
 """
+
+import random
 from copy import deepcopy as kopy
 
 
 class o:
-    def __init__(self, **d): self.__dict__.update(**d)
+    def __init__(self, **d):
+        self.__dict__.update(**d)
 
 
-class THE:
-    cliffs = o(dull=[0.147,  # small
-                     0.33,  # medium
-                     0.474  # large
-                     ])
-    bs = o(conf=0.05,
-           b=500)
-    mine = o(private="_")
-    char = o(skip="?")
-    rx = o(show="%4s %10s %s")
-    tile = o(width=50,
-             chops=[0.1, 0.25, 0.5, 0.75, 0.9],
-             marks=[" ", "-", "-", "-", " "],
-             bar="|",
-             star="*",
-             show=" %5.3f")
+def bootstrap(y0, z0, conf=0.05, b=500):
+    """
+    two  lists y0,z0 are the same if the same patterns can be seen in all of them, as well
+    as in 100s to 1000s  sub-samples from each.
+    From p220 to 223 of the Efron text  'introduction to the boostrap'.
+    Typically, conf=0.05 and b is 100s to 1000s.
+    """
+
+    class Sum:
+        def __init__(self, some=[]):
+            self.sum = self.n = self.mu = 0
+            self.all = []
+            for one in some:
+                self.put(one)
+
+        def put(self, x):
+            self.all.append(x)
+            self.sum += x
+            self.n += 1
+            self.mu = float(self.sum) / self.n
+
+        def __add__(self, other):
+            return Sum(self.all + other.all)
+
+    def testStatistic(y, z):
+        tmp1 = tmp2 = 0
+        for y1 in y.all:
+            tmp1 += (y1 - y.mu) ** 2
+        for z1 in z.all:
+            tmp2 += (z1 - z.mu) ** 2
+        s1 = float(tmp1) / (y.n - 1)
+        s2 = float(tmp2) / (z.n - 1)
+        delta = z.mu - y.mu
+        if s1 + s2:
+            delta = delta / ((s1 / y.n + s2 / z.n) ** 0.5)
+        return delta
+
+    def one(lst):
+        return lst[int(any(len(lst)))]
+
+    def any(n):
+        return random.uniform(0, n)
+
+    y, z = Sum(y0), Sum(z0)
+    x = y + z
+    baseline = testStatistic(y, z)
+    yhat = [y1 - y.mu + x.mu for y1 in y.all]
+    zhat = [z1 - z.mu + x.mu for z1 in z.all]
+    bigger = 0
+    for i in range(b):
+        if (
+            testStatistic(
+                Sum([one(yhat) for _ in yhat]), Sum([one(zhat) for _ in zhat])
+            )
+            > baseline
+        ):
+            bigger += 1
+    return bigger / b >= conf
 
 
 # -----------------------------------------------------
-def cliffsDelta(lst1, lst2, dull=THE.cliffs.dull[0]):
+def cliffsDelta(lst1, lst2, dull=0.147):
     "By pre-soring the lists, this cliffsDelta runs in NlogN time"
 
     def runs(lst):
@@ -63,11 +108,13 @@ def cliffsDelta(lst1, lst2, dull=THE.cliffs.dull[0]):
     return abs(d) <= dull
 
 
-def same(x): return x
+def same(x):
+    return x
 
 
 class Mine:
     "class that, amongst other times, pretty prints objects"
+
     oid = 0
 
     def identify(self):
@@ -79,15 +126,16 @@ class Mine:
 class Rx(Mine):
     "place to manage pairs of (TreatmentName,ListofResults)"
 
-    def __init__(self, rx="", vals=None, dull=THE.cliffs.dull[0]):
+    def __init__(self, rx="", vals=None, dull=0.147):
         if vals is None:
             vals = []
         self.rx = rx
-        self.vals = sorted([x for x in vals if x != THE.char.skip])
+        self.vals = sorted([x for x in vals if x != "?"])
         self.n = len(self.vals)
         self.med = self.vals[int(self.n / 2)]
         self.mu = sum(self.vals) / self.n
         self.rank = 1
+        self.dull = dull
 
     def tiles(self, lo=0, hi=1):
         return xtile(self.vals, lo, hi)
@@ -96,10 +144,12 @@ class Rx(Mine):
         return self.med < other.med
 
     def __eq__(self, other):
-        return cliffsDelta(self.vals, other.vals, dull=self.dull)  # and \
+        return cliffsDelta(self.vals, other.vals, dull=self.dull) and bootstrap(
+            self.vals, other.vals
+        )
 
     def __repr__(self):
-        return '%4s %10s %s' % (self.rank, self.rx, self.tiles())
+        return "%4s %10s %s" % (self.rank, self.rx, self.tiles())
 
     def xpect(self, j, b4):
         "Expected value of difference in means before and after a split"
@@ -126,19 +176,21 @@ class Rx(Mine):
     def show(rxs):
         "pretty print set of treatments"
         for rx in sorted(rxs):
-            print(THE.rx.show % (rx.rank, rx.rx, rx.tiles()))
+            print(f"{rx.rank:4} {rx.rx:10} {rx.tiles()}")
 
     @staticmethod
-    def sk(rxs, effect='small'):
+    def sk(rxs, effect="small"):
         "sort treatments and rank them"
         effect_dict = {
-            'small': THE.cliffs.dull[0],
-            'medium': THE.cliffs.dull[1],
-            'large': THE.cliffs.dull[2]
+            "small": 0.147,
+            "medium": 0.33,
+            "large": 0.474,
         }
 
         if effect in effect_dict:
             effect = effect_dict[effect]
+        else:
+            effect = 0.147
 
         def divide(lo, hi, b4, rank):
             cut = left = right = None
@@ -149,8 +201,7 @@ class Rx(Mine):
                 now = left0.xpect(right0, b4)
                 if now > best:
                     if not cliffsDelta(left0.vals, right0.vals, dull=effect):
-                        best, cut, left, right = now, j, kopy(
-                            left0), kopy(right0)
+                        best, cut, left, right = now, j, kopy(left0), kopy(right0)
             if cut:
                 rank = divide(lo, cut, left, rank) + 1
                 rank = divide(cut, hi, right, rank)
@@ -177,17 +228,20 @@ def pairs(lst):
 def words(f):
     with open(f) as fp:
         for line in fp:
-            for word in line.split(', '):
+            for word in line.split(", "):
                 yield word
 
 
-def xtile(lst, lo, hi,
-          width=THE.tile.width,
-          chops=THE.tile.chops,
-          marks=THE.tile.marks,
-          bar=THE.tile.bar,
-          star=THE.tile.star,
-          show=THE.tile.show):
+def xtile(
+    lst,
+    lo,
+    hi,
+    width=50,
+    chops=[0.1, 0.25, 0.5, 0.75, 0.9],
+    marks=[" ", "-", "-", "-", " "],
+    bar="|",
+    star="*"
+):
     """The function _xtile_ takes a list of (possibly)
     unsorted numbers and presents them as a horizontal
     xtile chart (in ascii format). The default is a
@@ -203,7 +257,7 @@ def xtile(lst, lo, hi,
         return int(width * float((x - lo)) / (hi - lo + 0.00001))
 
     def pretty(lst):
-        return ', '.join([show % x for x in lst])
+        return ", ".join([f" {x:5.3f}" for x in lst])
 
     ordered = sorted(lst)
     lo = min(lo, ordered[0])
@@ -217,7 +271,7 @@ def xtile(lst, lo, hi,
         marks = marks[1:]
     out[int(width / 2)] = bar
     out[place(pos(0.5))] = star
-    return '(' + ''.join(out) + ")," + pretty(what)
+    return "(" + "".join(out) + ")," + pretty(what)
 
 
 def thing(x):
