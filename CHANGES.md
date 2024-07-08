@@ -1,10 +1,11 @@
 # Change Log
 
-## 2.3.0 (Under development)
+## 2.3.0
 
 * Scott-Knott now also performs a bootstrap test.
-* Added distribution metrics (Jensen-Shannon, Kullback-Leibler, SMAPE) in `raise_utils.metrics.dist`. Note that the values you get from these will likely differ from other implementations, because we use a k-nearest neighbor-based KDE.
+* Added distribution metrics (Jensen-Shannon, Kullback-Leibler, SMAPE) in `raise_utils.metrics.dist`. Note that the values you get from these will likely differ from other implementations, because we use a k-nearest neighbor-based KDE. This will be improved in a future patch, and should currently be considered experimental.
 * Bug fix in `KruskalWallis` when there was no significant difference between group means.
+* `DataLoader` now has a `pd_kwargs` option that passes your options to `pd.read_csv`.
 
 ## 2.2.2
 
