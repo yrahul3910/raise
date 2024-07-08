@@ -65,7 +65,7 @@ class DataLoader:
     """Data loading utilities"""
 
     @staticmethod
-    def from_files(base_path: str, files: list, target: str = "bug", col_start: int = 3, col_stop: int = -2, n_classes: int = 2, hooks: list = None, **pd_kwargs) -> Data:
+    def from_files(base_path: str, files: list, target: str | int = "bug", col_start: int = 3, col_stop: int = -2, n_classes: int = 2, hooks: list = None, **pd_kwargs) -> Data:
         """
         Builds data from a list of files, the last of which is the test set.
 
@@ -86,15 +86,20 @@ class DataLoader:
 
         train_df, test_df = train_df.iloc[:,
                                           col_start:], test_df.iloc[:, col_start:]
-        train_size = train_df[target].count()
         df = pd.concat([train_df, test_df], ignore_index=True)
+
+        if isinstance(target, int):
+            target = df.columns[target]
+        elif not isinstance(target, str):
+            raise ValueError("Target must be a string or an integer")
 
         if n_classes == 2:
             df[target] = df[target].apply(lambda x: 0 if x == 0 else 1)
         elif n_classes > 2:
             df[target] = to_categorical(
-                df[target], num_classes=n_classes, dtype=int)
+                df[target], num_classes=n_classes) 
 
+        train_size = len(train_df)
         train_data = df.iloc[:train_size, :]
         test_data = df.iloc[train_size:, :]
 
@@ -110,7 +115,7 @@ class DataLoader:
         return Data(X_train, X_test, y_train, y_test)
 
     @staticmethod
-    def from_file(path: str, target="bug", col_start=3, col_stop=-2, hooks: list = None, **pd_kwargs) -> Data:
+    def from_file(path: str, target: str | int = "bug", col_start: int = 3, col_stop: int = -2, hooks: list = None, **pd_kwargs) -> Data:
         """
         Path to file
 
@@ -124,7 +129,14 @@ class DataLoader:
         :return: Data object
         """
         df = pd.read_csv(path, **pd_kwargs)
-        y = df[target].astype("int")
+
+        if isinstance(target, str):
+            y = df[target].astype("int")
+        elif isinstance(target, int):
+            y = df.iloc[:, target].astype("int")
+        else:
+            raise ValueError("Target must be a string or an integer")
+
         x = df.drop(columns=target)
         x = x.iloc[:, col_start:col_stop]
 
