@@ -211,7 +211,7 @@ def get_jsd_for_multidimensional_data(P, Q, bins=10):
     histograms_Q = compute_histograms(Q, bins)
 
     # Ensure both datasets have histograms for the same number of columns
-    assert len(histograms_P) == len(histograms_Q), "Datasets must have the same number of columns"
+    assert len(histograms_P) == len(histograms_Q)
 
     # Compute JSD for each column
     jsd_values = []
