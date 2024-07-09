@@ -190,7 +190,7 @@ def compute_histograms(P, bins=10):
     P = np.array(P)
     histograms = []
     for col in range(P.shape[1]):
-        hist, bin_edges = np.histogram(P[:, col], bins=bins, density=False)
+        hist, _ = np.histogram(P[:, col], bins=bins, density=False)
         hist = normalize_histogram(hist)
         histograms.append(hist)
     return histograms
