@@ -18,6 +18,7 @@ def get_smape(P, Q):
 
     return total / (len(P) * len(Q))
 
+
 def get_smape_vectorized(A: pd.DataFrame, F: pd.DataFrame) -> float:
     """
     Returns the Symmetric Mean Absolute Percentage Error (SMAPE) of distributions of P and Q.
@@ -30,8 +31,9 @@ def get_smape_vectorized(A: pd.DataFrame, F: pd.DataFrame) -> float:
     y = F.values[np.newaxis, :, :]
     numerator = 2 * np.abs(y - x)
     denominator = np.abs(x) + np.abs(y) + np.finfo(float).eps
-    result = np.mean(numerator / np.maximum(denominator, np.finfo(float).eps))    
+    result = np.mean(numerator / np.maximum(denominator, np.finfo(float).eps))
     return result
+
 
 def get_smape_vectorized_chunked(A: pd.DataFrame, F: pd.DataFrame, chunk_size: int = 1000) -> float:
     """
@@ -44,23 +46,23 @@ def get_smape_vectorized_chunked(A: pd.DataFrame, F: pd.DataFrame, chunk_size: i
     """
     total_sum = 0
     total_count = 0
-    
+
     for i in range(0, len(A), chunk_size):
         A_chunk = A.iloc[i:i+chunk_size]
-        
+
         for j in range(0, len(F), chunk_size):
             F_chunk = F.iloc[j:j+chunk_size]
-            
+
             x = A_chunk.values[:, np.newaxis, :]
             y = F_chunk.values[np.newaxis, :, :]
-            
+
             numerator = 2 * np.abs(y - x)
             denominator = np.abs(x) + np.abs(y)
-            
+ 
             chunk_result = numerator / np.maximum(denominator, np.finfo(float).eps)
             total_sum += np.sum(chunk_result)
             total_count += chunk_result.size
-    
+
     result = (total_sum / total_count)
     return result
 
@@ -159,13 +161,14 @@ def js_divergence(p, q):
     q = np.array(q)
     p = p / np.sum(p)
     q = q / np.sum(q)
-    
+
     # Calculate the pointwise mean
     m = 0.5 * (p + q)
-    
+
     # Compute the JSD
-    jsd = 0.5 * ( np.sum(rel_entr(p, m)) + np.sum(rel_entr(q, m)) )
+    jsd = 0.5 * (np.sum(rel_entr(p, m)) + np.sum(rel_entr(q, m)))
     return jsd
+
 
 def normalize_histogram(H):
     """
@@ -175,6 +178,7 @@ def normalize_histogram(H):
     """
     H = np.array(H)
     return H / np.sum(H)
+
 
 def compute_histograms(P, bins=10):
     """
@@ -191,6 +195,7 @@ def compute_histograms(P, bins=10):
         histograms.append(hist)
     return histograms
 
+
 def get_jsd_for_multidimensional_data(P, Q, bins=10):
     """
     Compute the Jensen-Shannon divergence for multidimensional dataframes by Summing JSDs for each column.
@@ -204,16 +209,16 @@ def get_jsd_for_multidimensional_data(P, Q, bins=10):
     # Compute histograms for each dataset
     histograms_P = compute_histograms(P, bins)
     histograms_Q = compute_histograms(Q, bins)
-    
+
     # Ensure both datasets have histograms for the same number of columns
     assert len(histograms_P) == len(histograms_Q), "Datasets must have the same number of columns"
-    
+
     # Compute JSD for each column
     jsd_values = []
     for h1, h2 in zip(histograms_P, histograms_Q):
         jsd = js_divergence(h1, h2)
         jsd_values.append(jsd)
-    
+
     # Sum of the JSD values
     sum_jsd = np.sum(jsd_values)
     return sum_jsd
