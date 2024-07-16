@@ -49,14 +49,9 @@ class Experiment:
         self.data = data
 
         # Apply transforms
-        # First, preserve columns
-        columns = self.data.x_train.columns
         for t in self.transforms:
             transform = Transform(t, random=self.random)
             transform.apply(self.data)
-
-        self.data.x_train = pd.DataFrame(self.data.x_train, columns=columns)
-        self.data.x_test = pd.DataFrame(self.data.x_test, columns=columns)
 
         results = {learn.__name__: {m: [] for m in self.metrics}
                    for learn in self.learners}

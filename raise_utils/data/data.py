@@ -65,7 +65,7 @@ class DataLoader:
     """Data loading utilities"""
 
     @staticmethod
-    def from_files(base_path: str, files: list, target: str | int = "bug", col_start: int = 3, col_stop: int = -2, n_classes: int = 2, hooks: list = None, **pd_kwargs) -> Data:
+    def from_files(base_path: str, files: list, target: str | int = "bug", col_start: int = 3, col_stop: int = -2, n_classes: int = 2, hooks: list = None, as_np: bool = False, **pd_kwargs) -> Data:
         """
         Builds data from a list of files, the last of which is the test set.
 
@@ -112,10 +112,13 @@ class DataLoader:
         X_test = test_data[test_data.columns[:col_stop]]
         y_test = test_data[target].astype("int")
 
+        if as_np:
+            return Data(X_train.values, X_test.values, y_train.values, y_test.values)
+
         return Data(X_train, X_test, y_train, y_test)
 
     @staticmethod
-    def from_file(path: str, target: str | int = "bug", col_start: int = 3, col_stop: int = -2, hooks: list = None, **pd_kwargs) -> Data:
+    def from_file(path: str, target: str | int = "bug", col_start: int = 3, col_stop: int = -2, hooks: list = None, as_np: bool = False, **pd_kwargs) -> Data:
         """
         Path to file
 
@@ -143,6 +146,10 @@ class DataLoader:
         if hooks is not None:
             for hook in hooks:
                 hook.call(x, y)
+
+        if as_np:
+            X_train, X_test, y_train, y_test = train_test_split(x.values, y.values)
+            return Data(X_train, X_test, y_train, y_test)
 
         return Data(*train_test_split(x, y))
 

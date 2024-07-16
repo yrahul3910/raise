@@ -1,5 +1,9 @@
 # Change Log
 
+## 2.3.1 (Under Development)
+
+* Added `as_np` option to `DataLoader` methods.
+
 ## 2.3.0
 
 * Scott-Knott now also performs a bootstrap test.
