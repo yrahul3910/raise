@@ -50,9 +50,9 @@ class Data:
 
     def get_popt_data(self, preds):
         preds = pd.Series(np.array(preds).squeeze(), name="prediction")
-        self.x_test.reset_index(inplace=True, drop=True)
-        self.y_test.reset_index(drop=True, inplace=True)
         if isinstance(self.x_train, pd.DataFrame):
+            self.x_test.reset_index(inplace=True, drop=True)
+            self.y_test.reset_index(inplace=True, drop=True)
             return pd.concat((self.x_test, self.y_test, preds), axis=1)
         else:
             df = pd.DataFrame(self.x_test)
@@ -137,6 +137,7 @@ class DataLoader:
             y = df[target].astype("int")
         elif isinstance(target, int):
             y = df.iloc[:, target].astype("int")
+            target = df.columns[target]
         else:
             raise ValueError("Target must be a string or an integer")
 
