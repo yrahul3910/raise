@@ -32,7 +32,7 @@ setup(name='raise_utils',
       install_requires=[
           'scikit-learn>=0.23.2',
           'keras>=3.0.0',
-          'numpy>=1.19.2',
+          'numpy>=1.23.2',
           'pandas',
           'cvxopt',
           'colorama',

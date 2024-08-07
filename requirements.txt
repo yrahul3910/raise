@@ -2,7 +2,7 @@ pytest
 pytest-cov
 cvxopt
 pandas
-numpy~=1.22.3
+numpy~=1.23.2
 keras>=3.0.0
 colorama
 hyperopt

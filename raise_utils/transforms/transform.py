@@ -14,7 +14,7 @@ from raise_utils.transforms.wfo import RadiallyWeightedFuzzyOversampler
 from raise_utils.data import Data
 import numpy as np
 import keras
-from remove_labels import Smooth  # noqa: F402
+from .remove_labels import Smooth  # noqa: F402
 
 if keras.config.backend() == "torch":
     from torch import FloatTensor, Tensor
