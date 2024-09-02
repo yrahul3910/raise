@@ -1,6 +1,10 @@
 # Change Log
 
-## 2.4.0 (Under Development)
+## 2.5.0
+
+* **Breaking change:** The `ifa` metric has been removed.
+
+## 2.4.0
 
 * Added `as_np` option to `DataLoader` methods.
 * **Breaking change:** The `popt20` metric has been removed, and with it, the `add_data` method on the `Data` class has also been removed.
