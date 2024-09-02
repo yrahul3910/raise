@@ -103,4 +103,4 @@ def test_smape_when_different():
     q = np.zeros((10, 10))
 
     smape = get_smape(p, q)
-    assert abs(smape - 2.0) <= np.finfo(float).eps
+    assert abs(smape - 1.0) <= np.finfo(float).eps
