@@ -1,6 +1,9 @@
 [project]
 name = "raise-utils"
 version = "2.4.0"
+authors = [{ name = "Rahul Yedida", email = "rahul.yedida@pm.me" }]
+description = "RAISE lab package"
+readme = "README.md"
 requires-python=">=3.9,<4.0"
 dependencies = [
     "pytest~=7.3.2",
