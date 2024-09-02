@@ -1,6 +1,7 @@
-from setuptools import setup, Extension
-from Cython.Build import cythonize
 import os
+
+from Cython.Build import cythonize
+from setuptools import Extension, setup
 
 ext_modules = cythonize(Extension(
     name="remove_labels",
@@ -8,7 +9,7 @@ ext_modules = cythonize(Extension(
 ))
 
 setup(name='raise_utils',
-      version='2.3.0',
+      version='2.4.0',
       description='RAISE lab package (LGPL-3.0-or-later)',
       author='RAISE, NC State University',
       author_email='ryedida@ncsu.edu',
