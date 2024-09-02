@@ -87,7 +87,7 @@ def test_smape_vectorized_when_different():
     q = np.zeros((10, 10))
 
     smape = get_smape_vectorized(p, q)
-    assert smape - 1.0 <= 1e-8
+    assert abs(smape - 2.0) <= np.finfo(float).eps
 
 
 def test_smape_when_equal():
@@ -103,4 +103,4 @@ def test_smape_when_different():
     q = np.zeros((10, 10))
 
     smape = get_smape(p, q)
-    assert smape - 1.0 <= 1e-8
+    assert abs(smape - 2.0) <= np.finfo(float).eps
