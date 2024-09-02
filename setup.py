@@ -9,7 +9,7 @@ ext_modules = cythonize(Extension(
 ))
 
 setup(name='raise_utils',
-      version='2.5.0',
+      version='2.5.1',
       description='RAISE lab package (MIT License)',
       author='RAISE, NC State University',
       author_email='ryedida@ncsu.edu',
@@ -32,7 +32,7 @@ setup(name='raise_utils',
       ],
       install_requires=[
           'scikit-learn~=1.5.1',
-          'keras>=3.0.0',
+          'keras>=3.0.0,<4.0.0',
           'numpy==1.26.4',
           'pandas~=2.2.2',
           'cvxopt~=1.3.1',
