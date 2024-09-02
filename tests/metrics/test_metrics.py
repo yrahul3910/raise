@@ -4,7 +4,12 @@ import numpy as np
 import pytest
 
 from raise_utils.metrics import ClassificationMetrics
-from raise_utils.metrics.dist import get_jensen_shannon, get_smape
+from raise_utils.metrics.dist import (
+    get_jensen_shannon,
+    get_jsd_for_multidimensional_data,
+    get_smape,
+    get_smape_vectorized,
+)
 
 
 def test_invalid_metrics_rejected():
@@ -48,6 +53,41 @@ def test_js_when_different():
     js = get_jensen_shannon(p, q)
     assert js > 0.0
     assert js < 1.0
+
+
+def test_jsd_for_multidimensional_data_when_equal():
+    np.random.seed(0)
+    p = np.random.randn(10, 10, 10)
+    q = np.random.randn(10, 10, 10)
+
+    jsd = get_jsd_for_multidimensional_data(p, q)
+    assert jsd < 0.1
+
+
+def test_jsd_for_multidimensional_data_when_different():
+    np.random.seed(0)
+    p = np.random.randn(10, 10, 10)
+    q = np.random.randn(10, 10, 10) + 1
+
+    jsd = get_jsd_for_multidimensional_data(p, q)
+    assert jsd > 0.0
+    assert jsd <= 1.0
+
+
+def test_smape_vectorized_when_equal():
+    p = np.zeros((10, 10))
+    q = np.zeros((10, 10))
+
+    smape = get_smape_vectorized(p, q)
+    assert smape == 0.0
+
+
+def test_smape_vectorized_when_different():
+    p = np.ones((10, 10))
+    q = np.zeros((10, 10))
+
+    smape = get_smape_vectorized(p, q)
+    assert smape - 1.0 <= np.finfo(float).eps
 
 
 def test_smape_when_equal():
