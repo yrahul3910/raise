@@ -9,8 +9,8 @@ ext_modules = cythonize(Extension(
 ))
 
 setup(name='raise_utils',
-      version='2.4.0',
-      description='RAISE lab package (LGPL-3.0-or-later)',
+      version='2.5.0',
+      description='RAISE lab package (MIT License)',
       author='RAISE, NC State University',
       author_email='ryedida@ncsu.edu',
       long_description=open(os.path.join(
@@ -31,17 +31,17 @@ setup(name='raise_utils',
           'raise_utils'
       ],
       install_requires=[
-          'scikit-learn>=0.23.2',
+          'scikit-learn~=1.5.1',
           'keras>=3.0.0',
-          'numpy>=1.23.2',
-          'pandas',
-          'cvxopt',
-          'colorama',
-          'hyperopt',
+          'numpy==1.26.4',
+          'pandas~=2.2.2',
+          'cvxopt~=1.3.1',
+          'colorama~=0.4.6',
+          'hyperopt~=0.2.7',
           'imblearn',
-          'Cython',
-          'tabulate',
-          'statsmodels'
+          'Cython~=0.29.24',
+          'tabulate~=0.8.9',
+          'statsmodels~=0.14.0'
       ],
       ext_modules=ext_modules
       )

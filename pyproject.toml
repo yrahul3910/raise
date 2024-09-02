@@ -27,7 +27,7 @@ dependencies = [
 
 [tool.poetry]
 name = "raise-utils"
-version = "2.4.0"
+version = "2.5.0"
 description = "RAISE lab package"
 authors = ["Rahul Yedida <rahul.yedida@pm.me>"]
 license = "LGPL 2.1"
