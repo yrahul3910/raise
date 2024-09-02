@@ -58,7 +58,7 @@ def test_js_when_different():
 def test_jsd_for_multidimensional_data_when_equal():
     np.random.seed(0)
     p = np.random.randn(10, 10, 10)
-    q = np.random.randn(10, 10, 10)
+    q = p.copy()
 
     jsd = get_jsd_for_multidimensional_data(p, q)
     assert jsd < 0.1
@@ -76,7 +76,7 @@ def test_jsd_for_multidimensional_data_when_different():
 
 def test_smape_vectorized_when_equal():
     p = np.zeros((10, 10))
-    q = np.zeros((10, 10))
+    q = p.copy()
 
     smape = get_smape_vectorized(p, q)
     assert smape == 0.0
@@ -92,7 +92,7 @@ def test_smape_vectorized_when_different():
 
 def test_smape_when_equal():
     p = np.zeros((10, 10))
-    q = np.zeros((10, 10))
+    q = p.copy()
 
     smape = get_smape(p, q)
     assert smape == 0.0
