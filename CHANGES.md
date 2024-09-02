@@ -1,5 +1,9 @@
 # Change Log
 
+## 2.5.1
+
+* This version just changes dependency versions for `keras`, making it looser. This should make it easier to install applications that depend on `raise-utils`.
+
 ## 2.5.0
 
 * **Breaking change:** The `ifa` metric has been removed.
