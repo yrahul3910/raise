@@ -1,8 +1,8 @@
 import numpy as np
 import pandas as pd
+from scipy.special import gamma, rel_entr
 from sklearn.neighbors import KNeighborsClassifier
-from scipy.special import gamma
-from scipy.special import rel_entr
+
 
 def get_smape(P, Q):
     """
@@ -19,7 +19,7 @@ def get_smape(P, Q):
     return total / (len(P) * len(Q))
 
 
-def get_smape_vectorized(A: pd.DataFrame, F: pd.DataFrame) -> float:
+def get_smape_vectorized(A: np.ndarray, F: np.ndarray) -> float:
     """
     Returns the Symmetric Mean Absolute Percentage Error (SMAPE) of distributions of P and Q.
     Works faster than the previous method.
@@ -27,12 +27,12 @@ def get_smape_vectorized(A: pd.DataFrame, F: pd.DataFrame) -> float:
     :param A: Distribution A
     :param F: Distribution F
     """
-    x = A.values[:, np.newaxis, :]
-    y = F.values[np.newaxis, :, :]
+    x = A[:, np.newaxis, :]
+    y = F[np.newaxis, :, :]
     numerator = 2 * np.abs(y - x)
     denominator = np.abs(x) + np.abs(y) + np.finfo(float).eps
     result = np.mean(numerator / np.maximum(denominator, np.finfo(float).eps))
-    return result
+    return result.item()
 
 
 def get_smape_vectorized_chunked(A: pd.DataFrame, F: pd.DataFrame, chunk_size: int = 1000) -> float:
