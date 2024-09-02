@@ -1,6 +1,8 @@
-import pytest
 import math
+
 import numpy as np
+import pytest
+
 from raise_utils.metrics import ClassificationMetrics
 from raise_utils.metrics.dist import get_jensen_shannon, get_smape
 
@@ -9,12 +11,6 @@ def test_invalid_metrics_rejected():
     metrics = ClassificationMetrics([1], [1])
     with pytest.raises(ValueError):
         metrics.add_metric('fail')
-
-
-def test_popt20_needs_add_data():
-    metrics = ClassificationMetrics([1], [1])
-    with pytest.raises(AssertionError):
-        metrics.add_metric('popt20')
 
 
 def test_metrics():

@@ -1,5 +1,6 @@
-from raise_utils.data import DataLoader
 import pandas as pd
+
+from raise_utils.data import DataLoader
 
 
 def test_load_single_file():
@@ -31,8 +32,3 @@ def test_add():
     data2 = DataLoader.from_file("../promise/camel-1.4.csv")
 
     assert len(data1 + data2) == len(data1) + len(data2)
-
-
-def test_popt_data():
-    data = DataLoader.from_file("../promise/camel-1.2.csv")
-    assert data.get_popt_data(data.y_train).shape[1] == data.x_train.shape[1] + 2

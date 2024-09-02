@@ -1,10 +1,9 @@
+import random
+import string
 import time
 
 from raise_utils.metrics.metrics import ClassificationMetrics
 from raise_utils.transforms.transform import Transform
-import random
-import pandas as pd
-import string
 
 
 class Experiment:
@@ -76,9 +75,6 @@ class Experiment:
 
                 # Evaluate
                 metric = ClassificationMetrics(self.data.y_test, predictions)
-                if "popt20" in self.metrics:
-                    metric.add_data(self.data.get_popt_data(
-                        predictions))
                 metric.add_metrics(self.metrics)
                 values = metric.get_metrics()
                 for j, m in enumerate(self.metrics):

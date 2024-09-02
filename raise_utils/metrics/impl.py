@@ -1,12 +1,14 @@
-from sklearn.metrics import confusion_matrix
-from sklearn.metrics import accuracy_score
-from sklearn.metrics import f1_score
-from sklearn.metrics import recall_score
-from sklearn.metrics import precision_score
-from sklearn.metrics import roc_auc_score
-from sklearn.metrics import auc
 import math
+
 import numpy as np
+from sklearn.metrics import (
+    accuracy_score,
+    confusion_matrix,
+    f1_score,
+    precision_score,
+    recall_score,
+    roc_auc_score,
+)
 
 
 def get_confusion_matrix(y_true, y_pred) -> tuple:
@@ -171,66 +173,3 @@ def get_g1_score(y_true, y_pred) -> float:
     recall = 1. * tp / (tp+fn) if tp + fn != 0 else 0
     g_score = (2 * recall * (1 - pf)) / (recall + 1 - pf) if recall + 1 - pf != 0 else 0
     return g_score
-
-
-def get_popt20(data) -> float:
-    """
-    Get popt20 score.
-
-    :param data: Pandas DataFrame with data. Must contain columns "bug", "loc", and "prediction".
-    :return: popt20 score
-    """
-    def subtotal(x):
-        xx = [0]
-        for _, t in enumerate(x):
-            xx += [xx[-1] + t]
-        return xx[1:]
-
-    def get_recall_(true):
-        total_true = float(len([i for i in true if i == 1]))
-        hit = 0.0
-        recall = []
-        for i, el in enumerate(true):
-            if el == 1:
-                hit += 1
-            recall += [hit / total_true if total_true else 0.0]
-        return recall
-
-    data.sort_values(by=["bug", "loc"], inplace=True)
-    x_sum = float(sum(data['loc']))
-    x = data['loc'].apply(lambda t: t / x_sum)
-    xx = subtotal(x)
-
-    # get  AUC_optimal
-    yy = get_recall_(data['bug'].values)
-    xxx = [i for i in xx if i <= 0.2]
-    yyy = yy[:len(xxx)]
-    try:
-        s_opt = round(auc(xxx, yyy), 3)
-    except ValueError:
-        s_opt = 0
-
-    # get AUC_worst
-    xx = subtotal(x[::-1])
-    yy = get_recall_(data['bug'][::-1].values)
-    xxx = [i for i in xx if i <= 0.2]
-    yyy = yy[:len(xxx)]
-    try:
-        s_wst = round(auc(xxx, yyy), 3)
-    except ValueError:
-        s_wst = 0
-
-    # get AUC_prediction
-    data.sort_values(by=["prediction", "loc"], ascending=[0, 1], inplace=True)
-    x = data['loc'].apply(lambda t: t / x_sum)
-    xx = subtotal(x)
-    yy = get_recall_(data['bug'].values)
-    xxx = [k for k in xx if k <= 0.2]
-    yyy = yy[:len(xxx)]
-    try:
-        s_m = round(auc(xxx, yyy), 3)
-    except ValueError:
-        return 0
-
-    popt = (s_m - s_wst) / (s_opt - s_wst)
-    return round(popt, 3)

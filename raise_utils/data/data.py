@@ -1,10 +1,10 @@
 import os
 from collections import Counter
 
-import pandas as pd
 import numpy as np
-from sklearn.model_selection import train_test_split
+import pandas as pd
 from keras.utils import to_categorical
+from sklearn.model_selection import train_test_split
 
 
 class Data:
@@ -47,18 +47,6 @@ class Data:
 
     def __len__(self):
         return len(self.x_train)
-
-    def get_popt_data(self, preds):
-        preds = pd.Series(np.array(preds).squeeze(), name="prediction")
-        if isinstance(self.x_train, pd.DataFrame):
-            self.x_test.reset_index(inplace=True, drop=True)
-            self.y_test.reset_index(inplace=True, drop=True)
-            return pd.concat((self.x_test, self.y_test, preds), axis=1)
-        else:
-            df = pd.DataFrame(self.x_test)
-            df["bug"] = self.y_test
-            df["prediction"] = preds
-            return df
 
 
 class DataLoader:
