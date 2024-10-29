@@ -12,7 +12,7 @@ def remove_labels(x_train, y_train):
     lost_idx_len = int(len(y_train) - np.sqrt(len(y_train)))
     lost_idx = np.random.choice(len(y_train), size=lost_idx_len, replace=False).astype(int)
 
-    x_train = np.array(x_train, dtype=float)
+    x_train = np.array(x_train, dtype=np.float32)
     y_train = np.array(y_train, dtype=int)
 
     x_lost = x_train[lost_idx]
