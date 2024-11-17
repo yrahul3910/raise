@@ -1,19 +1,15 @@
-from sklearn.preprocessing import StandardScaler
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.preprocessing import Normalizer
-from sklearn.preprocessing import MaxAbsScaler
-from sklearn.preprocessing import RobustScaler
-from sklearn.preprocessing import KernelCenterer
+import keras
+import numpy as np
 from imblearn.over_sampling import SMOTE
+from sklearn.preprocessing import KernelCenterer, MaxAbsScaler, MinMaxScaler, Normalizer, RobustScaler, StandardScaler
+
+from raise_utils.data import Data
 from raise_utils.transforms.cfs import CFS
 from raise_utils.transforms.inliers import OutlierRemoval
 from raise_utils.transforms.null import NullTransform
 from raise_utils.transforms.text.transform import TextTransform
-from raise_utils.transforms.wfo import WeightedFuzzyOversampler
-from raise_utils.transforms.wfo import RadiallyWeightedFuzzyOversampler
-from raise_utils.data import Data
-import numpy as np
-import keras
+from raise_utils.transforms.wfo import RadiallyWeightedFuzzyOversampler, WeightedFuzzyOversampler
+
 from .remove_labels import Smooth  # noqa: F402
 
 if keras.config.backend() == "torch":
@@ -99,7 +95,7 @@ class Transform:
                 else:
                     data.x_train = self.transformer.fit_transform(data.x_train)
 
-                if self.name != "wfo" and self.name != "rwfo":
+                if self.name not in ["wfo", "rwfo", "smooth"]:
                     data.x_test = self.transformer.transform(data.x_test)
             else:
                 if len(data.x_train) > self.transformer.k_neighbors:
