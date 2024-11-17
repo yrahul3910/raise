@@ -9,7 +9,7 @@ ext_modules = cythonize(Extension(
 ))
 
 setup(name='raise_utils',
-      version='2.5.1',
+      version='2.5.2',
       description='RAISE lab package (MIT License)',
       author='RAISE, NC State University',
       author_email='ryedida@ncsu.edu',

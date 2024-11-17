@@ -1,5 +1,10 @@
 # Change Log
 
+## 2.5.2
+
+* This version fixes a bug in `remove_labels` that caused a `TypeError`.
+* This version also bumps up the `setuptools` version, so that it now works with TensorFlow on Python 3.12.
+
 ## 2.5.1
 
 * This version just changes dependency versions for `keras`, making it looser. This should make it easier to install applications that depend on `raise-utils`.
