@@ -18,7 +18,7 @@ dependencies = [
     "scikit-learn~=1.5.1",
     "imblearn~=0.0",
     "bohb-hpo~=0.5.2",
-    "Cython~=0.29.24",
+    "cython~=0.29.24",
     "tabulate~=0.8.9",
     "keras>=3.0.0,<4.0.0",
     "statsmodels~=0.14.0",
@@ -27,6 +27,7 @@ dependencies = [
 
 [tool.setuptools]
 ext-modules = [{ name = "remove_labels", sources = ["raise_utils/transforms/remove_labels.pyx"] }]
+packages = ['raise_utils']
 
 [tool.poetry.dependencies]
 pytest = "^7.3.2"
