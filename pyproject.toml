@@ -26,8 +26,10 @@ dependencies = [
 ]
 
 [tool.setuptools]
-ext-modules = [{ name = "remove_labels", sources = ["raise_utils/transforms/remove_labels.pyx"] }]
 packages = ['raise_utils']
+ext-modules = [
+    { name="raise_utils.transforms.remove_labels", sources=["raise_utils/transforms/remove_labels.c"] }
+]
 
 [tool.poetry.dependencies]
 pytest = "^7.3.2"

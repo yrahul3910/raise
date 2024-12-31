@@ -3,10 +3,10 @@ import os
 from Cython.Build import cythonize
 from setuptools import Extension, setup
 
-ext_modules = cythonize(Extension(
-    name="remove_labels",
+ext_modules = [Extension(
+    name="raise_utils.transforms.remove_labels",
     sources=["raise_utils/transforms/remove_labels.pyx"]
-))
+)]
 
 setup(name='raise_utils',
       version='2.5.2',
@@ -43,5 +43,6 @@ setup(name='raise_utils',
           'tabulate~=0.8.9',
           'statsmodels~=0.14.0'
       ],
-      ext_modules=ext_modules
+      ext_modules=cythonize(ext_modules, compiler_directives={"language_level": 3, "profile": False}),
+      setup_requires=["Cython"]
       )
