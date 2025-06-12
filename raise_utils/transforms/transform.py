@@ -1,6 +1,6 @@
 import keras
 import numpy as np
-from imblearn.over_sampling import SMOTE
+from imblearn.over_sampling import SMOTE, RandomOverSampler
 from sklearn.preprocessing import KernelCenterer, MaxAbsScaler, MinMaxScaler, Normalizer, RobustScaler, StandardScaler
 
 from raise_utils.data import Data
@@ -23,6 +23,7 @@ transformers = {
     "kernel": KernelCenterer,
     "standardize": StandardScaler,
     "smote": SMOTE,
+    "ros": RandomOverSampler,
     "cfs": CFS,
     "smooth": Smooth,
     "rwfo": RadiallyWeightedFuzzyOversampler,
@@ -88,7 +89,7 @@ class Transform:
                 data.x_test = data.x_test.detach().numpy()
                 revert_to_tensor = True
 
-            if self.name != "smote":
+            if self.name not in ["smote", "ros"]:
                 if self.name in ["wfo", "cfs", "rwfo", "smooth"]:
                     data.x_train, data.y_train = self.transformer.fit_transform(
                         data.x_train, data.y_train)
@@ -97,10 +98,13 @@ class Transform:
 
                 if self.name not in ["wfo", "rwfo", "smooth"]:
                     data.x_test = self.transformer.transform(data.x_test)
-            else:
+            elif self.name == "smote":
                 if len(data.x_train) > self.transformer.k_neighbors:
                     self.transformer = SMOTE()
 
+                data.x_train, data.y_train = self.transformer.fit_resample(
+                    data.x_train, data.y_train)
+            elif self.name == "ros":
                 data.x_train, data.y_train = self.transformer.fit_resample(
                     data.x_train, data.y_train)
 

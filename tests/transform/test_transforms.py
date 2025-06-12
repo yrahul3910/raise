@@ -60,6 +60,17 @@ def test_rwfo():
     assert len_pre < len_post
 
 
+def test_ros():
+    data = DataLoader.from_file('../promise/log4j-1.1.csv')
+
+    len_pre = data.x_train.shape[0]
+    transform = Transform('ros')
+    transform.apply(data)
+
+    len_post = data.x_train.shape[0]
+    assert len_pre < len_post
+
+
 def test_cfs():
     data = DataLoader.from_file('../promise/log4j-1.1.csv')
 
