@@ -8,4 +8,6 @@ dist/
 .pypirc
 raise_utils.egg-info/
 .coverage
-
+remove_labels.c
+remove_labels.html
+*.so

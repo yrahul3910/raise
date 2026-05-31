@@ -2,7 +2,7 @@
 
 export PYTHONPATH=$PWD/../:$PYTHONPATH
 
-pytest --new-first --lf -vv -x --cov=raise_utils --cov-report=xml ../
+pytest --new-first -vv --cov=raise_utils --cov-report=xml ../
 
 SUCCESS=$?
 
