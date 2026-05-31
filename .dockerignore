@@ -1,0 +1,27 @@
+# Local virtualenv (wrong platform/arch for the image)
+.venv/
+
+# VCS and editor
+.git/
+.idea/
+.DS_Store
+.*.swp
+
+# Python caches
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Build outputs (the Cython extension is rebuilt inside the image)
+build/
+dist/
+*.egg-info/
+*.so
+remove_labels.c
+remove_labels.html
+
+# Coverage artifacts
+.coverage
+coverage.xml
