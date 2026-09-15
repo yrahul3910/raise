@@ -45,11 +45,16 @@ def test_feedforward_trains_with_tensor_inputs(tensor_data):
 
 
 def test_transform_accepts_tensor_inputs(tensor_data):
+    tensor_data.x_test = tensor_data.x_test.cpu()
+    train_device = tensor_data.x_train.device
+    test_device = tensor_data.x_test.device
     Transform("standardize").apply(tensor_data)
 
+    assert tensor_data.x_train.device == train_device
+    assert tensor_data.x_test.device == test_device
     assert torch.isfinite(tensor_data.x_train).all()
     assert torch.isfinite(tensor_data.x_test).all()
-    torch.testing.assert_close(tensor_data.x_train.mean(dim=0), torch.zeros(2), atol=1e-6, rtol=0)
+    torch.testing.assert_close(tensor_data.x_train.mean(dim=0), torch.zeros(2, device=train_device), atol=1e-6, rtol=0)
 
 
 def test_dodge_accepts_tensor_inputs(tensor_data, tmp_path):

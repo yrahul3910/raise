@@ -85,6 +85,8 @@ class Transform:
         else:
             revert_to_tensor = False
             if keras.config.backend() == "torch" and isinstance(data.x_train, Tensor):
+                train_device = data.x_train.device
+                test_device = data.x_test.device
                 data.x_train = data.x_train.detach().cpu().numpy()
                 data.x_test = data.x_test.detach().cpu().numpy()
                 revert_to_tensor = True
@@ -109,8 +111,8 @@ class Transform:
                     data.x_train, data.y_train)
 
             if revert_to_tensor:
-                data.x_train = FloatTensor(data.x_train)
-                data.x_test = FloatTensor(data.x_test)
+                data.x_train = FloatTensor(data.x_train).to(train_device)
+                data.x_test = FloatTensor(data.x_test).to(test_device)
 
         if self.name == "none":
             # Fix weirdness with NullTransform.
