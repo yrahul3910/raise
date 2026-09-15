@@ -1,6 +1,6 @@
 [project]
 name = "raise-utils"
-version = "2.5.2"
+version = "2.5.3"
 authors = [{ name = "Rahul Yedida", email = "ryedida@ncsu.edu" }]
 description = "RAISE lab package"
 readme = "README.md"

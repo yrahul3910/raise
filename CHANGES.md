@@ -1,5 +1,10 @@
 # Change Log
 
+## 2.5.3
+
+* Fix installation of the Cython extension so `raise_utils.transforms.remove_labels` is importable from installed packages.
+* Include all `raise_utils` subpackages in builds and verify installed-package imports in CI.
+
 ## 2.5.2
 
 * This version fixes a bug in `remove_labels` that caused a `TypeError`.
