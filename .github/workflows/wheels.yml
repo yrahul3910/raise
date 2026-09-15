@@ -37,10 +37,28 @@ jobs:
       - name: Test imports outside the checkout
         working-directory: ${{ runner.temp }}
         run: python -m pytest --import-mode=importlib "${{ github.workspace }}/tests/test_package.py"
-      - name: Run compatibility tests
-        if: matrix.os == 'ubuntu-latest' && matrix.python == '3.14'
+  test_compatibility:
+    name: Test compatibility and upload coverage
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - run: python -m pip install "torch>=2.14.0,<3" --index-url https://download.pytorch.org/whl/cpu
+      - run: python -m pip install -e . "pytest>=9.0.3,<10" "pytest-cov>=7.1.0,<8"
+      - name: Run compatibility tests with coverage
         working-directory: tests
-        run: python -m pytest --import-mode=importlib
+        run: python -m pytest --import-mode=importlib --cov=raise_utils --cov-report=xml
+      - uses: codecov/codecov-action@v5
+        with:
+          use_oidc: true
+          files: tests/coverage.xml
+          disable_search: true
+          fail_ci_if_error: true
 
   audit_dependencies:
     name: Audit dependency vulnerabilities

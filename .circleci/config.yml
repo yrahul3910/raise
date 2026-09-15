@@ -17,7 +17,4 @@ jobs:
       - run:
           name: Run tests
           command: cd tests && uv run --frozen ./test.sh
-      - run:
-          name: Upload to codecov
-          command: cd tests && bash <(curl -s https://codecov.io/bash)
     resource_class: large
