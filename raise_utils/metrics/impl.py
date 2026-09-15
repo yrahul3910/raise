@@ -19,7 +19,7 @@ def get_confusion_matrix(y_true, y_pred) -> tuple:
     :param y_pred: Predictions
     :return: (tp, tn, fp, fn)
     """
-    tn, fp, fn, tp = confusion_matrix(y_true, y_pred).ravel()
+    tn, fp, fn, tp = confusion_matrix(y_true, y_pred).ravel().tolist()
     return tp, tn, fp, fn
 
 

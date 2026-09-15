@@ -1,5 +1,13 @@
 # Change Log
 
+## 3.0.0
+
+* **Breaking change:** Python 3.11 or newer is required. Python 3.11-3.14 are tested; the package no longer imposes an upper Python version limit.
+* **Breaking change:** Keras uses PyTorch by default. TensorFlow is no longer installed. Current macOS binary support requires Apple Silicon and macOS 14 or newer.
+* Update dependencies and the lockfile to patched versions for the reported Dependabot vulnerabilities.
+* Update Cython and the wheel build pipeline for current Python versions.
+* Preserve parseable experiment logs with NumPy 2 and use platform-sized integers in the Cython transform.
+
 ## 2.5.3
 
 * Fix installation of the Cython extension so `raise_utils.transforms.remove_labels` is importable from installed packages.

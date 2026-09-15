@@ -5,15 +5,15 @@ from scipy.stats import mode
 
 def remove_labels(x_train, y_train):
     cdef int size, lost_idx_len, i
-    cdef long[:] lost_idx
-    cdef long[:, :] idx
+    cdef Py_ssize_t[:] lost_idx
+    cdef Py_ssize_t[:, :] idx
     cdef int k
 
     lost_idx_len = int(len(y_train) - np.sqrt(len(y_train)))
-    lost_idx = np.random.choice(len(y_train), size=lost_idx_len, replace=False).astype(int)
+    lost_idx = np.random.choice(len(y_train), size=lost_idx_len, replace=False).astype(np.intp)
 
     x_train = np.array(x_train, dtype=np.float32)
-    y_train = np.array(y_train, dtype=int)
+    y_train = np.array(y_train, dtype=np.intp)
 
     x_lost = x_train[lost_idx]
     x_rest = np.delete(x_train, lost_idx, axis=0)
@@ -27,8 +27,8 @@ def remove_labels(x_train, y_train):
 
     cdef float[:, :] x_lost_view = x_lost
     cdef float[:, :] x_rest_view = x_rest
-    cdef long[:] y_lost_view = y_lost
-    cdef long[:] y_rest_view = y_rest
+    cdef Py_ssize_t[:] y_lost_view = y_lost
+    cdef Py_ssize_t[:] y_rest_view = y_rest
 
     tree = ckdtree.cKDTree(x_rest_view)
     k = int(np.sqrt(len(x_rest_view)))
