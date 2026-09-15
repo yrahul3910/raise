@@ -36,7 +36,7 @@ jobs:
           PY
       - name: Test imports outside the checkout
         working-directory: ${{ runner.temp }}
-        run: python -m pytest --import-mode=importlib "${{ github.workspace }}/tests/test_package.py"
+        run: python -m pytest --import-mode=importlib "${{ github.workspace }}/tests/test_package.py" "${{ github.workspace }}/tests/test_torch_devices.py"
   test_compatibility:
     name: Test compatibility and upload coverage
     runs-on: ubuntu-latest

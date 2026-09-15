@@ -85,8 +85,8 @@ class Transform:
         else:
             revert_to_tensor = False
             if keras.config.backend() == "torch" and isinstance(data.x_train, Tensor):
-                data.x_train = data.x_train.detach().numpy()
-                data.x_test = data.x_test.detach().numpy()
+                data.x_train = data.x_train.detach().cpu().numpy()
+                data.x_test = data.x_test.detach().cpu().numpy()
                 revert_to_tensor = True
 
             if self.name not in ["smote", "ros"]:

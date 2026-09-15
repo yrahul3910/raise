@@ -115,7 +115,7 @@ class Autoencoder(Learner):
         encoded = self.encoder(x)
 
         if keras.config.backend() == "torch":
-            encoded = encoded.detach().numpy()
+            encoded = encoded.detach().cpu().numpy()
 
         return encoded
 

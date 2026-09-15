@@ -7,6 +7,7 @@
 * Update dependencies and the lockfile to patched versions for the reported Dependabot vulnerabilities.
 * Update Cython and the wheel build pipeline for current Python versions.
 * Preserve parseable experiment logs with NumPy 2 and use platform-sized integers in the Cython transform.
+* Move Torch tensors to CPU before NumPy conversion in autoencoder encoding, feedforward training, transforms, and DODGE.
 
 ## 2.5.3
 

@@ -61,8 +61,8 @@ class DODGE:
             print("=" * len("Run #" + str(_)))
 
             if keras.config.backend() == "torch" and isinstance(self.config["data"][0].x_train, Tensor):
-                x_train = self.config["data"][0].x_train.detach().numpy()
-                x_test = self.config["data"][0].x_test.detach().numpy()
+                x_train = self.config["data"][0].x_train.detach().cpu().numpy()
+                x_test = self.config["data"][0].x_test.detach().cpu().numpy()
                 y_train = deepcopy(self.config["data"][0].y_train)
                 y_test = deepcopy(self.config["data"][0].y_test)
                 data = Data(x_train, x_test, y_train, y_test)
