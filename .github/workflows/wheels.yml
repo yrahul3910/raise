@@ -61,11 +61,12 @@ jobs:
           fail_ci_if_error: true
 
   audit_dependencies:
-    name: Audit dependency vulnerabilities on Python ${{ matrix.python }}
-    runs-on: ubuntu-latest
+    name: Audit dependencies on ${{ matrix.os }} / Python ${{ matrix.python }}
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
         python: ['3.11', '3.12', '3.13', '3.14']
     steps:
       - uses: actions/checkout@v4
