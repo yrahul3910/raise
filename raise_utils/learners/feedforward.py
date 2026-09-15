@@ -72,8 +72,8 @@ class FeedforwardDL(Learner):
         self._check_data()
 
         if keras.config.backend() == "torch" and isinstance(self.x_train, Tensor):
-            self.x_train = self.x_train.detach().numpy()
-            self.x_test = self.x_test.detach().numpy()
+            self.x_train = self.x_train.detach().cpu().numpy()
+            self.x_test = self.x_test.detach().cpu().numpy()
         else:
             self.x_train = np.array(self.x_train)
             self.x_test = np.array(self.x_test)

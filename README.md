@@ -27,11 +27,15 @@ The package's intended users are the lab members, who can access a standardized 
 
 ## Install
 
-The `raise_utils` package is available on PyPI. Your package manager of choice should handle it. Python 2 is unsupported, but we recommend Python 3.10+.
+The `raise_utils` package is available on PyPI. Version 3 requires Python 3.11 or newer and uses Keras with the PyTorch backend by default. We test Python 3.11 through 3.14 on Linux, Windows, and Apple Silicon macOS.
 
 ```
 pip3 install raise_utils
 ```
+
+PyTorch's current binary packages support 64-bit Linux and Windows and Apple Silicon Macs running macOS 14 or newer. Intel Macs need a PyTorch source build; users who need the previous TensorFlow backend or Python 3.9-3.10 can pin `raise-utils<3`.
+
+Import `raise_utils` before importing Keras, or set `KERAS_BACKEND=torch` before starting Python. An explicit `KERAS_BACKEND` setting takes precedence; installing a different backend is the caller's responsibility.
 
 ## Contributing
 

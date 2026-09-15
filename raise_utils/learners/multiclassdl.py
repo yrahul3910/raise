@@ -57,7 +57,7 @@ class MulticlassDL(Learner):
         Sets the learner data, in the order (x_train, y_train, x_test, y_test). Please pass in
         one-hot encoded values for the target. This can be done as follows:
 
-        from tf.keras.utils import to_categorical
+        from keras.utils import to_categorical
         y = to_categorical(y, num_classes=3)
         """
         self.x_train = x_train

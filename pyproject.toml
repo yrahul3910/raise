@@ -1,36 +1,42 @@
 [project]
 name = "raise-utils"
-version = "2.5.3"
+version = "3.0.0"
 authors = [{ name = "Rahul Yedida", email = "ryedida@ncsu.edu" }]
 description = "RAISE lab package"
 readme = "README.md"
-requires-python=">=3.9,<3.13"
+requires-python = ">=3.11"
 dependencies = [
-    "cvxopt~=1.3.1",
-    "pandas~=2.2.2",
-    "numpy==1.26.4",
+    "cvxopt>=1.3.3,<2",
+    "pandas>=2.2.3,<4",
+    "numpy>=2.0,<3",
     "colorama~=0.4.6",
-    "hyperopt~=0.2.7",
-    "scikit-learn~=1.5.1",
-    "imblearn~=0.0",
+    "hyperopt>=0.3.0,<0.4",
+    "scikit-learn>=1.6.1,<2",
+    "imbalanced-learn>=0.14.2,<1",
+    "scipy>=1.14.1,<2",
     "bohb-hpo~=0.5.2",
-    "tabulate~=0.8.9",
-    "keras>=3.0.0,<4.0.0",
-    "statsmodels~=0.14.0",
-    "tensorflow>=2.16.2",
+    "tabulate>=0.9,<1",
+    "keras>=3.15.1,<4",
+    "statsmodels>=0.14.4,<1",
+    "torch>=2.14.0,<3",
 ]
 
 [dependency-groups]
 dev = [
-    "pytest~=7.3.2",
-    "pytest-cov~=4.1.0",
-    "coverage~=7.2.7",
-    "cython~=0.29.24",
+    "pytest>=9.0.3,<10",
+    "pytest-cov>=7.1.0,<8",
+    "coverage>=7.16.0,<8",
+    "cython>=3.2.0,<4",
+    "pip-audit>=2.10.1,<3",
 ]
 
 [tool.setuptools.packages.find]
 include = ["raise_utils", "raise_utils.*"]
 namespaces = false
+
+[tool.cibuildwheel]
+build = "cp3{11,12,13,14}-*"
+skip = ["*-musllinux_*", "*-manylinux_i686", "*-win32"]
 
 [tool.ruff]
 select = ["E", "F", "I001"]
@@ -53,5 +59,5 @@ inline-quotes = "single"
 max-doc-length = 120
 
 [build-system]
-requires = ["setuptools", "wheel", "Cython"]
+requires = ["setuptools>=83.0.0", "wheel>=0.46.2", "Cython>=3.2.0,<4"]
 build-backend = "setuptools.build_meta"

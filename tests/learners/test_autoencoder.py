@@ -34,7 +34,7 @@ def test_can_decode():
     decoded = learner.decode(learner.encode(data.x_test))
 
     if keras.config.backend() == 'torch':
-        decoded = decoded.detach().numpy()
+        decoded = decoded.detach().cpu().numpy()
 
     print(np.linalg.norm(decoded - data.x_test))
     assert True
