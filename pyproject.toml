@@ -28,11 +28,9 @@ dev = [
     "cython~=0.29.24",
 ]
 
-[tool.setuptools]
-packages = ['raise_utils']
-ext-modules = [
-    { name="raise_utils.transforms.remove_labels", sources=["raise_utils/transforms/remove_labels.c"] }
-]
+[tool.setuptools.packages.find]
+include = ["raise_utils", "raise_utils.*"]
+namespaces = false
 
 [tool.ruff]
 select = ["E", "F", "I001"]
