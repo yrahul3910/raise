@@ -2,6 +2,7 @@ from importlib import import_module
 from importlib.machinery import EXTENSION_SUFFIXES
 
 import numpy as np
+import pytest
 
 import raise_utils as ru
 from raise_utils.learners import FeedforwardDL
@@ -19,10 +20,11 @@ def test_cython_extension():
     assert module.remove_labels.__module__ == module.__name__
 
 
-def test_cython_transform_with_numpy_integers():
+@pytest.mark.parametrize("dtype", [np.int32, np.int64])
+def test_cython_transform_with_numpy_integers(dtype):
     module = import_module("raise_utils.transforms.remove_labels")
     x_train = np.arange(200, dtype=np.float32).reshape(100, 2)
-    y_train = np.arange(100, dtype=np.intp) % 2
+    y_train = np.arange(100, dtype=dtype) % 2
 
     x_result, y_result = module.Smooth().fit_transform(x_train, y_train)
 
